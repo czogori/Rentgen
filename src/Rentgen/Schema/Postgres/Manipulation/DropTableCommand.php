@@ -20,9 +20,9 @@ class DropTableCommand extends Command
     public function cascade()
     {
         $this->cascade = true;
+
         return $this;
     }
-
 
     public function getSql()
     {
@@ -31,6 +31,7 @@ class DropTableCommand extends Command
             , $this->cascade ? ' CASCADE' : ''
         );
         $sql .= ';';
+
         return $sql;
     }
 

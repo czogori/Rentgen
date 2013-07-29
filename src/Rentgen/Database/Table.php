@@ -21,6 +21,7 @@ class Table
     public function addColumn(Column $column)
     {
         $this->columns[] = $column;
+
         return $this;
     }
 
@@ -32,10 +33,11 @@ class Table
     public function getColumn($name)
     {
         foreach ($this->columns as $column) {
-            if($column->getName() == $name) {
+            if ($column->getName() == $name) {
                 return $column;
             }
         }
+
         return null;
     }
 

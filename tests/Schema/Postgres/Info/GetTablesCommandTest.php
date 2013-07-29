@@ -3,8 +3,6 @@
 namespace Rentgen\Tests\Schema\Postgres\Info;
 
 use Rentgen\Schema\Postgres\Info\GetTablesCommand;
-use Rentgen\Schema\Postgres\Manipulation\DropAllTablesCommand;
-use Rentgen\Database\Table;
 use Rentgen\Database\Connection;
 
 use Rentgen\Tests\TestHelpers;
@@ -15,12 +13,12 @@ class GetTablesCommandTest extends TestHelpers
 {
     public function setUp()
     {
-    	$this->clearDatabase();
+        $this->clearDatabase();
     }
 
     public function testGetSql()
-    {            	
-        $getTablesCommand = new GetTablesCommand();        
+    {
+        $getTablesCommand = new GetTablesCommand();
         $expect = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';";
         $this->assertEquals($expect, $getTablesCommand->getSql());
     }
@@ -33,10 +31,10 @@ class GetTablesCommandTest extends TestHelpers
         $getTablesCommand = new GetTablesCommand();
         $getTablesCommand->setConnection($this->connection);
         $tables = $getTablesCommand->execute();
-        
+
         $this->assertCount(2, $tables);
         $this->assertTrue($this->tableExists('foo'));
-        $this->assertTrue($this->tableExists('bar'));        
+        $this->assertTrue($this->tableExists('bar'));
     }
 
 }

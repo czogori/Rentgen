@@ -7,7 +7,7 @@ class ForeignKey
     private $name;
     private $columns;
 
-    private $table;    
+    private $table;
 
     public function __construct(Table $table, Table $referencedTable)
     {
@@ -19,6 +19,7 @@ class ForeignKey
     {
         $tableName = $this->table->getName();
         $columnsAsString = implode('_', $this->columns);
+
         return $tableName . '_' . $columnsAsString . '_fkey';
     }
 
@@ -29,12 +30,13 @@ class ForeignKey
 
     public function getReferencedTable()
     {
-        return $this->referencedTable;   
+        return $this->referencedTable;
     }
 
     public function setColumns($columns)
     {
         $this->columns = $columns;
+
         return $this;
     }
 
@@ -46,6 +48,7 @@ class ForeignKey
     public function setReferencedColumns($columns)
     {
         $this->referencedColumns = $columns;
+
         return $this;
     }
 

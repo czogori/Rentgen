@@ -3,5 +3,5 @@ connection:
     host:       localhost
     database:   rentgen
     user:       postgres
-    password:   
+    password:
     port:       5432

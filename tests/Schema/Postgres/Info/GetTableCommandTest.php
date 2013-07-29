@@ -7,7 +7,6 @@ use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
 
-
 use Rentgen\Tests\TestHelpers;
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
@@ -16,17 +15,17 @@ class GetTableCommandTest extends TestHelpers
 {
     public function setUp()
     {
-    	$this->clearDatabase();
+        $this->clearDatabase();
     }
 
     public function testGetSql()
-    {            	
-        
+    {
+
     }
 
     public function testExecute()
     {
-        $table = new Table('foo');        
+        $table = new Table('foo');
         $table->addColumn(new Column('name', 'string'));
 
         $createTableCommand = new CreateTableCommand();

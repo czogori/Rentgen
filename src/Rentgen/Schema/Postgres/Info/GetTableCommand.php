@@ -6,7 +6,6 @@ use Rentgen\Schema\Postgres\ColumnTypeMapper;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
 
-
 class GetTableCommand extends Command
 {
     private $tableName;
@@ -19,8 +18,8 @@ class GetTableCommand extends Command
     public function getSql()
     {
         $sql = sprintf("SELECT column_name, data_type, is_identity, is_nullable,
-            column_default, character_maximum_length, numeric_precision, numeric_scale  
-            FROM information_schema.columns  
+            column_default, character_maximum_length, numeric_precision, numeric_scale
+            FROM information_schema.columns
             WHERE table_name ='%s';", $this->tableName);
 
         return $sql;
@@ -30,7 +29,7 @@ class GetTableCommand extends Command
     {
         $columnTypeMapper = new ColumnTypeMapper();
 
-        $this->preExecute();        
+        $this->preExecute();
         $columns = $this->connection->query($this->getSql());
         $this->postExecute();
 
@@ -38,8 +37,9 @@ class GetTableCommand extends Command
         foreach ($columns as $column) {
             $columnType = $columnTypeMapper->getCommon($column['data_type']);
             $column = new Column($column['column_name'], $columnType);
-            $table->addColumn($column);            
-        }        
+            $table->addColumn($column);
+        }
+
         return $table;
     }
 

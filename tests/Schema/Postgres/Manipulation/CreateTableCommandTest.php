@@ -12,14 +12,14 @@ use Rentgen\Tests\TestHelpers;
  */
 class CreateTableCommandTest extends TestHelpers
 {
-	public function setUp()
+    public function setUp()
     {
-    	$this->clearDatabase();
+        $this->clearDatabase();
     }
 
     public function testGetSql()
-    {        
-    	$table = new Table('foo');
+    {
+        $table = new Table('foo');
         $createTableCommand = new CreateTableCommand();
         $createTableCommand->setTable($table);
         $sql = 'CREATE TABLE foo(foo_id serial NOT NULL,CONSTRAINT foo_pkey PRIMARY KEY (foo_id));';
@@ -28,13 +28,13 @@ class CreateTableCommandTest extends TestHelpers
 
     public function testExecute()
     {
-    	$table = new Table('foo');
+        $table = new Table('foo');
         $createTableCommand = new CreateTableCommand();
         $createTableCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
             ->setTable($table)
-        	->execute();   
+            ->execute();
 
         $this->assertTrue($this->tableExists('foo'));
     }

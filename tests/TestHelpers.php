@@ -15,58 +15,60 @@ use Rentgen\Database\Column;
  */
 class TestHelpers extends \PHPUnit_Framework_TestCase
 {
-	protected $connection;
+    protected $connection;
 
-	protected function setConnection()
-	{
-		$connectionConfig = $this->getMock('Rentgen\Database\ConnectionConfig');
+    protected function setConnection()
+    {
+        $connectionConfig = $this->getMock('Rentgen\Database\ConnectionConfig');
         $connectionConfig->expects($this->once())->method('getDsn')->will($this->returnValue($GLOBALS['DB_DSN']));
         $connectionConfig->expects($this->once())->method('getLogin')->will($this->returnValue($GLOBALS['DB_USER']));
-        $connectionConfig->expects($this->once())->method('getPassword')->will($this->returnValue($GLOBALS['DB_PASSWORD']));        
-    	$this->connection = new Connection($connectionConfig);
-	}
+        $connectionConfig->expects($this->once())->method('getPassword')->will($this->returnValue($GLOBALS['DB_PASSWORD']));
+        $this->connection = new Connection($connectionConfig);
+    }
 
-	protected function clearDatabase()
-	{
-		$this->setConnection();
+    protected function clearDatabase()
+    {
+        $this->setConnection();
 
-		$dropAllTablesCommand = new DropAllTablesCommand();
-    	$dropAllTablesCommand
-    		->setConnection($this->connection)
-    		->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-    		->execute();
-	}    
+        $dropAllTablesCommand = new DropAllTablesCommand();
+        $dropAllTablesCommand
+            ->setConnection($this->connection)
+            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
+            ->execute();
+    }
 
-	protected function createTable($name, $columns = array())
-	{
-		$table = new Table($name);
-		foreach ($columns as $columnName => $columnType) {
-			$table->addColumn(new Column($columnName, $columnType));
-		}		
-		$createTableCommand = new CreateTableCommand();
+    protected function createTable($name, $columns = array())
+    {
+        $table = new Table($name);
+        foreach ($columns as $columnName => $columnType) {
+            $table->addColumn(new Column($columnName, $columnType));
+        }
+        $createTableCommand = new CreateTableCommand();
         $createTableCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
             ->setTable($table)
-        	->execute(); 
-	}
+            ->execute();
+    }
 
-	protected function getTable($name)
-	{
-		$getTableCommand = new GetTableCommand();
+    protected function getTable($name)
+    {
+        $getTableCommand = new GetTableCommand();
+
         return $getTableCommand
-        	->setConnection($this->connection)
-        	->setTableName($name)
-        	->execute();
-	}
+            ->setConnection($this->connection)
+            ->setTableName($name)
+            ->execute();
+    }
 
-	protected function tableExists($name)
-	{
-		$tableExists = new TableExistsCommand();
-        return $tableExists              
+    protected function tableExists($name)
+    {
+        $tableExists = new TableExistsCommand();
+
+        return $tableExists
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
             ->setTable(new Table($name))
-            ->execute(); 
-	}
+            ->execute();
+    }
 }

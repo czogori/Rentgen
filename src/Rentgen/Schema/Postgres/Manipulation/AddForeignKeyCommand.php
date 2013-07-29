@@ -12,15 +12,17 @@ class AddForeignKeyCommand extends Command
     public function setForeignKey(ForeignKey $foreignKey)
     {
         $this->foreignKey = $foreignKey;
+
         return $this;
     }
 
     public function setTable(Table $table)
     {
         $this->table = $table;
+
         return $this;
     }
-    
+
     public function getSql()
     {
         $sql = sprintf('ALTER TABLE %s
@@ -32,7 +34,8 @@ class AddForeignKeyCommand extends Command
             , implode(',', $this->foreignKey->getColumns())
             , $this->foreignKey->getReferencedTable()->getName()
             , implode(',', $this->foreignKey->getReferencedColumns())
-        );        
+        );
+
         return $sql;
     }
 

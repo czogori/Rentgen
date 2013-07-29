@@ -11,13 +11,13 @@ use Rentgen\Tests\TestHelpers;
  */
 class DropTableCommandTest extends TestHelpers
 {
-	public function setUp()
+    public function setUp()
     {
-    	$this->clearDatabase();
+        $this->clearDatabase();
     }
 
     public function testGetSql()
-    {            	
+    {
         $createTableCommand = new DropTableCommand();
         $createTableCommand->setTable(new Table('foo'));
         $this->assertEquals('DROP TABLE foo;', $createTableCommand->getSql());
@@ -25,8 +25,8 @@ class DropTableCommandTest extends TestHelpers
 
     public function testExecute()
     {
-        $tableName = 'foo';        
-    	$this->createTable($tableName);
+        $tableName = 'foo';
+        $this->createTable($tableName);
 
         $this->assertTrue($this->tableExists($tableName));
 
@@ -35,7 +35,7 @@ class DropTableCommandTest extends TestHelpers
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
             ->setTable(new Table($tableName))
-        	->execute();   
+            ->execute();
 
         $this->assertFalse($this->tableExists($tableName));
     }

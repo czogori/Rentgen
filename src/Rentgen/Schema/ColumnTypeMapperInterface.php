@@ -4,7 +4,7 @@ namespace Rentgen\Schema;
 
 interface ColumnTypeMapperInterface
 {
-	function getNative($type);
+    public function getNative($type);
 
-	function getCommon($nativeType);
+    public function getCommon($nativeType);
 }

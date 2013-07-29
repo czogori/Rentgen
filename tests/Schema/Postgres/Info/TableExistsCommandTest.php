@@ -17,8 +17,8 @@ class TableExistsCommandTest extends TestHelpers
     }
 
     public function testGetSql()
-    {        
-    	$table = new Table('foo');
+    {
+        $table = new Table('foo');
         $createTable = new TableExistsCommand();
         $createTable->setTable($table);
         $expect = "SELECT count(table_name) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'foo';";
@@ -30,11 +30,11 @@ class TableExistsCommandTest extends TestHelpers
         $this->createTable('foo');
 
         $tableExists = new TableExistsCommand();
-        $result = $tableExists              
+        $result = $tableExists
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
             ->setTable(new Table('foo'))
-            ->execute(); 
+            ->execute();
         $this->assertTrue($result);
     }
 

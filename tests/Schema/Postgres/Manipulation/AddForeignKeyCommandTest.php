@@ -12,20 +12,20 @@ use Rentgen\Tests\TestHelpers;
  */
 class AddForeignKeyCommandTest extends TestHelpers
 {
-	public function setUp()
+    public function setUp()
     {
-    	$this->clearDatabase();
+        $this->clearDatabase();
     }
 
     public function testGetSql()
-    {            	
+    {
         // $createTableCommand = new DropTableCommand();
         // $createTableCommand->setTable(new Table('foo'));
         // $this->assertEquals('DROP TABLE foo;', $createTableCommand->getSql());
     }
 
     public function testExecute()
-    {        
+    {
         $table = new Table('foo');
         $referencedTable = new Table('bar');
 
@@ -40,8 +40,8 @@ class AddForeignKeyCommandTest extends TestHelpers
             ->onDeleteCascade();
 
         $addForeignKeyCommand = new AddForeignKeyCommand();
-        $addForeignKeyCommand          
-            ->setConnection($this->connection)  
+        $addForeignKeyCommand
+            ->setConnection($this->connection)
             ->setForeignKey($foreignKey)
             ->setTable($table)
             ->execute();
