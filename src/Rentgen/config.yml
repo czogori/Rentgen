@@ -1,0 +1,7 @@
+driver: pgsql
+connection:
+    host:       localhost
+    database:   rentgen
+    user:       postgres
+    password:   
+    port:       5432
