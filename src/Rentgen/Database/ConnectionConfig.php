@@ -3,6 +3,7 @@
 namespace Rentgen\Database;
 
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Config\FileLocator;
 
 class ConnectionConfig
 {
@@ -14,7 +15,9 @@ class ConnectionConfig
 
     public function __construct()
     {
-        $config = Yaml::parse(__DIR__ . '/../config.yml');
+        $fileLocator = new FileLocator(getcwd());
+        $configFile = $fileLocator->locate('config.yml');        
+        $config = Yaml::parse($configFile);
         $configArray = $config['connection'];
 
         $this->host = $configArray['host'];
