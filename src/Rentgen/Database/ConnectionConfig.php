@@ -5,7 +5,7 @@ namespace Rentgen\Database;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Config\FileLocator;
 
-class ConnectionConfig
+class ConnectionConfig implements ConnectionConfigInterface
 {
     private $host;
     private $database;

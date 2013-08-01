@@ -8,7 +8,7 @@ class Connection
     private $connection;
     private $config;
 
-    public function __construct(ConnectionConfig $config)
+    public function __construct(ConnectionConfigInterface $config)
     {
         try {
             $this->connection = new \PDO($config->getDsn(), $config->getLogin(), $config->getPassword(), array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
