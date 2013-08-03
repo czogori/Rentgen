@@ -1,20 +1,16 @@
 parameters:
 
-    adapter: Postgres
-    factory.class: Rentgen\Factory
+    adapter: Postgres    
     event_dispatcher.class: Symfony\Component\EventDispatcher\EventDispatcher
     event_listener.class: Rentgen\Listener
     connection_config.class: Rentgen\Database\ConnectionConfig
 
+    command.factory.class: Rentgen\Schema\Factory
     command.manipulation.create_table.class: Rentgen\Schema\@@adapter@@\Manipulation\CreateTableCommand
     command.manipulation.drop_table.class: Rentgen\Schema\@@adapter@@\Manipulation\DropTableCommand
 
 services:
-    factory:
-        class: "%factory.class%"
 
-        calls:
-             - [setAdapter, ["%adapter%"]]
     event_dispatcher:
         class: "%event_dispatcher.class%"
 
@@ -28,7 +24,6 @@ services:
         class: Rentgen\Database\Connection
         arguments: [@connection_config]
 
-
     AbstractCommand:
         class: Rentgen\Schema\Command
         abstract: true
@@ -36,15 +31,20 @@ services:
             - [setEventDispatcher, [ @event_dispatcher ]]
             - [setConnection, [ @connection ]]
 
+    command_factory:
+        class: "%command.factory.class%"
+        calls:
+             - [setAdapter, ["%adapter%"]]
+
     create_table:
         parent: AbstractCommand
-        factory_service: Factory
+        factory_service: command_factory
         factory_method: setClass
         arguments: [%command.manipulation.create_table.class%]
 
     drop_table:
         parent: AbstractCommand
-        factory_service: Factory
+        factory_service: command_factory
         factory_method: setClass
         arguments: [%command.manipulation.drop_table.class%]
 

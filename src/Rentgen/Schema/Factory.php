@@ -1,6 +1,6 @@
 <?php
 
-namespace Rentgen;
+namespace Rentgen\Schema;
 
 class Factory
 {
