@@ -4,16 +4,24 @@ namespace Rentgen;
 
 class Factory
 {
-    private $adapter;
-    private $command;
+    private $adapter;   
 
-    public function setCommand($command)
-    {
-        $class =  'Rentgen\\Schema\\' . $this->adapter .'\\Manipulation\\' . $command;
-
-        return new $class();
+    /**
+     * Set fully qualified class name
+     * 
+     * @param string $class Fully qualified class name.
+     */
+    public function setClass($class)
+    {    
+        $className =  str_replace('@@adapter@@', $this->adapter, $class);        
+        return new $className();
     }
 
+    /**
+     * Set database adapter
+     * 
+     * @param string $adapter Database adapter
+     */
     public function setAdapter($adapter)
     {
         $this->adapter = $adapter;

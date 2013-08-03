@@ -6,6 +6,9 @@ parameters:
     event_listener.class: Rentgen\Listener
     connection_config.class: Rentgen\Database\ConnectionConfig
 
+    command.manipulation.create_table.class: Rentgen\Schema\@@adapter@@\Manipulation\CreateTableCommand
+    command.manipulation.drop_table.class: Rentgen\Schema\@@adapter@@\Manipulation\DropTableCommand
+
 services:
     factory:
         class: "%factory.class%"
@@ -36,14 +39,14 @@ services:
     create_table:
         parent: AbstractCommand
         factory_service: Factory
-        factory_method: setCommand
-        arguments: ["CreateTableCommand"]
+        factory_method: setClass
+        arguments: [%command.manipulation.create_table.class%]
 
     drop_table:
         parent: AbstractCommand
         factory_service: Factory
-        factory_method: setCommand
-        arguments: ["DropTableCommand"]
+        factory_method: setClass
+        arguments: [%command.manipulation.drop_table.class%]
 
     event_table:
         class: Rentgen\Event\TableEvent
