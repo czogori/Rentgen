@@ -30,7 +30,7 @@ class AddColumnCommand extends Command
         $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s;'
             , $this->table->getName()
             , $this->column->getName()
-            . $this->column->getType()
+            , $this->column->getType()
         );
 
         return $sql;
