@@ -8,12 +8,16 @@ class ColumnTypeMapper implements ColumnTypeMapperInterface
 {
     private $commonMap = array(
         'string' => 'character varying',
-        'integer' => 'integer'
+        'integer' => 'integer',
+        'biginteger' => 'bigint',
+        'timestamp' => 'timestamp'
         );
 
     private $nativeMap = array(
         'character varying' => 'string',
-        'integer' => 'integer'
+        'integer' => 'integer',
+        'bigint' => 'biginteger',
+        'timestamp' => 'timestamp'
         );
 
     public function getNative($type)
