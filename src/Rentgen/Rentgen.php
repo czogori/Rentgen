@@ -6,6 +6,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
+use Rentgen\Schema\Info;
+use Rentgen\Schema\Manipulation;
+
 class Rentgen
 {
     private $container;
@@ -34,5 +37,15 @@ class Rentgen
     public function get($service)
     {
         return $this->container->get($service);
+    }
+
+    public function createManipulationInstance()
+    {
+        return new Manipulation($this);
+    }
+
+    public function createInfoInstance()
+    {
+        return new Info($this);
     }
 }
