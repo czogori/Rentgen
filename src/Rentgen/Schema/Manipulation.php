@@ -4,6 +4,7 @@ namespace Rentgen\Schema;
 
 use Rentgen\Rentgen;
 use Rentgen\Database\Table;
+use Rentgen\Database\ForeignKey;
 
 class Manipulation
 {
@@ -27,6 +28,14 @@ class Manipulation
 		return $this->rentgen
 			->get('drop_table')
 			->setTable($table)
+    		->execute();
+	}
+
+	public function addForeignKey(ForeignKey $foreignKey)
+	{
+		return $this->rentgen
+			->get('add_foreign_key')			
+			->setForeignKey($foreignKey)
     		->execute();
 	}
 }

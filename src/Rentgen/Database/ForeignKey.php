@@ -35,8 +35,10 @@ class ForeignKey
 
     public function setColumns($columns)
     {
+        if(!is_array($columns)) {
+            $columns = array($columns);    
+        }
         $this->columns = $columns;
-
         return $this;
     }
 
@@ -47,6 +49,9 @@ class ForeignKey
 
     public function setReferencedColumns($columns)
     {
+        if(!is_array($columns)) {
+            $columns = array($columns);    
+        }
         $this->referencedColumns = $columns;
 
         return $this;

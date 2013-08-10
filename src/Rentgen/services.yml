@@ -8,6 +8,7 @@ parameters:
     command.factory.class: Rentgen\Schema\Factory
     command.manipulation.create_table.class: Rentgen\Schema\@@adapter@@\Manipulation\CreateTableCommand
     command.manipulation.drop_table.class: Rentgen\Schema\@@adapter@@\Manipulation\DropTableCommand
+    command.manipulation.add_foreign_key.class: Rentgen\Schema\@@adapter@@\Manipulation\AddForeignKeyCommand
 
 services:
 
@@ -47,6 +48,12 @@ services:
         factory_service: command_factory
         factory_method: setClass
         arguments: [%command.manipulation.drop_table.class%]
+
+    add_foreign_key:
+        parent: AbstractCommand
+        factory_service: command_factory
+        factory_method: setClass
+        arguments: [%command.manipulation.add_foreign_key.class%]
 
     event_table:
         class: Rentgen\Event\TableEvent
