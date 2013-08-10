@@ -38,4 +38,12 @@ class Manipulation
 			->setForeignKey($foreignKey)
     		->execute();
 	}
+
+	public function dropForeignKey(ForeignKey $foreignKey)
+	{
+		return $this->rentgen
+			->get('drop_constraint')			
+			->setConstraint($foreignKey)
+    		->execute();
+	}
 }

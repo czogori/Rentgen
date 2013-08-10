@@ -2,7 +2,7 @@
 
 namespace Rentgen\Database;
 
-class ForeignKey
+class ForeignKey implements ConstraintInterface
 {
     private $name;
     private $columns;
