@@ -2,9 +2,12 @@
 
 namespace Rentgen;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
+
 
 use Rentgen\Schema\Info;
 use Rentgen\Schema\Manipulation;
@@ -29,6 +32,10 @@ class Rentgen
             }
         }
 
+        $definition = new Definition('Rentgen\Schema\Manipulation');
+        $definition->setArguments(array($this));
+        $container->setDefinition('schema.manipulation', $definition);        
+
         $container->compile();
 
         $this->container = $container;
@@ -41,11 +48,6 @@ class Rentgen
 
     public function createManipulationInstance()
     {
-        return new Manipulation($this);
-    }
-
-    public function createInfoInstance()
-    {
-        return new Info($this);
+        return $this->container->get('schema.manipulation');
     }
 }
