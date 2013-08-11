@@ -28,9 +28,19 @@ class ForeignKey implements ConstraintInterface
         return $this->table;
     }
 
+    public function setTable(Table $table)
+    {
+        $this->table = $table;        
+    }
+
     public function getReferencedTable()
     {
         return $this->referencedTable;
+    }
+
+    public function setReferencedTable(Table $referencedTable)
+    {
+        $this->referencedTable = $referencedTable;
     }
 
     public function setColumns($columns)
