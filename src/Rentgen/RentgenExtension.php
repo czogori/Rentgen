@@ -22,6 +22,10 @@ class RentgenExtension implements ExtensionInterface
         $definition->setArguments(array($container));
         $container->setDefinition('schema.manipulation', $definition); 
 
+        $definition = new Definition('Rentgen\Schema\Info');
+        $definition->setArguments(array($container));
+        $container->setDefinition('schema.info', $definition); 
+
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
@@ -31,6 +35,8 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);    
         $this->setDefinition('add_foreign_key', 'command.manipulation.add_foreign_key.class', $container);    
         $this->setDefinition('drop_constraint', 'command.manipulation.drop_constraint.class', $container);    
+
+        $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);    
 
         $container->addCompilerPass(new ListenerPass);
     }

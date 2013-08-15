@@ -39,4 +39,8 @@ class Rentgen
         return $this->container->get('schema.manipulation');
     }
 
+    public function createInfoInstance()
+    {
+        return $this->container->get('schema.info');
+    }
 }
