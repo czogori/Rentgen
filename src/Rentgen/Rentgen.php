@@ -19,23 +19,11 @@ class Rentgen
     public function __construct()
     {
         $container = new ContainerBuilder();
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-        $loader->load('services.yml');
+     
 
-        $dispatcher = $container->get('event_dispatcher');
-        $listener = $container->get('event_listener');
-
-        $taggedServices = $container->findTaggedServiceIds('table');
-        foreach ($taggedServices as $id => $tagAttributes) {
-            foreach ($tagAttributes as $attributes) {
-                $dispatcher->addListener($attributes['event'], array($listener, $attributes['method']));
-            }
-        }
-
-        $definition = new Definition('Rentgen\Schema\Manipulation');
-        $definition->setArguments(array($this));
-        $container->setDefinition('schema.manipulation', $definition);        
-
+        $extension = new RentgenExtension();
+        $container->registerExtension($extension);
+        $container->loadFromExtension($extension->getAlias());
         $container->compile();
 
         $this->container = $container;
@@ -50,4 +38,5 @@ class Rentgen
     {
         return $this->container->get('schema.manipulation');
     }
+
 }

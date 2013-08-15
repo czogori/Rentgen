@@ -2,6 +2,8 @@
 
 namespace Rentgen\Schema;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Rentgen\Rentgen;
 use Rentgen\Database\Table;
 use Rentgen\Database\ForeignKey;
@@ -10,13 +12,13 @@ class Manipulation
 {
 	private $rentgen;
 
-	public function __construct(Rentgen $rentgen)
+	public function __construct(ContainerInterface $rentgen)
 	{
 		$this->rentgen = $rentgen;
 	}
 
 	public function createTable(Table $table)
-	{
+	{		
 		return $this->rentgen
 			->get('create_table')
 			->setTable($table)
