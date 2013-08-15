@@ -10,16 +10,16 @@ use Rentgen\Database\ForeignKey;
 
 class Manipulation
 {
-	private $rentgen;
+	private $container;
 
-	public function __construct(ContainerInterface $rentgen)
+	public function __construct(ContainerInterface $container)
 	{
-		$this->rentgen = $rentgen;
+		$this->container = $container;
 	}
 
 	public function createTable(Table $table)
 	{		
-		return $this->rentgen
+		return $this->container
 			->get('create_table')
 			->setTable($table)
     		->execute();
@@ -27,7 +27,7 @@ class Manipulation
 
 	public function dropTable(Table $table)
 	{
-		return $this->rentgen
+		return $this->container
 			->get('drop_table')
 			->setTable($table)
     		->execute();
@@ -35,7 +35,7 @@ class Manipulation
 
 	public function addForeignKey(ForeignKey $foreignKey)
 	{
-		return $this->rentgen
+		return $this->container
 			->get('add_foreign_key')			
 			->setForeignKey($foreignKey)
     		->execute();
@@ -43,7 +43,7 @@ class Manipulation
 
 	public function dropForeignKey(ForeignKey $foreignKey)
 	{
-		return $this->rentgen
+		return $this->container
 			->get('drop_constraint')			
 			->setConstraint($foreignKey)
     		->execute();
