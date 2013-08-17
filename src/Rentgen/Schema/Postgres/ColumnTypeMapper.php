@@ -10,14 +10,14 @@ class ColumnTypeMapper implements ColumnTypeMapperInterface
         'string' => 'character varying',
         'integer' => 'integer',
         'biginteger' => 'bigint',
-        'timestamp' => 'timestamp'
+        'datetime' => 'timestamp'
         );
 
     private $nativeMap = array(
         'character varying' => 'string',
         'integer' => 'integer',
         'bigint' => 'biginteger',
-        'timestamp' => 'timestamp'
+        'timestamp' => 'datetime'
         );
 
     public function getNative($type)
