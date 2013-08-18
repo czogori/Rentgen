@@ -43,4 +43,16 @@ class Rentgen
     {
         return $this->container->get('schema.info');
     }
+
+    public function execute($sql)
+    {
+        $connection = $this->get('connection');
+        return $connection->execute($sql);
+    }
+
+    public function query($sql)
+    {
+        $connection = $this->get('connection');              
+        return $connection->query($sql);
+    }
 }

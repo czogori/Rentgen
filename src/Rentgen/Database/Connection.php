@@ -24,6 +24,10 @@ class Connection
 
     public function query($sql)
     {
-        return $this->connection->query($sql);
+        $rows = array();
+        foreach ($this->connection->query($sql) as $row) {
+            $rows[] = $row;
+        }
+        return $rows;
     }
 }
