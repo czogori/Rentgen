@@ -4,6 +4,7 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
+use Rentgen\Database\Column;
 use Rentgen\Database\Connection;
 use Rentgen\Tests\TestHelpers;
 
@@ -28,7 +29,7 @@ class CreateTableCommandTest extends TestHelpers
 
     public function testExecute()
     {
-        $table = new Table('foo');
+        $table = new Table('foo', array());
         $createTableCommand = new CreateTableCommand();
         $createTableCommand
             ->setConnection($this->connection)
@@ -37,5 +38,21 @@ class CreateTableCommandTest extends TestHelpers
             ->execute();
 
         $this->assertTrue($this->tableExists('foo'));
+    }
+
+    public function testCreateTableWithMultiPrimaryKey()
+    {
+        $table = new Table('test');
+        $table->addColumn(new Column('foo', 'string'));
+        $table->addColumn(new Column('bar', 'string'));
+        $createTableCommand = new CreateTableCommand();
+        $createTableCommand
+            ->setConnection($this->connection)
+            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
+            ->setTable($table)
+            ->withMultiPrimaryKey(array('foo', 'bar'))
+            ->execute();
+
+        $this->assertTrue($this->tableExists('test'));   
     }
 }
