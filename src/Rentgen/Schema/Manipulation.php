@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Rentgen\Rentgen;
 use Rentgen\Database\Table;
 use Rentgen\Database\ForeignKey;
+use Rentgen\Database\PrimaryKey;
 
 class Manipulation
 {
@@ -17,12 +18,17 @@ class Manipulation
 		$this->container = $container;
 	}
 
-	public function createTable(Table $table)
+	public function createTable(Table $table, array $constraints = array())
 	{		
-		return $this->container
+		$command = $this->container
 			->get('create_table')
-			->setTable($table)
-    		->execute();
+			->setTable($table);    		
+    	foreach ($constraints as $constraint) {
+    		if($constraint instanceof PrimaryKey) {
+    			$command->setPrimaryKey($constraint);
+    		}
+    	}
+    	return $command->execute();
 	}	
 
 	public function dropTable(Table $table)
