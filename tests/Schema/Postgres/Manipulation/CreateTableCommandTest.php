@@ -6,6 +6,7 @@ use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
 use Rentgen\Database\Connection;
+use Rentgen\Database\PrimaryKey;
 use Rentgen\Tests\TestHelpers;
 
 /**
@@ -50,7 +51,7 @@ class CreateTableCommandTest extends TestHelpers
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
             ->setTable($table)
-            ->withMultiPrimaryKey(array('foo', 'bar'))
+            ->setPrimaryKey(new PrimaryKey(array('foo', 'bar')))
             ->execute();
 
         $this->assertTrue($this->tableExists('test'));   

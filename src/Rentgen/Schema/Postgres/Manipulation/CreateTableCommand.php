@@ -3,13 +3,14 @@ namespace Rentgen\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
 use Rentgen\Database\Table;
+use Rentgen\Database\PrimaryKey;
 use Rentgen\Event\TableEvent;
 use Rentgen\Schema\Postgres\ColumnTypeMapper;
 
 class CreateTableCommand extends Command
 {
     private $table;
-    private $multiPrimaryKey;
+    private $primaryKey;
 
     public function setTable(Table $table)
     {
@@ -17,10 +18,11 @@ class CreateTableCommand extends Command
 
         return $this;
     }
-
-    public function withMultiPrimaryKey(array $keys = array())
+    
+    public function setPrimaryKey(PrimaryKey $primaryKey)
     {
-        $this->multiPrimaryKey = $keys;
+        $this->primaryKey = $primaryKey;
+        $this->primaryKey->setTable($this->table);
         return $this;
     }
 
@@ -38,11 +40,14 @@ class CreateTableCommand extends Command
     private function columns()
     {
         $columnTypeMapper = new ColumnTypeMapper();
-        $sql = '';
-        
-        $primaryKeyColumns = $this->getPrimaryKeyColumns();        
-        if(!$this->isMultiPrimaryKey()) {
-            $sql = sprintf('%s serial NOT NULL,', $primaryKeyColumns);    
+        if(!$this->primaryKey) {
+            $this->primaryKey = new PrimaryKey();
+            $this->primaryKey->setTable($this->table);
+        }
+
+        $sql = '';        
+        if(!$this->primaryKey->isMulti()) {
+            $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());    
         }         
         foreach ($this->table->columns as $column) {
             $sql .= sprintf('%s %s %s,'
@@ -51,12 +56,7 @@ class CreateTableCommand extends Command
                 , $column->isNull() ? '' : 'NOT NULL'
             );
         }
-        $sql .= sprintf('CONSTRAINT %s PRIMARY KEY (%s),'
-            , $this->getPrimaryKeyName()
-            , $primaryKeyColumns
-        );
-
-        $sql = trim($sql, ',');
+        $sql .= (string) $this->primaryKey;
 
         return $sql;
     }
@@ -69,21 +69,5 @@ class CreateTableCommand extends Command
     {
         $this->dispatcher->dispatch('table.create', new TableEvent($this->table, $this->getSql()));
     }
-
-    private function getPrimaryKeyName()
-    {
-        return $this->table->getName() . '_pkey';
-    }
-
-    private function getPrimaryKeyColumns()
-    {
-        return $this->isMultiPrimaryKey()
-            ?  implode(',', $this->multiPrimaryKey)
-            :  $this->table->getName() . '_id';
-    }
-
-    private function isMultiPrimaryKey()
-    {
-        return is_array($this->multiPrimaryKey) && count($this->multiPrimaryKey) > 0;
-    }
 }
+
