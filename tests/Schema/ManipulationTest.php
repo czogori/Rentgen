@@ -2,7 +2,11 @@
 
 namespace Rentgen\Tests\Schema;
 
+
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
 use Rentgen\Rentgen;
+use Rentgen\RentgenExtension;
 use Rentgen\Database\Table;
 use Rentgen\Schema\Manipulation;
 use Rentgen\Tests\TestHelpers;
@@ -18,7 +22,13 @@ class ManipulationTest extends TestHelpers
     {
         $this->clearDatabase();
         
-     	$this->manipulation = new Manipulation(new Rentgen());
+        $container = new ContainerBuilder();     
+        $extension = new RentgenExtension();
+        $container->registerExtension($extension);
+        $container->loadFromExtension($extension->getAlias());
+        $container->compile();
+
+     	$this->manipulation = new Manipulation($container);
     }
 
     public function testCreateTable()
