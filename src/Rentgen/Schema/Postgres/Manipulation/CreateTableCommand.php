@@ -53,7 +53,7 @@ class CreateTableCommand extends Command
             $sql .= sprintf('%s %s %s,'
                 , $column->getName()
                 , $columnTypeMapper->getNative($column->getType())
-                , $column->isNull() ? '' : 'NOT NULL'
+                , $column->isNotNull() ? 'NOT NULL' : ''
             );
         }
         $sql .= (string) $this->primaryKey;

@@ -29,5 +29,5 @@ class AddColumnCommandTest extends TestHelpers
 
     public function testExecute()
     {        
-    }
+    }    
 }
