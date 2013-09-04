@@ -50,9 +50,10 @@ class CreateTableCommand extends Command
             $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());    
         }         
         foreach ($this->table->columns as $column) {
-            $sql .= sprintf('%s %s %s %s,'
+            $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
                 , $columnTypeMapper->getNative($column->getType())
+                , $column->getType() === 'string' && $column->getLimit() ? sprintf('(%s)', $column->getLimit()) : ''
                 , $column->isNotNull() ? 'NOT NULL' : ''
                 , $column->getDefault() ? 'DEFAULT'. ' ' . $column->getDefault() : ''
             );
