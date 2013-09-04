@@ -60,7 +60,7 @@ class Column
      */
     public function getDefault()
     {
-        return $this->default;
+        return (string) $this->default;
     }
     
     /**
