@@ -29,7 +29,7 @@ class Column
             $this->default = $options['default'];
         }
         if (array_key_exists('limit', $options)) {
-            $this->default = $options['limit'];
+            $this->limit = $options['limit'];
         }
     }
 
