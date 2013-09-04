@@ -55,7 +55,7 @@ class CreateTableCommand extends Command
                 , $columnTypeMapper->getNative($column->getType())
                 , $column->getType() === 'string' && $column->getLimit() ? sprintf('(%s)', $column->getLimit()) : ''
                 , $column->isNotNull() ? 'NOT NULL' : ''
-                , $column->getDefault() ? 'DEFAULT'. ' ' . $column->getDefault() : ''
+                , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $column->getDefault()
             );
         }
         $sql .= (string) $this->primaryKey;
