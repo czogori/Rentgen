@@ -60,4 +60,25 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('bar', $column->getDefault());        
     }
+
+    public function testGetDefaultWithDefaultValue()
+    {
+        $column = new Column('foo', 'string');
+
+        $this->assertNull($column->getDefault());        
+    }
+
+    public function testGetDefaultWithBooleanFalse()
+    {
+        $column = new Column('foo', 'boolean', array('default' => false));
+
+        $this->assertEquals('false', $column->getDefault());        
+    }
+
+    public function testGetDefaultWithBooleanTrue()
+    {
+        $column = new Column('foo', 'boolean', array('default' => true));
+
+        $this->assertEquals('true', $column->getDefault());        
+    }    
 }

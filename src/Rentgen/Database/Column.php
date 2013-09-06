@@ -2,7 +2,9 @@
 
 namespace Rentgen\Database;
 
-class Column
+use Rentgen\Exception\NotSupportedException;
+
+abstract class Column
 {
     private $name;
     private $type;    
@@ -60,17 +62,18 @@ class Column
      */
     public function getDefault()
     {
-        return (string) $this->default;
+        return null === $this->default ?: (string) $this->default;
     }
     
     /**
      * [getLimit description]
-     * 
+     *
+     * @throws NotSupportedException
      * @return [type] [description]
      */
     public function getLimit()
     {
-        return $this->limit;
+        throw new NotSupportedException();        
     }
 
     /**
