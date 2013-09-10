@@ -1,7 +1,7 @@
 {
     "name": "czogori/rentgen",
     "description": "Database abstraction layer",
-    "keywords": [ "database" ],
+    "keywords": [ "database", 'dbal' ],
     "license": "MIT",
     "require": {        
         "php": ">=5.3.2",        
