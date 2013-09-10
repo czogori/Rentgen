@@ -2,7 +2,7 @@
 
 namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
-use Rentgen\Schema\Postgres\Manipulation\DropTableCommand;
+use Rentgen\Schema\Adapter\Postgres\Manipulation\DropTableCommand;
 use Rentgen\Database\Table;
 use Rentgen\Tests\TestHelpers;
 

@@ -2,7 +2,7 @@
 
 namespace Rentgen\Schema\Postgres\Info;
 
-use Rentgen\Schema\Postgres\Info\TableExistsCommand;
+use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
 use Rentgen\Database\Table;
 use Rentgen\Tests\TestHelpers;
 

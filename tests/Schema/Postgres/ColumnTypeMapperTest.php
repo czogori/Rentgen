@@ -2,7 +2,7 @@
 
 namespace Rentgen\Tests\Schema\Postgres;
 
-use Rentgen\Schema\Postgres\ColumnTypeMapper;
+use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>

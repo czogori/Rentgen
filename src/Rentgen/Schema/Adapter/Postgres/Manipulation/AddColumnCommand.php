@@ -1,5 +1,5 @@
 <?php
-namespace Rentgen\Schema\Postgres\Manipulation;
+namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
 use Rentgen\Database\Table;

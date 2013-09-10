@@ -2,7 +2,7 @@
 
 namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
-use Rentgen\Schema\Postgres\Manipulation\AddColumnCommand;
+use Rentgen\Schema\Adapter\Postgres\Manipulation\AddColumnCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\StringColumn;
 use Rentgen\Tests\TestHelpers;

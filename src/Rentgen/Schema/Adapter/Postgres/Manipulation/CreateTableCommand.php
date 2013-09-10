@@ -1,11 +1,11 @@
 <?php
-namespace Rentgen\Schema\Postgres\Manipulation;
+namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
 use Rentgen\Database\Table;
 use Rentgen\Database\PrimaryKey;
 use Rentgen\Event\TableEvent;
-use Rentgen\Schema\Postgres\ColumnTypeMapper;
+use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 
 class CreateTableCommand extends Command
 {

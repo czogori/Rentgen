@@ -1,8 +1,8 @@
 <?php
-namespace Rentgen\Schema\Postgres\Info;
+namespace Rentgen\Schema\Adapter\Postgres\Info;
 
 use Rentgen\Schema\Command;
-use Rentgen\Schema\Postgres\ColumnTypeMapper;
+use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\ColumnCreator;
 

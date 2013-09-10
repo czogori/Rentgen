@@ -1,6 +1,6 @@
 <?php
 
-namespace Rentgen\Schema\Postgres;
+namespace Rentgen\Schema\Adapter\Postgres;
 
 use Rentgen\Schema\ColumnTypeMapperInterface;
 

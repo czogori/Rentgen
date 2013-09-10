@@ -6,10 +6,10 @@ parameters:
     connection_config.class: Rentgen\Database\ConnectionConfig
 
     command.factory.class: Rentgen\Schema\Factory
-    command.manipulation.create_table.class: Rentgen\Schema\@@adapter@@\Manipulation\CreateTableCommand
-    command.manipulation.drop_table.class: Rentgen\Schema\@@adapter@@\Manipulation\DropTableCommand
-    command.manipulation.add_foreign_key.class: Rentgen\Schema\@@adapter@@\Manipulation\AddForeignKeyCommand
-    command.manipulation.drop_constraint.class: Rentgen\Schema\@@adapter@@\Manipulation\DropConstraintCommand
+    command.manipulation.create_table.class: Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateTableCommand
+    command.manipulation.drop_table.class: Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropTableCommand
+    command.manipulation.add_foreign_key.class: Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddForeignKeyCommand
+    command.manipulation.drop_constraint.class: Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropConstraintCommand
 
     command.info.table_exists.class: Rentgen\Schema\@@adapter@@\Info\TableExistsCommand
 

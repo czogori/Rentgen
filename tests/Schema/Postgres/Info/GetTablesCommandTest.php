@@ -2,7 +2,7 @@
 
 namespace Rentgen\Tests\Schema\Postgres\Info;
 
-use Rentgen\Schema\Postgres\Info\GetTablesCommand;
+use Rentgen\Schema\Adapter\Postgres\Info\GetTablesCommand;
 use Rentgen\Database\Connection;
 
 use Rentgen\Tests\TestHelpers;

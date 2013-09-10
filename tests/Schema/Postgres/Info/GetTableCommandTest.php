@@ -2,8 +2,8 @@
 
 namespace Rentgen\Tests\Schema\Postgres\Info;
 
-use Rentgen\Schema\Postgres\Info\GetTableCommand;
-use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
+use Rentgen\Schema\Adapter\Postgres\Info\GetTableCommand;
+use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\StringColumn;
 

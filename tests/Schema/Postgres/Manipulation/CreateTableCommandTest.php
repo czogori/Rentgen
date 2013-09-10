@@ -2,7 +2,7 @@
 
 namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
-use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
+use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\StringColumn;
 use Rentgen\Database\Connection;

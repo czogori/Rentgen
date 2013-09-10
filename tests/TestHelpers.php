@@ -2,9 +2,9 @@
 
 namespace Rentgen\Tests;
 
-use Rentgen\Schema\Postgres\Info\TableExistsCommand;
-use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
-use Rentgen\Schema\Postgres\Manipulation\DropAllTablesCommand;
+use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
+use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
+use Rentgen\Schema\Adapter\Postgres\Manipulation\DropAllTablesCommand;
 use Rentgen\Database\Connection;
 use Rentgen\Database\ConnectionConfig;
 use Rentgen\Database\Table;
