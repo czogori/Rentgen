@@ -5,7 +5,7 @@ namespace Rentgen\Tests\Schema\Postgres\Info;
 use Rentgen\Schema\Postgres\Info\GetTableCommand;
 use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
-use Rentgen\Database\Column;
+use Rentgen\Database\Column\StringColumn;
 
 use Rentgen\Tests\TestHelpers;
 /**
@@ -26,7 +26,7 @@ class GetTableCommandTest extends TestHelpers
     public function testExecute()
     {
         $table = new Table('foo');
-        $table->addColumn(new Column('name', 'string'));
+        $table->addColumn(new StringColumn('name'));
 
         $createTableCommand = new CreateTableCommand();
         $createTableCommand

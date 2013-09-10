@@ -4,6 +4,7 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Postgres\Manipulation\AddForeignKeyCommand;
 use Rentgen\Database\Table;
+use Rentgen\Database\Column\IntegerColumn;
 use Rentgen\Database\ForeignKey;
 use Rentgen\Tests\TestHelpers;
 
@@ -29,7 +30,7 @@ class AddForeignKeyCommandTest extends TestHelpers
         $table = new Table('foo');
         $referencedTable = new Table('bar');
 
-        $this->createTable('foo', array('bar_id' => 'integer'));
+        $this->createTable('foo', array(new IntegerColumn('bar_id')));
         $this->createTable('bar');
 
         $foreignKey = new ForeignKey($table, $referencedTable);

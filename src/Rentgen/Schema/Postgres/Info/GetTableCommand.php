@@ -4,7 +4,7 @@ namespace Rentgen\Schema\Postgres\Info;
 use Rentgen\Schema\Command;
 use Rentgen\Schema\Postgres\ColumnTypeMapper;
 use Rentgen\Database\Table;
-use Rentgen\Database\Column;
+use Rentgen\Database\Column\ColumnCreator;
 
 class GetTableCommand extends Command
 {
@@ -34,9 +34,12 @@ class GetTableCommand extends Command
         $this->postExecute();
 
         $table = new Table($this->tableName);
+
+        $columnCreator = new ColumnCreator();
         foreach ($columns as $column) {
             $columnType = $columnTypeMapper->getCommon($column['data_type']);
-            $column = new Column($column['column_name'], $columnType);
+            //$column = new Column($column['column_name'], $columnType);
+            $column = $columnCreator->create($column['column_name'], $columnType);
             $table->addColumn($column);
         }
 

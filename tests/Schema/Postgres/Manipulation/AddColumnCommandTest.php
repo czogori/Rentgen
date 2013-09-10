@@ -4,7 +4,7 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Postgres\Manipulation\AddColumnCommand;
 use Rentgen\Database\Table;
-use Rentgen\Database\Column;
+use Rentgen\Database\Column\StringColumn;
 use Rentgen\Tests\TestHelpers;
 
 /**
@@ -21,7 +21,7 @@ class AddColumnCommandTest extends TestHelpers
     {
         $addColumnCommand = new AddColumnCommand();
         $addColumnCommand->setTable(new Table('foo'));
-        $addColumnCommand->setColumn(new Column('name', 'string'));
+        $addColumnCommand->setColumn(new StringColumn('name'));
 
         $sql = 'ALTER TABLE foo ADD COLUMN name string;';
         $this->assertEquals($sql, $addColumnCommand->getSql());

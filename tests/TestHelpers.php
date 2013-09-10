@@ -40,8 +40,8 @@ class TestHelpers extends \PHPUnit_Framework_TestCase
     protected function createTable($name, $columns = array())
     {
         $table = new Table($name);
-        foreach ($columns as $columnName => $columnType) {
-            $table->addColumn(new Column($columnName, $columnType));
+        foreach ($columns as $column) {
+            $table->addColumn($column);
         }
         $createTableCommand = new CreateTableCommand();
         $createTableCommand

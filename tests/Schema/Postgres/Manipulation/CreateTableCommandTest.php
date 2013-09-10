@@ -4,7 +4,7 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
-use Rentgen\Database\Column;
+use Rentgen\Database\Column\StringColumn;
 use Rentgen\Database\Connection;
 use Rentgen\Database\PrimaryKey;
 use Rentgen\Tests\TestHelpers;
@@ -44,8 +44,8 @@ class CreateTableCommandTest extends TestHelpers
     public function testCreateTableWithMultiPrimaryKey()
     {
         $table = new Table('test');
-        $table->addColumn(new Column('foo', 'string'));
-        $table->addColumn(new Column('bar', 'string'));
+        $table->addColumn(new StringColumn('foo'));
+        $table->addColumn(new StringColumn('bar'));
         $createTableCommand = new CreateTableCommand();
         $createTableCommand
             ->setConnection($this->connection)

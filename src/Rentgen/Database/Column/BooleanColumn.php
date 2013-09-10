@@ -2,30 +2,16 @@
 
 namespace Rentgen\Database\Column;
 
-class BooleanColumn
-{
-    private $name;
-    private $type;    
-    private $isNotNull;
-    private $default;
-    private $limit;
+use Rentgen\Database\Column;
 
-    
-    public function __construct($name, array $options = array())
+class BooleanColumn extends Column
+{    
+    public function getDefault()
     {
-        $this->name = $name;
-        $this->type = $type;        
-
-        if (array_key_exists('not_null', $options)) {
-            $this->isNotNull = $options['not_null'];
-        }
-        if (array_key_exists('default', $options)) {
-            $this->default = $options['default'];
-        }
-        if (array_key_exists('limit', $options)) {
-            $this->limit = $options['limit'];
-        }
-    }    
+        return null !== $this->default 
+            ? filter_var($this->default, FILTER_VALIDATE_BOOLEAN)
+            : null;
+    }
 
     /**
      * Get column type name.
@@ -35,15 +21,5 @@ class BooleanColumn
     public function getType()
     {
         return 'boolean';
-    }    
-
-    /**
-     * Get default value of column.
-     * 
-     * @return mixed Default value of column.
-     */
-    public function getDefault()
-    {
-        return null === $this->default ?: (string) $this->default;
     }    
 }

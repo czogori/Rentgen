@@ -39,6 +39,13 @@ class BooleanColumnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('boolean', $column->getType());        
     }  
 
+    public function testGetDefaultWithoutSetDefaultValue()
+    {
+        $column = new BooleanColumn('foo');
+
+        $this->assertNull($column->getDefault());        
+    }
+
     public function testGetDefaultWithBooleanFalse()
     {
         $column = new BooleanColumn('foo', array('default' => false));

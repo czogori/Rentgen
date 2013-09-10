@@ -6,23 +6,20 @@ use Rentgen\Exception\NotSupportedException;
 
 abstract class Column
 {
-    private $name;
-    private $type;    
-    private $isNotNull;
-    private $default;
-    private $limit;
+    protected $name;    
+    protected $isNotNull;
+    protected $default;
+    protected $limit;
 
     /**
      * Constructor.
      * 
-     * @param string $name    Column name.
-     * @param string $type    Column type name.
+     * @param string $name    Column name.     
      * @param array  $options Optional options.
      */
-    public function __construct($name, $type, array $options = array())
+    public function __construct($name, array $options = array())
     {
-        $this->name = $name;
-        $this->type = $type;        
+        $this->name = $name;       
 
         if (array_key_exists('not_null', $options)) {
             $this->isNotNull = $options['not_null'];
@@ -50,10 +47,7 @@ abstract class Column
      * 
      * @return string Column type name.
      */
-    public function getType()
-    {
-        return $this->type;
-    }    
+    abstract public function getType();
 
     /**
      * Get default value of column.
@@ -62,7 +56,7 @@ abstract class Column
      */
     public function getDefault()
     {
-        return null === $this->default ?: (string) $this->default;
+        return null;
     }
     
     /**
@@ -82,7 +76,6 @@ abstract class Column
      */
     public function isNotNull()
     {
-        return $this->isNotNull;
+        return false;
     }
-
 }
