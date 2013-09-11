@@ -9,7 +9,6 @@ abstract class Column
     protected $name;    
     protected $isNotNull;
     protected $default;
-    protected $limit;
 
     /**
      * Constructor.
@@ -27,9 +26,6 @@ abstract class Column
         if (array_key_exists('default', $options)) {
             $this->default = $options['default'];
         }
-        if (array_key_exists('limit', $options)) {
-            $this->limit = $options['limit'];
-        }
     }
 
     /**
@@ -43,13 +39,6 @@ abstract class Column
     }
 
     /**
-     * Get column type name.
-     * 
-     * @return string Column type name.
-     */
-    abstract public function getType();
-
-    /**
      * Get default value of column.
      * 
      * @return mixed Default value of column.
@@ -60,22 +49,19 @@ abstract class Column
     }
     
     /**
-     * [getLimit description]
-     *
-     * @throws NotSupportedException
-     * @return [type] [description]
-     */
-    public function getLimit()
-    {
-        throw new NotSupportedException();        
-    }
-
-    /**
      * Check if column not allows null value.
+     * 
      * @return boolean Column not allows null value.
      */
     public function isNotNull()
     {
         return false;
     }
+
+    /**
+     * Get column type name.
+     * 
+     * @return string Column type name.
+     */
+    abstract public function getType();
 }

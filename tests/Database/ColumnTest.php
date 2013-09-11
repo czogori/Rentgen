@@ -44,16 +44,6 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($column->isNotNull());   
     }
-
-    /**
-     * @expectedException Rentgen\Exception\NotSupportedException
-     */ 
-    public function testGetLimit()
-    {
-        $column = new FooColumn('foo');
-
-        $limit = $column->getLimit();
-    }
 }
 
 class FooColumn extends Column
