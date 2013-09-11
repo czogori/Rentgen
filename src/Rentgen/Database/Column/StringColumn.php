@@ -4,9 +4,18 @@ namespace Rentgen\Database\Column;
 
 use Rentgen\Database\Column;
 
-class StringColumn extends Column
+class StringColumn extends Column implements LimitableInterface
 {
+    private $limit;
 
+    public function __construct($name, array $options = array())
+    {
+        parent::__construct($name, $options);
+
+        if (array_key_exists('limit', $options)) {
+            $this->limit = $options['limit'];
+        }        
+    }
     /**
      * Get column type name.
      * 
@@ -27,8 +36,13 @@ class StringColumn extends Column
         return null === $this->default ?: (string) $this->default;
     }    
 
+    /**
+     * Get characters limit.
+     * 
+     * @return integer Number of characters.
+     */
     public function getLimit()
     {
-        
+        return $this->limit;
     }
 }
