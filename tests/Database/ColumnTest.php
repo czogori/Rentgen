@@ -9,7 +9,6 @@ use Rentgen\Database\Column;
  */
 class ColumnTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @expectedException Exception
      */ 
@@ -18,7 +17,43 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
      	$column = new FooColumn();    
     }
 
-    
+    public function testGetName()
+    {
+        $column = new FooColumn('foo');
+
+        $this->assertEquals('foo', $column->getName());        
+    }
+
+    public function testGetType()
+    {
+        $column = new FooColumn('foo');
+
+        $this->assertEquals('foo', $column->getType());        
+    }  
+
+    public function testGetDefault()
+    {
+        $column = new FooColumn('foo');
+
+        $this->assertNull($column->getDefault());
+    }
+
+    public function testIsNotNull()
+    {
+        $column = new FooColumn('foo');
+
+        $this->assertFalse($column->isNotNull());   
+    }
+
+    /**
+     * @expectedException Rentgen\Exception\NotSupportedException
+     */ 
+    public function testGetLimit()
+    {
+        $column = new FooColumn('foo');
+
+        $limit = $column->getLimit();
+    }
 }
 
 class FooColumn extends Column
