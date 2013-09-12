@@ -5,10 +5,13 @@ namespace Rentgen\Tests;
 use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\DropAllTablesCommand;
-use Rentgen\Database\Connection;
-use Rentgen\Database\ConnectionConfig;
+use Rentgen\Database\Connection\Connection;
+use Rentgen\Database\Connection\ConnectionConfig;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
+
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
@@ -18,12 +21,12 @@ class TestHelpers extends \PHPUnit_Framework_TestCase
     protected $connection;
 
     protected function setConnection()
-    {
-        $connectionConfig = $this->getMock('Rentgen\Database\ConnectionConfig');
-        $connectionConfig->expects($this->once())->method('getDsn')->will($this->returnValue($GLOBALS['DB_DSN']));
-        $connectionConfig->expects($this->once())->method('getLogin')->will($this->returnValue($GLOBALS['DB_USER']));
-        $connectionConfig->expects($this->once())->method('getPassword')->will($this->returnValue($GLOBALS['DB_PASSWORD']));
-        $this->connection = new Connection($connectionConfig);
+    {        
+        $fileLocator = new FileLocator(getcwd());
+        $configFile = $fileLocator->locate('rentgen.yml');        
+        $config = Yaml::parse($configFile);
+        
+        $this->connection = new Connection(new ConnectionConfig($config['connection']));
     }
 
     protected function clearDatabase()

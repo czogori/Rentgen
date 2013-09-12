@@ -1,9 +1,9 @@
 parameters:
 
-    adapter: Postgres    
+    #adapter: Postgres    
     event_dispatcher.class: Symfony\Component\EventDispatcher\EventDispatcher
     event_listener.class: Rentgen\Listener
-    connection_config.class: Rentgen\Database\ConnectionConfig
+    #connection_config.class: Rentgen\Database\Connection\ConnectionConfig
 
     command.factory.class: Rentgen\Schema\Factory
     command.manipulation.create_table.class: Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateTableCommand
@@ -21,12 +21,12 @@ services:
     event_listener:
         class: "%event_listener.class%"
 
-    connection_config:
-        class: "%connection_config.class%"
+    # connection_config:
+    #     class: "%connection_config.class%"
 
-    connection:
-        class: Rentgen\Database\Connection
-        arguments: [@connection_config]
+    # connection:
+    #     class: Rentgen\Database\Connection\Connection
+    #     arguments: [@connection_config]
 
     event_table:
         class: Rentgen\Event\TableEvent

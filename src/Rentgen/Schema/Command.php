@@ -2,7 +2,7 @@
 namespace Rentgen\Schema;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Rentgen\Database\Connection;
+use Rentgen\Database\Connection\Connection;
 
 abstract class Command
 {

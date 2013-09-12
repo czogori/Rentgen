@@ -7,8 +7,10 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Yaml\Yaml;
 
 use Rentgen\Schema\Factory;
+use Rentgen\Database\Connection\ConnectionConfig;
 
 class RentgenExtension implements ExtensionInterface
 {    
@@ -26,10 +28,21 @@ class RentgenExtension implements ExtensionInterface
         $definition->setArguments(array($container));
         $container->setDefinition('schema.info', $definition); 
 
+        $fileLocator = new FileLocator(getcwd());
+        $configFile = $fileLocator->locate('rentgen.yml');        
+        $config = Yaml::parse($configFile);
+
+        $connectionConfig = new ConnectionConfig($config['connection']);
+        
+
+        $definition = new Definition('Rentgen\Database\Connection\Connection');
+        $definition->setArguments(array($connectionConfig));
+        $container->setDefinition('connection', $definition); 
+
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
-        $this->adapter = $container->getParameter('adapter');
+        $this->adapter = 'Postgres';
     
         $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);    
         $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);    
