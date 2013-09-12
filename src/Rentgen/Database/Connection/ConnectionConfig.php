@@ -39,4 +39,9 @@ class ConnectionConfig implements ConnectionConfigInterface
             , $this->port
             , $this->database);
     }
+
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
 }

@@ -14,6 +14,11 @@ use Rentgen\Database\Connection\ConnectionConfig;
 
 class RentgenExtension implements ExtensionInterface
 {    
+    public function __construct(ConnectionConfig $connectionConfig = null)
+    {
+        $this->connectionConfig = $connectionConfig;
+    }
+
     public function load(array $configs, ContainerBuilder $container)
     {       
         $configDirectories = array(__DIR__ . '/../../vendor/czogori/rentgen/src/Rentgen', __DIR__);
@@ -28,19 +33,21 @@ class RentgenExtension implements ExtensionInterface
         $definition->setArguments(array($container));
         $container->setDefinition('schema.info', $definition); 
 
-        $fileLocator = new FileLocator(getcwd());
-        $configFile = $fileLocator->locate('rentgen.yml');        
-        $config = Yaml::parse($configFile);
+        if(null === $this->connectionConfig) {            
+            $fileLocator = new FileLocator(getcwd());
+            $configFile = $fileLocator->locate('rentgen.yml');        
+            $config = Yaml::parse($configFile);
 
-        $connectionConfig = new ConnectionConfig($config['connection']);        
+            $this->connectionConfig = new ConnectionConfig($config['connection']);        
+        }
 
         $definition = new Definition('Rentgen\Database\Connection\Connection');
-        $definition->setArguments(array($connectionConfig));
+        $definition->setArguments(array($this->connectionConfig));
         $container->setDefinition('connection', $definition); 
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
-        $this->adapter = $this->parseAdapter($config['connection']['adapter']);
+        $this->adapter = $this->parseAdapter($this->connectionConfig->getAdapter());
     
         $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);    
         $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);    
@@ -58,14 +65,14 @@ class RentgenExtension implements ExtensionInterface
     }
 
     public function getXsdValidationBasePath()
-	{
-	    return false;
-	}
+    {
+        return false;
+    }
 
-	public function getNamespace()
-	{
-	    return 'http://www.example.com/symfony/schema/';
-	}
+    public function getNamespace()
+    {
+        return 'http://www.example.com/symfony/schema/';
+    }
 
     private function getClassName($className, $adapter)
     {        
