@@ -8,9 +8,10 @@ class BooleanColumn extends Column
 {    
     public function getDefault()
     {
-        return null !== $this->default 
-            ? filter_var($this->default, FILTER_VALIDATE_BOOLEAN)
-            : null;
+        if(null !== $this->default) {
+            return filter_var($this->default, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
+        }            
+        return null;
     }
 
     /**

@@ -50,41 +50,41 @@ class BooleanColumnTest extends \PHPUnit_Framework_TestCase
     {
         $column = new BooleanColumn('foo', array('default' => false));
 
-        $this->assertFalse($column->getDefault());        
+        $this->assertEquals('false', $column->getDefault());        
     }
 
     public function testGetDefaultWithBooleanTrue()
     {
         $column = new BooleanColumn('foo', array('default' => true));
 
-        $this->assertTrue($column->getDefault());        
+        $this->assertEquals('true', $column->getDefault());        
     }
 
     public function testGetDefaultWithStringFalse()
     {
         $column = new BooleanColumn('foo', array('default' => 'false'));
 
-        $this->assertFalse($column->getDefault());        
+        $this->assertEquals('false', $column->getDefault());        
     }
 
     public function testGetDefaultWithStringTrue()
     {
         $column = new BooleanColumn('foo', array('default' => 'true'));
 
-        $this->assertTrue($column->getDefault());        
+        $this->assertEquals('true', $column->getDefault());        
     }    
 
     public function testGetDefaultWithIntegerFalse()
     {
         $column = new BooleanColumn('foo', array('default' => 0));
 
-        $this->assertFalse($column->getDefault());        
+        $this->assertEquals('false', $column->getDefault());        
     }
 
     public function testGetDefaultWithIntegerTrue()
     {
         $column = new BooleanColumn('foo', array('default' => 1));
 
-        $this->assertTrue($column->getDefault());        
+        $this->assertEquals('true', $column->getDefault());        
     }    
 }
