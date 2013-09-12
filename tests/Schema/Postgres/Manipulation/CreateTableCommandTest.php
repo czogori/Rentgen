@@ -6,7 +6,7 @@ use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\StringColumn;
 use Rentgen\Database\Connection;
-use Rentgen\Database\PrimaryKey;
+use Rentgen\Database\Constraint\PrimaryKey;
 use Rentgen\Tests\TestHelpers;
 
 /**

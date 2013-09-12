@@ -5,7 +5,7 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\AddForeignKeyCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\IntegerColumn;
-use Rentgen\Database\ForeignKey;
+use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Tests\TestHelpers;
 
 /**

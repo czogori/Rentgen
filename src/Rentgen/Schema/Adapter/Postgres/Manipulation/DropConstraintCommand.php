@@ -1,7 +1,7 @@
 <?php
 namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
-use Rentgen\Database\ConstraintInterface;
+use Rentgen\Database\Constraint\ConstraintInterface;
 use Rentgen\Schema\Command;
 
 class DropConstraintCommand extends Command

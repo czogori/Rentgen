@@ -2,7 +2,7 @@
 namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
-use Rentgen\Database\ForeignKey;
+use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Table;
 
 class AddForeignKeyCommand extends Command

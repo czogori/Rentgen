@@ -3,7 +3,7 @@
 namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Adapter\Postgres\Manipulation\DropConstraintCommand;
-use Rentgen\Database\ForeignKey;
+use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Table;
 use Rentgen\Tests\TestHelpers;
 

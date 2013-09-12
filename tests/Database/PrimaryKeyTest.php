@@ -4,7 +4,7 @@ namespace Rentgen\Tests\Database;
 
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
-use Rentgen\Database\PrimaryKey;
+use Rentgen\Database\Constraint\PrimaryKey;
 
 
 /**
