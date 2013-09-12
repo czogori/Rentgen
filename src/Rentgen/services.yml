@@ -11,7 +11,7 @@ parameters:
     command.manipulation.add_foreign_key.class: Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddForeignKeyCommand
     command.manipulation.drop_constraint.class: Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropConstraintCommand
 
-    command.info.table_exists.class: Rentgen\Schema\@@adapter@@\Info\TableExistsCommand
+    command.info.table_exists.class: Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand
 
 services:
 
