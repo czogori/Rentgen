@@ -32,17 +32,15 @@ class RentgenExtension implements ExtensionInterface
         $configFile = $fileLocator->locate('rentgen.yml');        
         $config = Yaml::parse($configFile);
 
-        $connectionConfig = new ConnectionConfig($config['connection']);
-        
+        $connectionConfig = new ConnectionConfig($config['connection']);        
 
         $definition = new Definition('Rentgen\Database\Connection\Connection');
         $definition->setArguments(array($connectionConfig));
         $container->setDefinition('connection', $definition); 
 
-
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
-        $this->adapter = 'Postgres';
+        $this->adapter = $this->parseAdapter($config['connection']['adapter']);
     
         $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);    
         $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);    
@@ -70,8 +68,20 @@ class RentgenExtension implements ExtensionInterface
 	}
 
     private function getClassName($className, $adapter)
-    {
+    {        
         return  str_replace('@@adapter@@', $adapter, $className);        
+    }
+
+    private function parseAdapter($adapter)
+    {
+        switch (strtolower($adapter)) {
+            case 'pgsql':
+            case 'postgres':
+            case 'postgresql':
+                return 'Postgres';                
+            default:
+                return '';                
+        }
     }
 
     private function setDefinition($name, $classParam, $container)

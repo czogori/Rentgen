@@ -2,6 +2,6 @@ connection:
     adapter:    pgsql
     host:       localhost
     database:   rentgen
-    username:   postgres
-    password:   
+    username:   aj
+    password:   aj
     port:       5432
