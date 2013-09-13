@@ -30,13 +30,16 @@ class Manipulation
     	}
     	return $command->execute();
 	}	
-
-	public function dropTable(Table $table)
+	
+	public function dropTable(Table $table, $cascade = false)
 	{
-		return $this->container
+		$dropTableCommand = $this->container
 			->get('drop_table')
-			->setTable($table)
-    		->execute();
+			->setTable($table);
+		if($cascade) {
+			$dropTableCommand->cascade();
+		}
+   		return $dropTableCommand->execute();
 	}
 
 	public function addForeignKey(ForeignKey $foreignKey)
