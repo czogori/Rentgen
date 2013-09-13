@@ -6,8 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Rentgen\Rentgen;
 use Rentgen\Database\Table;
-use Rentgen\Database\ForeignKey;
-use Rentgen\Database\PrimaryKey;
+use Rentgen\Database\Constraint\ForeignKey;
+use Rentgen\Database\Constraint\PrimaryKey;
 
 class Manipulation
 {
