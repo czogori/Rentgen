@@ -38,5 +38,19 @@ class IntegerColumnTest extends \PHPUnit_Framework_TestCase
         $column = new IntegerColumn('foo');
 
         $this->assertEquals('integer', $column->getType());        
-    }      
+    } 
+
+    public function testGetDefaultWithoutSpecifiedInOptions()
+    {
+        $column = new IntegerColumn('foo');        
+
+        $this->assertNull($column->getDefault());
+    }
+
+    public function testGetDefault()
+    {
+        $column = new IntegerColumn('foo', array('default' => 0));
+
+        $this->assertSame(0, $column->getDefault());                
+    }     
 }
