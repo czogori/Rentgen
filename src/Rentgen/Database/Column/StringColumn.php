@@ -33,7 +33,7 @@ class StringColumn extends Column implements LimitableInterface
      */
     public function getDefault()
     {
-        return null === $this->default ?: (string) $this->default;
+        return $this->default;
     }    
 
     /**

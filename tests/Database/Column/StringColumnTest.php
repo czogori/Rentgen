@@ -54,4 +54,18 @@ class StringColumnTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($column->getLimit());        
     }  
+
+    public function testGetDefaultWithoutSpecifiedInOptions()
+    {
+        $column = new StringColumn('foo');        
+
+        $this->assertNull($column->getDefault());
+    }
+
+    public function testGetDefault()
+    {
+        $column = new StringColumn('foo', array('default' => 'bar'));
+
+        $this->assertEquals('bar', $column->getDefault());        
+    }
 }
