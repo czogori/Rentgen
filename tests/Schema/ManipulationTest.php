@@ -45,4 +45,13 @@ class ManipulationTest extends TestHelpers
         $this->manipulation->dropTable(new Table('foo'));
         $this->assertFalse($this->tableExists('foo'));
     }
+
+    public function testExecute()
+    {
+        $this->manipulation->execute('CREATE TABLE foo()');
+        $this->assertTrue($this->tableExists('foo'));
+
+        $this->manipulation->execute('DROP TABLE foo');
+        $this->assertFalse($this->tableExists('foo'));
+    }
 }
