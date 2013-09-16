@@ -1,5 +1,6 @@
 {
     "name": "czogori/rentgen",
+    "type": "library",
     "description": "Database abstraction layer",
     "keywords": [ "database", "dbal" ],
     "license": "MIT",
