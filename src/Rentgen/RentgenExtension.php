@@ -20,10 +20,14 @@ class RentgenExtension implements ExtensionInterface
     }
 
     public function load(array $configs, ContainerBuilder $container)
-    {       
-        $configDirectories = array(__DIR__ . '/../../vendor/czogori/rentgen/src/Rentgen', __DIR__);
-        $loader = new YamlFileLoader($container, new FileLocator($configDirectories));
-        $loader->load('services.yml');        
+    {               
+        $this->defineParameters($container);
+
+        $definition = new Definition($container->getParameter('event_dispatcher.class'));        
+        $container->setDefinition('event_dispatcher', $definition); 
+
+        $definition = new Definition($container->getParameter('event_listener.class'));        
+        $container->setDefinition('event_listener', $definition); 
 
         $definition = new Definition('Rentgen\Schema\Manipulation');
         $definition->setArguments(array($container));
@@ -54,7 +58,12 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('add_foreign_key', 'command.manipulation.add_foreign_key.class', $container);    
         $this->setDefinition('drop_constraint', 'command.manipulation.drop_constraint.class', $container);    
 
-        $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);    
+        $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);  
+
+        $definition = new Definition('Rentgen\Event\TableEvent');
+        $definition->addTag('table', array('event' => 'table.create',   'method' => 'onCreateTable'));
+        $definition->addTag('table', array('event' => 'table.drop',     'method' => 'onDropTable'));
+        $container->setDefinition('event_table', $definition);   
 
         $container->addCompilerPass(new ListenerPass);
     }
@@ -99,5 +108,17 @@ class RentgenExtension implements ExtensionInterface
         $definition->addMethodCall('setConnection', array($this->connection));
         $definition->addMethodCall('setEventDispatcher', array($this->eventDispatcher));
         $container->setDefinition($name, $definition);
+    }
+
+    private function defineParameters(ContainerBuilder $container)
+    {
+        $container->setParameter('command.factory.class', 'Rentgen\Schema\Factory');
+        $container->setParameter('command.manipulation.create_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateTableCommand');
+        $container->setParameter('command.manipulation.drop_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropTableCommand');
+        $container->setParameter('command.manipulation.add_foreign_key.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddForeignKeyCommand');
+        $container->setParameter('command.manipulation.drop_constraint.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropConstraintCommand');
+        $container->setParameter('command.info.table_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand');
+        $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\EventDispatcher');
+        $container->setParameter('event_listener.class', 'Rentgen\Listener');
     }
 }
