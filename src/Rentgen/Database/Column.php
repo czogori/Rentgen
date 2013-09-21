@@ -7,7 +7,7 @@ use Rentgen\Exception\NotSupportedException;
 abstract class Column
 {
     protected $name;    
-    protected $isNotNull;
+    protected $isNotNull = false;
     protected $default;
 
     /**
@@ -55,7 +55,7 @@ abstract class Column
      */
     public function isNotNull()
     {
-        return false;
+        return $this->isNotNull;
     }
 
     /**
