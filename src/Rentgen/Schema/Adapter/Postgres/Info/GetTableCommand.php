@@ -34,12 +34,18 @@ class GetTableCommand extends Command
         $this->postExecute();
 
         $table = new Table($this->tableName);
-
         $columnCreator = new ColumnCreator();
         foreach ($columns as $column) {
-            $columnType = $columnTypeMapper->getCommon($column['data_type']);
-            //$column = new Column($column['column_name'], $columnType);
-            $column = $columnCreator->create($column['column_name'], $columnType);
+            $columnType = $columnTypeMapper->getCommon($column['data_type']);    
+            $options = array();
+            $options['not_null'] = $column['is_nullable'] === 'NO';
+            $options['default'] = $column['column_default'];            
+            if($columnType === 'string') {
+                preg_match("/'(.*)'::character varying/", $column['column_default'], $matches);                
+                $options['default'] = isset($matches[1]) ? $matches[1] : '';       
+                $options['limit'] = $column['character_maximum_length'];
+            }
+            $column = $columnCreator->create($column['column_name'], $columnType, $options);
             $table->addColumn($column);
         }
 
