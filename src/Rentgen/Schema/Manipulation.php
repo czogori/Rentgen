@@ -13,6 +13,12 @@ class Manipulation
 {
 	private $container;
 
+	private $createTableCommand;
+	private $dropTableCommand;
+	private $addForeignKey;
+	private $dropForeignKey;
+	private $connection;
+
 	/**
 	 * Constructor.
 	 * 
@@ -104,5 +110,10 @@ class Manipulation
 		return $this->container
 			->get('connection')
 			->execute($sql);
+	}
+
+	public function registerCommand($name, Command $command)
+	{
+		$this->commands[$name] = $command;
 	}
 }

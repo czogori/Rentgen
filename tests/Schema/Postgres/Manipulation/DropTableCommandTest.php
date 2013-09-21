@@ -20,7 +20,7 @@ class DropTableCommandTest extends TestHelpers
     {
         $createTableCommand = new DropTableCommand();
         $createTableCommand->setTable(new Table('foo'));
-        $this->assertEquals('DROP TABLE foo;', $createTableCommand->getSql());
+        $this->assertEquals('DROP TABLE public.foo;', $createTableCommand->getSql());
     }
 
     public function testExecute()

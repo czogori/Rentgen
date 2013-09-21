@@ -28,8 +28,8 @@ class CreateTableCommand extends Command
 
     public function getSql()
     {
-        $schema = $this->table->getSchema() == '' ? '' : $this->table->getSchema().'.';
-        $sql = sprintf('CREATE TABLE %s%s(%s);'
+        $schema = empty($this->table->getSchema()) ? 'public' : $this->table->getSchema();
+        $sql = sprintf('CREATE TABLE %s.%s(%s);'
             , $schema
             , $this->table->getName()
             , $this->columns());

@@ -24,7 +24,7 @@ class CreateTableCommandTest extends TestHelpers
         $table = new Table('foo');
         $createTableCommand = new CreateTableCommand();
         $createTableCommand->setTable($table);
-        $sql = 'CREATE TABLE foo(foo_id serial NOT NULL,CONSTRAINT foo_pkey PRIMARY KEY (foo_id));';
+        $sql = 'CREATE TABLE public.foo(foo_id serial NOT NULL,CONSTRAINT foo_pkey PRIMARY KEY (foo_id));';
         $this->assertEquals($sql, $createTableCommand->getSql());
     }
 

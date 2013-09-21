@@ -26,7 +26,9 @@ class DropTableCommand extends Command
 
     public function getSql()
     {
-        $sql = sprintf('DROP TABLE %s%s'
+        $schema = empty($this->table->getSchema()) ? 'public' : $this->table->getSchema();
+        $sql = sprintf('DROP TABLE %s.%s%s'
+            , $schema
             , $this->table->getName()
             , $this->cascade ? ' CASCADE' : ''
         );
