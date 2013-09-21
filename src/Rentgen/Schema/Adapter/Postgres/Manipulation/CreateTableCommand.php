@@ -3,6 +3,7 @@ namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
 use Rentgen\Database\Table;
+use Rentgen\Database\Column;
 use Rentgen\Database\Constraint\PrimaryKey;
 use Rentgen\Event\TableEvent;
 use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
@@ -33,7 +34,7 @@ class CreateTableCommand extends Command
             , $schema
             , $this->table->getName()
             , $this->columns());
-
+        echo $sql;
         return $sql;
     }
 
@@ -49,13 +50,13 @@ class CreateTableCommand extends Command
         if(!$this->primaryKey->isMulti()) {
             $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());    
         }         
-        foreach ($this->table->columns as $column) {
+        foreach ($this->table->columns as $column) {            
             $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
                 , $columnTypeMapper->getNative($column->getType())
                 , $column->getType() === 'string' && $column->getLimit() ? sprintf('(%s)', $column->getLimit()) : ''
                 , $column->isNotNull() ? 'NOT NULL' : ''
-                , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $column->getDefault()
+                , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $this->addQuotesIfNeeded($column, $column->getDefault())
             );
         }
         $sql .= (string) $this->primaryKey;
@@ -70,6 +71,11 @@ class CreateTableCommand extends Command
     protected function postExecute()
     {
         $this->dispatcher->dispatch('table.create', new TableEvent($this->table, $this->getSql()));
+    }
+
+    private function addQuotesIfNeeded(Column $column, $value)
+    {
+        return $column->getType() === 'string' ? sprintf("'%s'", $value) : $value;
     }
 }
 
