@@ -33,8 +33,7 @@ class CreateTableCommand extends Command
         $sql = sprintf('CREATE TABLE %s.%s(%s);'
             , $schema
             , $this->table->getName()
-            , $this->columns());
-        echo $sql;
+            , $this->columns());        
         return $sql;
     }
 
