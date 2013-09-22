@@ -111,9 +111,4 @@ class Manipulation
 			->get('connection')
 			->execute($sql);
 	}
-
-	public function registerCommand($name, Command $command)
-	{
-		$this->commands[$name] = $command;
-	}
 }
