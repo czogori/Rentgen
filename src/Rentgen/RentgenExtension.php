@@ -30,11 +30,11 @@ class RentgenExtension implements ExtensionInterface
         $container->setDefinition('event_listener', $definition); 
 
         $definition = new Definition('Rentgen\Schema\Manipulation');
-        $definition->setArguments(array($container));
+        $definition->setArguments(array('service_container'));
         $container->setDefinition('schema.manipulation', $definition); 
 
         $definition = new Definition('Rentgen\Schema\Info');
-        $definition->setArguments(array($container));
+        $definition->setArguments(array('service_container'));
         $container->setDefinition('schema.info', $definition); 
 
         if(null === $this->connectionConfig) {            
