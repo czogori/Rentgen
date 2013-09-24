@@ -24,6 +24,7 @@ class RentgenExtension implements ExtensionInterface
         $this->defineParameters($container);
 
         $definition = new Definition($container->getParameter('event_dispatcher.class'));        
+        $definition->setArguments(array(new Reference('service_container')));
         $container->setDefinition('event_dispatcher', $definition); 
 
         $definition = new Definition($container->getParameter('event_listener.class'));        
@@ -122,7 +123,7 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('command.manipulation.add_foreign_key.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddForeignKeyCommand');
         $container->setParameter('command.manipulation.drop_constraint.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropConstraintCommand');
         $container->setParameter('command.info.table_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand');
-        $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\EventDispatcher');
-        $container->setParameter('event_listener.class', 'Rentgen\Listener');
+        $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
+        $container->setParameter('event_listener.class', 'Rentgen\Listener');       
     }
 }
