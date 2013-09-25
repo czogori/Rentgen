@@ -25,4 +25,16 @@ class PrimaryKeyTest extends \PHPUnit_Framework_TestCase
         $primaryKey->setTable(new Table('test'));
         $this->assertEquals('CONSTRAINT test_pkey PRIMARY KEY (foo,bar)', (string) $primaryKey);
     }
+
+    public function testIfIsMultiPrimaryKey()
+    {
+        $primaryKey = new PrimaryKey(array('foo', 'bar'));        
+        $this->assertTrue($primaryKey->isMulti());
+    }
+
+    public function testIfIsNotMultiPrimaryKey()
+    {
+        $primaryKey = new PrimaryKey(array('foo'));        
+        $this->assertFalse($primaryKey->isMulti());
+    }
 }

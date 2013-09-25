@@ -31,7 +31,7 @@ class PrimaryKey implements ConstraintInterface
 
     public function isMulti()
     {
-        return count($this->columns) > 0;
+        return count($this->columns) > 1;
     }
 
     public function disableAutoIncrement()
