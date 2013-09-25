@@ -8,7 +8,7 @@ class PrimaryKey implements ConstraintInterface
 {
     private $name;
     private $columns;
-    private $isAutoIncrement = false;
+    private $isAutoIncrement = true;
 
     private $table;
 
@@ -34,10 +34,15 @@ class PrimaryKey implements ConstraintInterface
         return count($this->columns) > 0;
     }
 
-    public function autoIncrement()
+    public function disableAutoIncrement()
     {
-        $this->autoIncrement = true;
+        $this->isAutoIncrement = false;
         return $this;
+    }
+
+    public function isAutoIncrement()
+    {
+        return true === $this->isAutoIncrement;        
     }
 
     public function __toString()
