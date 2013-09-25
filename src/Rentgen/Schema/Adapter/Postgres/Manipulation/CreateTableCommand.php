@@ -29,7 +29,9 @@ class CreateTableCommand extends Command
 
     public function getSql()
     {
-        $schema = empty($this->table->getSchema()) ? 'public' : $this->table->getSchema();
+        $schemaName = $this->table->getSchema();
+        $schema = empty($schemaName) ? 'public' : $schemaName;
+
         $sql = sprintf('CREATE TABLE %s.%s(%s);'
             , $schema
             , $this->table->getName()
@@ -46,7 +48,7 @@ class CreateTableCommand extends Command
         }
 
         $sql = '';        
-        if(!$this->primaryKey->isMulti()) {
+        if(!$this->primaryKey->isMulti() && $this->primaryKey->isAutoIncement()) {
             $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());    
         }         
         foreach ($this->table->columns as $column) {            
