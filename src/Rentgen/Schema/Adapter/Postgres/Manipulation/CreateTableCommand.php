@@ -55,7 +55,7 @@ class CreateTableCommand extends Command
                 $sql = sprintf('%s integer NOT NULL,', $this->primaryKey->getColumns());    
             }
         }
-        foreach ($this->table->columns as $column) {            
+        foreach ($this->table->getColumns() as $column) {            
             $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
                 , $columnTypeMapper->getNative($column->getType())
