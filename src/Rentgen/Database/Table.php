@@ -4,9 +4,9 @@ namespace Rentgen\Database;
 
 class Table
 {
-    public $name;
-    public $schemaName;
-    public $columns = array();
+    private $name;
+    private $schemaName;
+    private $columns = array();
 
     public function __construct($name)
     {
