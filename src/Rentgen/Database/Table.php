@@ -7,6 +7,7 @@ class Table
     private $name;
     private $schemaName;
     private $columns = array();
+    private $constraints = array();
 
     /**
      * Constructor.
@@ -67,6 +68,29 @@ class Table
         }
 
         return null;
+    }
+
+    /**
+     * Add contraint to table.
+     * 
+     * @param ConstraintInterface $constraint Instance of class implements ConstraintInterface.
+     *
+     * @return Table Table instance.
+     */
+    public function addConstraint(ConstraintInterface $constraint)
+    {        
+        $this->constraints[] = $constraint;
+        return $this;
+    }
+
+    /**
+     * Get constraints of table.
+     * 
+     * @return ConstraintInterface[] Array of instances implement ConstraintInterface.
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
     }
 
     /**
