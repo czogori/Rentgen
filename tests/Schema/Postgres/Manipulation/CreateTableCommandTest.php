@@ -3,6 +3,7 @@
 namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
+use Rentgen\Schema\Adapter\Postgres\Info\GetTableCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\StringColumn;
 use Rentgen\Database\Connection;
@@ -55,5 +56,26 @@ class CreateTableCommandTest extends TestHelpers
             ->execute();
 
         $this->assertTrue($this->tableExists('test'));   
+    }
+
+    public function testCreateTableWithNotAutoIncrementPrimaryKey()
+    {
+        $primaryKey = new PrimaryKey();
+        $primaryKey->disableAutoIncrement();
+        $createTableCommand = new CreateTableCommand();
+        $createTableCommand
+            ->setConnection($this->connection)
+            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
+            ->setTable(new Table('foo'))
+            ->setPrimaryKey($primaryKey)
+            ->execute();
+
+        $getTableCommand = new GetTableCommand();
+        $getTableCommand->setConnection($this->connection);
+        $getTableCommand->setTableName('foo');
+
+        $tableInfo = $getTableCommand->execute();
+
+        $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());        
     }
 }
