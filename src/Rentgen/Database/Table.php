@@ -94,6 +94,16 @@ class Table
     }
 
     /**
+     * Set schema name.
+     * 
+     * @param string $name Schama name.
+     */
+    public function setSchema($name)
+    {
+        $this->schemaName = $name;
+    }
+
+    /**
      * Get schema name.
      * 
      * @return string Schema name.
