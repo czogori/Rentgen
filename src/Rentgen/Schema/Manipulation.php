@@ -13,12 +13,6 @@ class Manipulation
 {
     private $container;
 
-    private $createTableCommand;
-    private $dropTableCommand;
-    private $addForeignKey;
-    private $dropForeignKey;
-    private $connection;
-
     /**
      * Constructor.
      *
