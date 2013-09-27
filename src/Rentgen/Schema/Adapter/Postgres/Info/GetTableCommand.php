@@ -38,13 +38,13 @@ class GetTableCommand extends Command
 
         $columnCreator = new ColumnCreator();
         foreach ($columns as $column) {
-            $columnType = $columnTypeMapper->getCommon($column['data_type']);    
+            $columnType = $columnTypeMapper->getCommon($column['data_type']);
             $options = array();
             $options['not_null'] = $column['is_nullable'] === 'NO';
-            $options['default'] = $column['column_default'];            
-            if($columnType === 'string') {
-                preg_match("/'(.*)'::character varying/", $column['column_default'], $matches);                
-                $options['default'] = isset($matches[1]) ? $matches[1] : '';       
+            $options['default'] = $column['column_default'];
+            if ($columnType === 'string') {
+                preg_match("/'(.*)'::character varying/", $column['column_default'], $matches);
+                $options['default'] = isset($matches[1]) ? $matches[1] : '';
                 $options['limit'] = $column['character_maximum_length'];
             }
             $column = $columnCreator->create($column['column_name'], $columnType, $options);
@@ -93,7 +93,7 @@ LEFT JOIN information_schema.constraint_column_usage ccu
         $constraints = $this->connection->query($sql);
 
         foreach ($constraints as $constraint) {
-            print_r($constraint);die;            
+            print_r($constraint);die;
         }
     }
 }

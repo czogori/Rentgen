@@ -4,5 +4,5 @@ namespace Rentgen\Database\Column;
 
 interface LimitableInterface
 {
-	public function getLimit();	
+    public function getLimit();
 }

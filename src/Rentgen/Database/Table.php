@@ -11,7 +11,7 @@ class Table
 
     /**
      * Constructor.
-     * 
+     *
      * @param string $name Table name.
      */
     public function __construct($name)
@@ -21,7 +21,7 @@ class Table
 
     /**
      * Get table name.
-     * 
+     *
      * @return string Table name.
      */
     public function getName()
@@ -31,7 +31,7 @@ class Table
 
     /**
      * Add column to table.
-     * 
+     *
      * @param Column $column Column instance.
      *
      * @return Table Table instance.
@@ -45,7 +45,7 @@ class Table
 
     /**
      * Get columns of table.
-     * 
+     *
      * @return Column[] Array of Column instances.
      */
     public function getColumns()
@@ -55,9 +55,9 @@ class Table
 
     /**
      * Get column of table.
-     * 
+     *
      * @param  string $name Column name.
-     * @return Column       Column instance.
+     * @return Column Column instance.
      */
     public function getColumn($name)
     {
@@ -72,20 +72,21 @@ class Table
 
     /**
      * Add contraint to table.
-     * 
+     *
      * @param ConstraintInterface $constraint Instance of class implements ConstraintInterface.
      *
      * @return Table Table instance.
      */
     public function addConstraint(ConstraintInterface $constraint)
-    {        
+    {
         $this->constraints[] = $constraint;
+
         return $this;
     }
 
     /**
      * Get constraints of table.
-     * 
+     *
      * @return ConstraintInterface[] Array of instances implement ConstraintInterface.
      */
     public function getConstraints()
@@ -95,7 +96,7 @@ class Table
 
     /**
      * Set schema name.
-     * 
+     *
      * @param string $name Schama name.
      */
     public function setSchema($name)
@@ -105,7 +106,7 @@ class Table
 
     /**
      * Get schema name.
-     * 
+     *
      * @return string Schema name.
      */
     public function getSchema()

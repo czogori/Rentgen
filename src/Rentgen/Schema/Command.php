@@ -20,14 +20,14 @@ abstract class Command
     }
 
     public function setEventDispatcher(EventDispatcher $dispatcher)
-    {        
+    {
         $this->dispatcher = $dispatcher;
 
         return $this;
     }
 
     public function setConnection(Connection $connection)
-    {        
+    {
         $this->connection = $connection;
 
         return $this;

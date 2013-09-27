@@ -19,8 +19,8 @@ class DropConstraintCommandTest extends TestHelpers
 
     public function testDropForeignKeyGetSql()
     {
-    	$foreignKey = new ForeignKey(new Table('foo'), new Table('bar'));
-    	$foreignKey->setColumns('column_foo');
+        $foreignKey = new ForeignKey(new Table('foo'), new Table('bar'));
+        $foreignKey->setColumns('column_foo');
 
         $dropConstraintCommand = new DropConstraintCommand();
         $dropConstraintCommand->setConstraint($foreignKey);

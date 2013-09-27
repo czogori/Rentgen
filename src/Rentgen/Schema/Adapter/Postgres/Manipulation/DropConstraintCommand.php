@@ -6,11 +6,12 @@ use Rentgen\Schema\Command;
 
 class DropConstraintCommand extends Command
 {
-    private $constraint;    
+    private $constraint;
 
     public function setConstraint(ConstraintInterface $constraint)
     {
         $this->constraint = $constraint;
+
         return $this;
     }
 
@@ -21,12 +22,14 @@ class DropConstraintCommand extends Command
             , $this->constraint->getTable()->getName()
             , $this->constraint->getName()
         );
+
         return $sql;
     }
 
     private function getSchema()
     {
         $schemaName = $this->foreignKey->getTable()->getSchema();
-        return empty($schemaName) ? 'public' : $schemaName;                    
+
+        return empty($schemaName) ? 'public' : $schemaName;
     }
 }

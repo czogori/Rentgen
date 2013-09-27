@@ -44,7 +44,7 @@ class GetTableCommandTest extends TestHelpers
         $this->assertCount(2, $tableInfo->getColumns());
         $this->assertEquals('foo_id', $tableInfo->getColumn('foo_id')->getName());
         $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());
-        
+
         $this->assertEquals('name', $tableInfo->getColumn('name')->getName());
         $this->assertEquals('string', $tableInfo->getColumn('name')->getType());
         $this->assertTrue($tableInfo->getColumn('name')->isNotNull());

@@ -12,7 +12,7 @@ class ConnectionConfig implements ConnectionConfigInterface
     private $port;
 
     public function __construct(array $config = array())
-    {                
+    {
         $this->adapter = $config['adapter'];
         $this->host = $config['host'];
         $this->database = $config['database'];

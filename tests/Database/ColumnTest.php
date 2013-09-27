@@ -11,25 +11,25 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException Exception
-     */ 
+     */
     public function testCreateInstanceWithoutParams()
-    {     	
-     	$column = new FooColumn();    
+    {
+         $column = new FooColumn();
     }
 
     public function testGetName()
     {
         $column = new FooColumn('foo');
 
-        $this->assertEquals('foo', $column->getName());        
+        $this->assertEquals('foo', $column->getName());
     }
 
     public function testGetType()
     {
         $column = new FooColumn('foo');
 
-        $this->assertEquals('foo', $column->getType());        
-    }  
+        $this->assertEquals('foo', $column->getType());
+    }
 
     public function testGetDefault()
     {
@@ -42,7 +42,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
     {
         $column = new FooColumn('foo');
 
-        $this->assertFalse($column->isNotNull());   
+        $this->assertFalse($column->isNotNull());
     }
 }
 
@@ -51,5 +51,5 @@ class FooColumn extends Column
     public function getType()
     {
         return 'foo';
-    } 
+    }
 }

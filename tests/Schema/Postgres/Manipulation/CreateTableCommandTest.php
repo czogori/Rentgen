@@ -55,7 +55,7 @@ class CreateTableCommandTest extends TestHelpers
             ->setPrimaryKey(new PrimaryKey(array('foo', 'bar')))
             ->execute();
 
-        $this->assertTrue($this->tableExists('test'));   
+        $this->assertTrue($this->tableExists('test'));
     }
 
     public function testCreateTableWithNotAutoIncrementPrimaryKey()
@@ -76,6 +76,6 @@ class CreateTableCommandTest extends TestHelpers
 
         $tableInfo = $getTableCommand->execute();
 
-        $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());        
+        $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());
     }
 }

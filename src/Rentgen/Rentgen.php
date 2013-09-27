@@ -14,7 +14,6 @@ class Rentgen
     public function __construct()
     {
         $container = new ContainerBuilder();
-     
 
         $extension = new RentgenExtension();
         $container->registerExtension($extension);
@@ -42,12 +41,14 @@ class Rentgen
     public function execute($sql)
     {
         $connection = $this->get('connection');
+
         return $connection->execute($sql);
     }
 
     public function query($sql)
     {
-        $connection = $this->get('connection');              
+        $connection = $this->get('connection');
+
         return $connection->query($sql);
     }
 }

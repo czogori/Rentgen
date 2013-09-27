@@ -11,7 +11,7 @@ class AddForeignKeyCommand extends Command
 
     /**
      * Set foreign key
-     * 
+     *
      * @param ForeignKey $foreignKey Foreign key instance.
      *
      * @return AddForeignKeyCommand
@@ -25,7 +25,7 @@ class AddForeignKeyCommand extends Command
 
     /**
      * Set table witch foreign key will be added.
-     * 
+     *
      * @param Table $table Table instance.
      *
      * @return AddForeignKeyCommand
@@ -52,12 +52,14 @@ class AddForeignKeyCommand extends Command
             , $this->foreignKey->getReferencedTable()->getName()
             , implode(',', $this->foreignKey->getReferencedColumns())
         );
+
         return $sql;
-    }    
+    }
 
     private function getSchema()
     {
         $schemaName = $this->foreignKey->getTable()->getSchema();
-        return empty($schemaName) ? 'public' : $schemaName;                    
+
+        return empty($schemaName) ? 'public' : $schemaName;
     }
 }

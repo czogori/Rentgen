@@ -13,11 +13,11 @@ class PrimaryKey implements ConstraintInterface
     private $table;
 
     public function __construct(array $columns = array())
-    {        
-    	$this->columns = $columns;
-    }        
-	
-	public function getName()
+    {
+        $this->columns = $columns;
+    }
+
+    public function getName()
     {
         return $this->table->getName() . '_pkey';
     }
@@ -37,17 +37,18 @@ class PrimaryKey implements ConstraintInterface
     public function disableAutoIncrement()
     {
         $this->isAutoIncrement = false;
+
         return $this;
     }
 
     public function isAutoIncrement()
     {
-        return true === $this->isAutoIncrement;        
+        return true === $this->isAutoIncrement;
     }
 
     public function __toString()
     {
-    	return  sprintf('CONSTRAINT %s PRIMARY KEY (%s)'
+        return  sprintf('CONSTRAINT %s PRIMARY KEY (%s)'
             , $this->getName()
             , $this->getColumns()
         );
@@ -55,11 +56,11 @@ class PrimaryKey implements ConstraintInterface
 
     public function getTable()
     {
-        return $this->table;        
+        return $this->table;
     }
 
     public function setTable(Table $table)
     {
-        $this->table = $table;        
+        $this->table = $table;
     }
 }

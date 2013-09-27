@@ -12,37 +12,37 @@ class IntegerColumnTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException Exception
-     */ 
+     */
     public function testCreateInstanceWithoutParams()
-    {     	
-     	$column = new IntegerColumn();    
+    {
+         $column = new IntegerColumn();
     }
-    
+
     public function testCreateInstance()
-    {       
+    {
         $column = new IntegerColumn('foo');
 
         $this->assertInstanceOf('Rentgen\Database\Column', $column);
         $this->assertInstanceOf('Rentgen\Database\Column\IntegerColumn', $column);
-    }    
+    }
 
     public function testGetName()
     {
         $column = new IntegerColumn('foo');
 
-        $this->assertEquals('foo', $column->getName());        
+        $this->assertEquals('foo', $column->getName());
     }
 
     public function testGetType()
     {
         $column = new IntegerColumn('foo');
 
-        $this->assertEquals('integer', $column->getType());        
-    } 
+        $this->assertEquals('integer', $column->getType());
+    }
 
     public function testGetDefaultWithoutSpecifiedInOptions()
     {
-        $column = new IntegerColumn('foo');        
+        $column = new IntegerColumn('foo');
 
         $this->assertNull($column->getDefault());
     }
@@ -51,6 +51,6 @@ class IntegerColumnTest extends \PHPUnit_Framework_TestCase
     {
         $column = new IntegerColumn('foo', array('default' => 0));
 
-        $this->assertSame(0, $column->getDefault());                
-    }     
+        $this->assertSame(0, $column->getDefault());
+    }
 }

@@ -4,7 +4,6 @@ namespace Rentgen;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class ListenerPass implements CompilerPassInterface
 {

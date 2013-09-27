@@ -28,6 +28,7 @@ class Connection
         foreach ($this->connection->query($sql) as $row) {
             $rows[] = $row;
         }
+
         return $rows;
     }
 }

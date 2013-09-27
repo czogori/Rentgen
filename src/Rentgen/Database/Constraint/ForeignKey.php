@@ -32,7 +32,7 @@ class ForeignKey implements ConstraintInterface
 
     public function setTable(Table $table)
     {
-        $this->table = $table;        
+        $this->table = $table;
     }
 
     public function getReferencedTable()
@@ -47,10 +47,11 @@ class ForeignKey implements ConstraintInterface
 
     public function setColumns($columns)
     {
-        if(!is_array($columns)) {
-            $columns = array($columns);    
+        if (!is_array($columns)) {
+            $columns = array($columns);
         }
         $this->columns = $columns;
+
         return $this;
     }
 
@@ -61,8 +62,8 @@ class ForeignKey implements ConstraintInterface
 
     public function setReferencedColumns($columns)
     {
-        if(!is_array($columns)) {
-            $columns = array($columns);    
+        if (!is_array($columns)) {
+            $columns = array($columns);
         }
         $this->referencedColumns = $columns;
 

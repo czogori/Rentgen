@@ -21,11 +21,11 @@ class TestHelpers extends \PHPUnit_Framework_TestCase
     protected $connection;
 
     protected function setConnection()
-    {        
+    {
         $fileLocator = new FileLocator(getcwd());
-        $configFile = $fileLocator->locate('rentgen.yml');        
+        $configFile = $fileLocator->locate('rentgen.yml');
         $config = Yaml::parse($configFile);
-        
+
         $this->connection = new Connection(new ConnectionConfig($config['connection']));
     }
 

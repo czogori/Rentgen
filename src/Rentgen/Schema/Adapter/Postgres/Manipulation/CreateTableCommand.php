@@ -19,11 +19,12 @@ class CreateTableCommand extends Command
 
         return $this;
     }
-    
+
     public function setPrimaryKey(PrimaryKey $primaryKey)
     {
         $this->primaryKey = $primaryKey;
         $this->primaryKey->setTable($this->table);
+
         return $this;
     }
 
@@ -35,27 +36,28 @@ class CreateTableCommand extends Command
         $sql = sprintf('CREATE TABLE %s.%s(%s);'
             , $schema
             , $this->table->getName()
-            , $this->columns());        
+            , $this->columns());
+
         return $sql;
     }
 
     private function columns()
     {
         $columnTypeMapper = new ColumnTypeMapper();
-        if(!$this->primaryKey) {
+        if (!$this->primaryKey) {
             $this->primaryKey = new PrimaryKey();
             $this->primaryKey->setTable($this->table);
         }
 
-        $sql = '';        
-        if(!$this->primaryKey->isMulti()) {
-            if($this->primaryKey->isAutoIncrement()) {
-                $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());    
+        $sql = '';
+        if (!$this->primaryKey->isMulti()) {
+            if ($this->primaryKey->isAutoIncrement()) {
+                $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());
             } else {
-                $sql = sprintf('%s integer NOT NULL,', $this->primaryKey->getColumns());    
+                $sql = sprintf('%s integer NOT NULL,', $this->primaryKey->getColumns());
             }
         }
-        foreach ($this->table->getColumns() as $column) {            
+        foreach ($this->table->getColumns() as $column) {
             $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
                 , $columnTypeMapper->getNative($column->getType())
@@ -83,4 +85,3 @@ class CreateTableCommand extends Command
         return $column->getType() === 'string' ? sprintf("'%s'", $value) : $value;
     }
 }
-
