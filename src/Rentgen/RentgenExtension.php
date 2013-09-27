@@ -58,10 +58,11 @@ class RentgenExtension implements ExtensionInterface
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
         $this->adapter = $this->parseAdapter($this->connectionConfig['adapter']);
     
-        $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);    
-        $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);    
-        $this->setDefinition('add_foreign_key', 'command.manipulation.add_foreign_key.class', $container);    
-        $this->setDefinition('drop_constraint', 'command.manipulation.drop_constraint.class', $container);    
+        $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);
+        $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);
+        $this->setDefinition('add_foreign_key', 'command.manipulation.add_foreign_key.class', $container);
+        $this->setDefinition('drop_constraint', 'command.manipulation.drop_constraint.class', $container);
+        $this->setDefinition('create_schema', 'command.manipulation.create_schema.class', $container);
 
         $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);  
 
@@ -122,6 +123,7 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('command.manipulation.drop_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropTableCommand');
         $container->setParameter('command.manipulation.add_foreign_key.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddForeignKeyCommand');
         $container->setParameter('command.manipulation.drop_constraint.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropConstraintCommand');
+        $container->setParameter('command.manipulation.create_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateSchemaCommand');
         $container->setParameter('command.info.table_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand');
         $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
         $container->setParameter('event_listener.class', 'Rentgen\Listener');       

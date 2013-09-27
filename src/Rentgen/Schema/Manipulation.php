@@ -99,6 +99,20 @@ class Manipulation
 	}
 
 	/**
+	 * Create a schema.
+	 * 
+	 * @param  string  $schemaName Schema name.
+	 * @return integer
+	 */
+	public function createSchema($schemaName)
+	{		
+		$command = $this->container
+			->get('create_schema')
+			->setName($schemaName);    		    	
+    	return $command->execute();
+	}	
+
+	/**
 	 * Execute SQL query.
 	 * 
 	 * @param  string  $sql Sql query.
