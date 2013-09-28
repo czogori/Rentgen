@@ -109,6 +109,21 @@ class Manipulation
         return $command->execute();
     }
 
+     /**
+     * Drop a schema.
+     *
+     * @param  string  $schemaName Schema name.
+     * @return integer
+     */
+    public function dropSchema($schemaName)
+    {
+        $command = $this->container
+            ->get('drop_schema')
+            ->setName($schemaName);
+
+        return $command->execute();
+    }
+
     /**
      * Execute SQL query.
      *
