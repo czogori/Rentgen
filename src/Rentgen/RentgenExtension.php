@@ -65,6 +65,7 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('drop_schema', 'command.manipulation.drop_schema.class', $container);
 
         $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);
+        $this->setDefinition('get_table', 'command.info.get_table.class', $container);
 
         $definition = new Definition('Rentgen\Event\TableEvent');
         $definition->addTag('table', array('event' => 'table.create',   'method' => 'onCreateTable'));
@@ -126,6 +127,7 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('command.manipulation.create_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateSchemaCommand');
         $container->setParameter('command.manipulation.drop_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropSchemaCommand');
         $container->setParameter('command.info.table_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand');
+        $container->setParameter('command.info.get_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTableCommand');
         $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
         $container->setParameter('event_listener.class', 'Rentgen\Listener');
     }

@@ -10,11 +10,38 @@ class Info
 {
     private $container;
 
+     /**
+     * Constructor.
+     *
+     * @param Symfony\Component\DependencyInjection\ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
+    /**
+     * Get table information.
+     *
+     * @param Table $table Table instance.     
+     *
+     * @return Table Table instance.
+     */
+    public function getTable(Table $table)
+    {
+        return $this->container
+            ->get('get_table')
+            ->setTableName($table->getName())
+            ->execute();
+    }
+
+    /**
+     * If table exists.
+     *
+     * @param Table $table Table instance.     
+     *
+     * @return Boolean
+     */
     public function isTableExists(Table $table)
     {
         return $this->container
