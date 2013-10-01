@@ -24,6 +24,6 @@ class DropConstraintCommandTest extends TestHelpers
 
         $dropConstraintCommand = new DropConstraintCommand();
         $dropConstraintCommand->setConstraint($foreignKey);
-        $this->assertEquals('ALTER TABLE foo DROP CONSTRAINT foo_column_foo_fkey;', $dropConstraintCommand->getSql());
+        $this->assertEquals('ALTER TABLE public.foo DROP CONSTRAINT foo_column_foo_fkey;', $dropConstraintCommand->getSql());
     }
 }
