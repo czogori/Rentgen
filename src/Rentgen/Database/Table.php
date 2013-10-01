@@ -1,4 +1,4 @@
-protected<?php
+<?php
 
 namespace Rentgen\Database;
 
