@@ -44,7 +44,7 @@ class AddForeignKeyCommand extends Command
      */
     public function getSql()
     {
-        $sql = sprintf('ALTER TABLE %s.%s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE;'
+        $sql = sprintf('ALTER TABLE %s.%s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %1$s.%s (%s) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE;'
             , $this->getSchema()
             , $this->foreignKey->getTable()->getName()
             , $this->foreignKey->getName()
