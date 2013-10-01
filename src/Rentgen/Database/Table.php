@@ -1,4 +1,4 @@
-<?php
+protected<?php
 
 namespace Rentgen\Database;
 
@@ -6,8 +6,8 @@ class Table
 {
     private $name;
     private $schemaName;
-    private $columns = array();
-    private $constraints = array();
+    protected $columns = array();
+    protected $constraints = array();
 
     /**
      * Constructor.
