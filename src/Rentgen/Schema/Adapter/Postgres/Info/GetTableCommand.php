@@ -34,8 +34,9 @@ class GetTableCommand extends Command
         $this->postExecute();
 
         $table = new Table($this->tableName);
-        $table->setSchema($columns[0]['table_schema']);
-        //$this->getConstraints($table);       
+        if(null === $table->getSchema()) {
+            $table->setSchema($columns[0]['table_schema']);
+        }  
         $columnCreator = new ColumnCreator();
         foreach ($columns as $column) {
             $columnType = $columnTypeMapper->getCommon($column['data_type']);
