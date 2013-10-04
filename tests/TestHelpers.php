@@ -3,6 +3,7 @@
 namespace Rentgen\Tests;
 
 use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
+use Rentgen\Schema\Adapter\Postgres\Info\SchemaExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\DropAllTablesCommand;
 use Rentgen\Database\Connection\Connection;
@@ -72,6 +73,17 @@ class TestHelpers extends \PHPUnit_Framework_TestCase
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
             ->setTable(new Table($name))
+            ->execute();
+    }
+
+    protected function schemaExists($name)
+    {
+        $schemaExists = new SchemaExistsCommand();
+
+        return $schemaExists
+            ->setConnection($this->connection)
+            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
+            ->setName($name)
             ->execute();
     }
 }
