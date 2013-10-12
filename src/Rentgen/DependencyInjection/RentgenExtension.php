@@ -1,6 +1,6 @@
 <?php
 
-namespace Rentgen;
+namespace Rentgen\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -10,6 +10,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
 
 use Rentgen\Schema\Factory;
+use Rentgen\DependencyInjection\Compiler\ListenerPass;
 
 class RentgenExtension implements ExtensionInterface
 {

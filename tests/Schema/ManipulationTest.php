@@ -5,8 +5,8 @@ namespace Rentgen\Tests\Schema;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 use Rentgen\Rentgen;
-use Rentgen\RentgenExtension;
 use Rentgen\Database\Table;
+use Rentgen\DependencyInjection\RentgenExtension;
 use Rentgen\Schema\Manipulation;
 use Rentgen\Tests\TestHelpers;
 

@@ -4,6 +4,7 @@ namespace Rentgen;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+use Rentgen\DependencyInjection\RentgenExtension;
 use Rentgen\Schema\Info;
 use Rentgen\Schema\Manipulation;
 
