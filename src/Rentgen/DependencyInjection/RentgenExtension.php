@@ -14,13 +14,15 @@ use Rentgen\DependencyInjection\Compiler\ListenerPass;
 
 class RentgenExtension implements ExtensionInterface
 {
-    public function __construct(array $connectionConfig = array())
-    {
-        $this->connectionConfig = $connectionConfig;
-    }
-
     public function load(array $configs, ContainerBuilder $container)
     {
+        $connectionConfig = array();
+        foreach ($configs as $config) {
+            if($this->isConnectionConfig($config)) {
+                $connectionConfig = $config;
+            }
+        }
+
         $this->defineParameters($container);
 
         $definition = new Definition($container->getParameter('event_dispatcher.class'));
@@ -38,16 +40,16 @@ class RentgenExtension implements ExtensionInterface
         $definition->setArguments(array(new Reference('service_container')));
         $container->setDefinition('schema.info', $definition);
 
-        if (empty($this->connectionConfig)) {
+        if (empty($connectionConfig)) {
             $fileLocator = new FileLocator(getcwd());
             $configFile = $fileLocator->locate('rentgen.yml');
             $config = Yaml::parse($configFile);
 
-            $this->connectionConfig = $config['connection'];
+            $connectionConfig = $config['connection'];
         }
 
         $definition = new Definition('Rentgen\Database\Connection\ConnectionConfig');
-        $definition->setArguments(array($this->connectionConfig));
+        $definition->setArguments(array($connectionConfig));
         $container->setDefinition('connection_config', $definition);
 
         $definition = new Definition('Rentgen\Database\Connection\Connection');
@@ -56,7 +58,7 @@ class RentgenExtension implements ExtensionInterface
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
-        $this->adapter = $this->parseAdapter($this->connectionConfig['adapter']);
+        $this->adapter = $this->parseAdapter($connectionConfig['adapter']);
 
         $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);
         $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);
@@ -131,5 +133,12 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('command.info.get_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTableCommand');
         $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
         $container->setParameter('event_listener.class', 'Rentgen\Listener');
+    }
+
+    private function isConnectionConfig($config)
+    {
+        return isset($config['username']) 
+            && isset($config['password'])
+            && isset($config['dsn']);
     }
 }
