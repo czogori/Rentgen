@@ -2,6 +2,11 @@
 
 namespace Rentgen\Database;
 
+use Rentgen\Database\Constraint\ConstraintInterface;
+
+/**
+ * @author Arek Jaskólski <arek.jaskolski@gmail.com>
+ */
 class Table
 {
     private $name;
