@@ -17,9 +17,8 @@ class DropConstraintCommand extends Command
 
     public function getSql()
     {
-        $sql = sprintf('ALTER TABLE %s.%s DROP CONSTRAINT %s;'
-            , $this->getSchema()
-            , $this->constraint->getTable()->getName()
+        $sql = sprintf('ALTER TABLE %s DROP CONSTRAINT %s;'            
+            , $this->constraint->getTable()->getQualifiedName()
             , $this->constraint->getName()
         );
 

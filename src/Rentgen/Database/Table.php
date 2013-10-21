@@ -5,7 +5,7 @@ namespace Rentgen\Database;
 class Table
 {
     private $name;
-    private $schemaName;
+    private $schema;
     protected $columns = array();
     protected $constraints = array();
 
@@ -17,6 +17,7 @@ class Table
     public function __construct($name)
     {
         $this->name = $name;
+        $this->schema = new Schema();
     }
 
     /**
@@ -36,7 +37,7 @@ class Table
      */
     public function getQualifiedName()
     {
-        return $this->getSchema() . '.' .$this->name;
+        return $this->schema->getName() . '.' .$this->name;
     }
 
     /**
@@ -109,18 +110,13 @@ class Table
      *
      * @param string $name Schama name.
      */
-    public function setSchema($name)
+    public function setSchema(Schema $schema)
     {
-        $this->schemaName = $name;
+        $this->schema = $schema;
     }
 
-    /**
-     * Get schema name.
-     *
-     * @return string Schema name.
-     */
     public function getSchema()
     {
-        return $this->schemaName ?: 'public';
+        return $this->schema;
     }
 }

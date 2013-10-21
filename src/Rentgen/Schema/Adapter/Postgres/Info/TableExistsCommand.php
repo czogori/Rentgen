@@ -16,11 +16,10 @@ class TableExistsCommand extends Command
     }
 
     public function getSql()
-    {
-        $schema = $this->table->getSchema() == '' ? 'public' : $this->table->getSchema();
+    {        
         $sql = sprintf(
             "SELECT count(table_name) FROM information_schema.tables WHERE table_schema = '%s' AND table_name = '%s';"
-            , $schema
+            , $this->table->getSchema()->getName()
             , $this->table->getName());
 
         return $sql;
@@ -36,13 +35,5 @@ class TableExistsCommand extends Command
         $this->postExecute();
 
         return (Boolean) $count;
-    }
-
-    protected function preExecute()
-    {
-    }
-
-    protected function postExecute()
-    {
     }
 }

@@ -29,13 +29,9 @@ class CreateTableCommand extends Command
     }
 
     public function getSql()
-    {
-        $schemaName = $this->table->getSchema();
-        $schema = empty($schemaName) ? 'public' : $schemaName;
-
-        $sql = sprintf('CREATE TABLE %s.%s(%s);'
-            , $schema
-            , $this->table->getName()
+    {        
+        $sql = sprintf('CREATE TABLE %s(%s);'     
+            , $this->table->getQualifiedName()
             , $this->columns());
 
         return $sql;

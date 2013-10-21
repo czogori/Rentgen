@@ -26,9 +26,8 @@ class RenameTableCommand extends Command
         $schemaName = $this->table->getSchema();
         $schema = empty($schemaName) ? 'public' : $schemaName;
 
-        $sql = sprintf('ALTER TABLE %s.%s RENAME TO %s;'
-            , $schema
-            , $this->table->getName()
+        $sql = sprintf('ALTER TABLE %s RENAME TO %s;'            
+            , $this->table->getQualifiedName()
             , $this->newTableName
         );    
         return $sql;

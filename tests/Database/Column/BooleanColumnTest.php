@@ -16,6 +16,7 @@ class BooleanColumnTest extends \PHPUnit_Framework_TestCase
     public function testCreateInstanceWithoutParams()
     {
          $column = new BooleanColumn();
+          $this->assertInstanceOf('Rentgen\Database\Column\BooleanColumn', $column);
     }
 
     public function testCreateInstance()
