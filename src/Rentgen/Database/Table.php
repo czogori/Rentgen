@@ -30,6 +30,16 @@ class Table
     }
 
     /**
+     * Get qualified name (schema name + table name)
+     * 
+     * @return string  Qualified name.
+     */
+    public function getQualifiedName()
+    {
+        return $this->getSchema() . '.' .$this->name;
+    }
+
+    /**
      * Add column to table.
      *
      * @param Column $column Column instance.
@@ -111,6 +121,6 @@ class Table
      */
     public function getSchema()
     {
-        return $this->schemaName;
+        return $this->schemaName ?: 'public';
     }
 }
