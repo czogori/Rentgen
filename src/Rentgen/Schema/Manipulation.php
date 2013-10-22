@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Rentgen\Rentgen;
 use Rentgen\Database\Table;
-use Rentgen\Database\Constraint\ForeignKey;
+use Rentgen\Database\Constraint\ConstraintInterface;
 use Rentgen\Database\Constraint\PrimaryKey;
 
 class Manipulation
@@ -65,32 +65,32 @@ class Manipulation
     }
 
     /**
-     * Add a foreign key.
+     * Add a constraint.
      *
-     * @param ForeignKey $foreignKey ForeginKey instance.
+     * @param ContainerInterface $constraint A ContainerInterface instance.
      *
      * @return integer
      */
-    public function addForeignKey(ForeignKey $foreignKey)
+    public function addConstraint(ContainerInterface $constraint)
     {
         return $this->container
-            ->get('add_foreign_key')
-            ->setForeignKey($foreignKey)
+            ->get('add_constraint')
+            ->setForeignKey($constraint)
             ->execute();
     }
 
     /**
      * Drop a foregin key.
      *
-     * @param ForeignKey $foreignKey ForeignKey instance.
+     * @param ForeignKey $constraint A ContainerInterface instance.
      *
      * @return integer
      */
-    public function dropForeignKey(ForeignKey $foreignKey)
+    public function dropConstraint(ContainerInterface $constraint)
     {
         return $this->container
             ->get('drop_constraint')
-            ->setConstraint($foreignKey)
+            ->setConstraint($constraint)
             ->execute();
     }
 
