@@ -67,6 +67,7 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('create_index', 'command.manipulation.create_index.class', $container);
         $this->setDefinition('create_schema', 'command.manipulation.create_schema.class', $container);
         $this->setDefinition('drop_schema', 'command.manipulation.drop_schema.class', $container);
+        $this->setDefinition('drop_index', 'command.manipulation.drop_index.class', $container);
 
         $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);
         $this->setDefinition('get_table', 'command.info.get_table.class', $container);
@@ -129,6 +130,7 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('command.manipulation.add_foreign_key.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddForeignKeyCommand');
         $container->setParameter('command.manipulation.drop_constraint.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropConstraintCommand');
         $container->setParameter('command.manipulation.create_index.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateIndexCommand');
+        $container->setParameter('command.manipulation.drop_index.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropIndexCommand');
         $container->setParameter('command.manipulation.create_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateSchemaCommand');
         $container->setParameter('command.manipulation.drop_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropSchemaCommand');
         $container->setParameter('command.info.table_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand');
