@@ -24,11 +24,4 @@ class DropConstraintCommand extends Command
 
         return $sql;
     }
-
-    private function getSchema()
-    {
-        $schemaName = $this->constraint->getTable()->getSchema();
-
-        return empty($schemaName) ? 'public' : $schemaName;
-    }
 }
