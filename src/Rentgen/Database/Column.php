@@ -56,6 +56,16 @@ abstract class Column
         return $this->isNotNull;
     }
 
+    public function setTable(Table $table)
+    {
+        $this->table = $table;
+    }
+
+    public function getTable()
+    {
+        return $this->table;
+    }
+
     /**
      * Get column type name.
      *
