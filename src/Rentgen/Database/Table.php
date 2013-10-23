@@ -17,12 +17,13 @@ class Table
     /**
      * Constructor.
      *
-     * @param string $name Table name.
+     * @param string $name  Table name.
+     * @param Schema $schem Schema instance.
      */
-    public function __construct($name)
+    public function __construct($name, Schema $schema = null)
     {
-        $this->name = $name;
-        $this->schema = new Schema();
+        $this->name = $name;        
+        $this->schema = null === $schema ? new Schema() : $schema;         
     }
 
     /**

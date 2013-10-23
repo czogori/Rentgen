@@ -31,7 +31,7 @@ class CreateTableCommandTest extends TestHelpers
 
     public function testExecute()
     {
-        $table = new Table('foo', array());
+        $table = new Table('foo');
         $createTableCommand = new CreateTableCommand();
         $createTableCommand
             ->setConnection($this->connection)
