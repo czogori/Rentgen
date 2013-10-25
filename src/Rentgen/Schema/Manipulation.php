@@ -103,7 +103,7 @@ class Manipulation
     {
         return $this->container
             ->get('add_constraint')
-            ->setForeignKey($constraint)
+            ->setConstraint($constraint)
             ->execute();
     }
 
