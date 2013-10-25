@@ -95,11 +95,11 @@ class Manipulation
     /**
      * Add a constraint.
      *
-     * @param ContainerInterface $constraint A ContainerInterface instance.
+     * @param ConstraintInterface $constraint A ConstraintInterface instance.
      *
      * @return integer
      */
-    public function addConstraint(ContainerInterface $constraint)
+    public function addConstraint(ConstraintInterface $constraint)
     {
         return $this->container
             ->get('add_constraint')
@@ -110,11 +110,11 @@ class Manipulation
     /**
      * Drop a foregin key.
      *
-     * @param ForeignKey $constraint A ContainerInterface instance.
+     * @param ForeignKey $constraint A ConstraintInterface instance.
      *
      * @return integer
      */
-    public function dropConstraint(ContainerInterface $constraint)
+    public function dropConstraint(ConstraintInterface $constraint)
     {
         return $this->container
             ->get('drop_constraint')
