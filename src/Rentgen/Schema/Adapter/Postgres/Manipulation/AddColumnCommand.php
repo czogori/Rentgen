@@ -2,21 +2,13 @@
 namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
-use Rentgen\Database\Table;
 use Rentgen\Database\Column;
 use Rentgen\Event\ColumnEvent;
+use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 
 class AddColumnCommand extends Command
-{
-    private $table;
+{ 
     private $column;
-
-    public function setTable(Table $table)
-    {
-        $this->table = $table;
-
-        return $this;
-    }
 
     public function setColumn(Column $column)
     {
@@ -27,22 +19,18 @@ class AddColumnCommand extends Command
 
     public function getSql()
     {
+        $columnTypeMapper = new ColumnTypeMapper();
+        
         $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s;'
-            , $this->table->getName()
+            , $this->column->getTable()->getQualifiedName()
             , $this->column->getName()
-            , $this->column->getType()
+            , $columnTypeMapper->getNative($this->column->getType())
         );
-
         return $sql;
-    }
-
-    protected function preExecute()
-    {
-
     }
 
     protected function postExecute()
     {
-        $this->dispatcher->dispatch('column.create', new ColumnEvent($this->table, $this->getSql()));
+        $this->dispatcher->dispatch('column.add', new ColumnEvent($this->column, $this->getSql()));
     }
 }

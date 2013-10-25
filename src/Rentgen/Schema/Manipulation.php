@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Rentgen\Rentgen;
 use Rentgen\Database\Table;
+use Rentgen\Database\Column;
 use Rentgen\Database\Constraint\ConstraintInterface;
 use Rentgen\Database\Constraint\PrimaryKey;
 
@@ -60,8 +61,35 @@ class Manipulation
         if ($cascade) {
             $dropTableCommand->cascade();
         }
+        return $dropTableCommand->execute();
+    }
 
-           return $dropTableCommand->execute();
+    /**
+     * Add a column to a table.
+     *
+     * @param  Column   $table   A Column instance     
+     * @return integer
+     */
+    public function addColumn(Column $column)
+    {
+        $command = $this->container
+            ->get('add_column')
+            ->setColumn($column);
+        return $command->execute();
+    }
+
+    /**
+     * Drop a column from a table.
+     *
+     * @param  Column  $table A column instance     
+     * @return integer
+     */
+    public function dropColumn(Column $column)
+    {
+        $command = $this->container
+            ->get('drop_column')
+            ->setColumn($column);
+        return $command->execute();
     }
 
     /**
