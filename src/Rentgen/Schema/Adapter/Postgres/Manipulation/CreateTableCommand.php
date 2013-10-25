@@ -40,6 +40,12 @@ class CreateTableCommand extends Command
     private function columns()
     {
         $columnTypeMapper = new ColumnTypeMapper();
+
+        foreach ($this->table->getConstraints() as $constraint) {
+            if($constraint instanceof PrimaryKey) {
+                $this->primaryKey = $constraint;
+            }
+        }
         if (!$this->primaryKey) {
             $this->primaryKey = new PrimaryKey();
             $this->primaryKey->setTable($this->table);
@@ -49,8 +55,6 @@ class CreateTableCommand extends Command
         if (!$this->primaryKey->isMulti()) {
             if ($this->primaryKey->isAutoIncrement()) {
                 $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());
-            } else {
-                $sql = sprintf('%s integer NOT NULL,', $this->primaryKey->getColumns());
             }
         }
         foreach ($this->table->getColumns() as $column) {
@@ -63,7 +67,6 @@ class CreateTableCommand extends Command
             );
         }
         $sql .= (string) $this->primaryKey;
-
         return $sql;
     }
 
