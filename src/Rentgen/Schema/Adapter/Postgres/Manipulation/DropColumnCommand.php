@@ -31,7 +31,7 @@ class DropColumnCommand extends Command
     public function getSql()
     {
         $sql = sprintf('ALTER TABLE %s DROP COLUMN %s;'
-            , $this->column->getTable()->getName()
+            , $this->column->getTable()->getQualifiedName()
             , $this->column->getName()            
         );
         return $sql;
