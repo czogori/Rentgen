@@ -96,6 +96,7 @@ class Table
      */
     public function addConstraint(ConstraintInterface $constraint)
     {
+        $constraint->setTable($this);
         $this->constraints[] = $constraint;
 
         return $this;
