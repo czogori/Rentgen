@@ -19,15 +19,13 @@ class AddColumnCommandTest extends TestHelpers
 
     public function testGetSql()
     {
-        $addColumnCommand = new AddColumnCommand();
-        $addColumnCommand->setTable(new Table('foo'));
-        $addColumnCommand->setColumn(new StringColumn('name'));
+        $column = new StringColumn('name');
+        $column->setTable(new Table('foo'));
+        
+        $addColumnCommand = new AddColumnCommand();        
+        $addColumnCommand->setColumn($column);
 
-        $sql = 'ALTER TABLE foo ADD COLUMN name string;';
+        $sql = 'ALTER TABLE public.foo ADD COLUMN name character varying;';
         $this->assertEquals($sql, $addColumnCommand->getSql());
-    }
-
-    public function testExecute()
-    {
     }
 }

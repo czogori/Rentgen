@@ -24,9 +24,9 @@ class PrimaryKey implements ConstraintInterface
 
     public function getColumns()
     {
-        return $this->isMulti()
-            ?  implode(',', $this->columns)
-            :  $this->table->getName() . '_id';
+        return empty($this->columns)
+            ?  $this->table->getName() . '_id'
+            :  implode(',', $this->columns);
     }
 
     public function isMulti()
@@ -46,6 +46,7 @@ class PrimaryKey implements ConstraintInterface
         return true === $this->isAutoIncrement;
     }
 
+    // TODO Remove this code
     public function __toString()
     {
         return  sprintf('CONSTRAINT %s PRIMARY KEY (%s)'

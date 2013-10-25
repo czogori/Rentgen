@@ -55,6 +55,8 @@ class CreateTableCommand extends Command
         if (!$this->primaryKey->isMulti()) {
             if ($this->primaryKey->isAutoIncrement()) {
                 $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());
+            } else {
+                $sql = sprintf('%s integer NOT NULL,', $this->primaryKey->getColumns());    
             }
         }
         foreach ($this->table->getColumns() as $column) {
