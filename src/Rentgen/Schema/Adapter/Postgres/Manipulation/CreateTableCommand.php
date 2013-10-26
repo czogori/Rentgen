@@ -11,19 +11,10 @@ use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 class CreateTableCommand extends Command
 {
     private $table;
-    private $primaryKey;
 
     public function setTable(Table $table)
     {
         $this->table = $table;
-
-        return $this;
-    }
-
-    public function setPrimaryKey(PrimaryKey $primaryKey)
-    {
-        $this->primaryKey = $primaryKey;
-        $this->primaryKey->setTable($this->table);
 
         return $this;
     }
@@ -43,22 +34,18 @@ class CreateTableCommand extends Command
 
         foreach ($this->table->getConstraints() as $constraint) {
             if($constraint instanceof PrimaryKey) {
-                $this->primaryKey = $constraint;
+                $primaryKey = $constraint;
             }
         }
-        if (!$this->primaryKey) {
-            $this->primaryKey = new PrimaryKey();
-            $this->primaryKey->setTable($this->table);
+        if (!isset($primaryKey)) {
+            $primaryKey = new PrimaryKey();
+            $primaryKey->setTable($this->table);
         }
 
         $sql = '';
-        if (!$this->primaryKey->isMulti()) {
-            if ($this->primaryKey->isAutoIncrement()) {
-                $sql = sprintf('%s serial NOT NULL,', $this->primaryKey->getColumns());
-            } else {
-                $sql = sprintf('%s integer NOT NULL,', $this->primaryKey->getColumns());    
-            }
-        }
+        if (!$primaryKey->isMulti() && $primaryKey->isAutoCreateColumn()) {
+            $sql = sprintf('%s %s NOT NULL,', $primaryKey->getColumns(), $primaryKey->isAutoIncrement() ? 'serial' : 'integer');
+        }        
         foreach ($this->table->getColumns() as $column) {
             $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
@@ -68,7 +55,7 @@ class CreateTableCommand extends Command
                 , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $this->addQuotesIfNeeded($column, $column->getDefault())
             );
         }
-        $sql .= (string) $this->primaryKey;
+        $sql .= (string) $primaryKey;
         return $sql;
     }
 

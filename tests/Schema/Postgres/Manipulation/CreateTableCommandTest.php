@@ -47,12 +47,12 @@ class CreateTableCommandTest extends TestHelpers
         $table = new Table('test');
         $table->addColumn(new StringColumn('foo'));
         $table->addColumn(new StringColumn('bar'));
+        $table->addConstraint(new PrimaryKey(array('foo', 'bar')));
         $createTableCommand = new CreateTableCommand();
         $createTableCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->setTable($table)
-            ->setPrimaryKey(new PrimaryKey(array('foo', 'bar')))
+            ->setTable($table)            
             ->execute();
 
         $this->assertTrue($this->tableExists('test'));
@@ -62,12 +62,13 @@ class CreateTableCommandTest extends TestHelpers
     {
         $primaryKey = new PrimaryKey();
         $primaryKey->disableAutoIncrement();
+        $table = new Table('foo');
+        $table->addConstraint($primaryKey);
         $createTableCommand = new CreateTableCommand();
         $createTableCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->setTable(new Table('foo'))
-            ->setPrimaryKey($primaryKey)
+            ->setTable($table)            
             ->execute();
 
         $getTableCommand = new GetTableCommand();

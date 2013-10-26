@@ -34,15 +34,12 @@ class Manipulation
      */
     public function createTable(Table $table, array $constraints = array())
     {
+        foreach ($constraints as $constraint) {
+            $table->addConstraint($constraint);
+        }
         $command = $this->container
             ->get('create_table')
             ->setTable($table);
-        foreach ($constraints as $constraint) {
-            if ($constraint instanceof PrimaryKey) {
-                $command->setPrimaryKey($constraint);
-            }
-        }
-
         return $command->execute();
     }
 

@@ -9,12 +9,15 @@ class PrimaryKey implements ConstraintInterface
     private $name;
     private $columns;
     private $isAutoIncrement = true;
-
+    private $autoCreateColumn = false;
     private $table;
 
     public function __construct(array $columns = array())
     {
         $this->columns = $columns;
+        if(empty($this->columns)) {
+            $this->autoCreateColumn = true;         
+        }
     }
 
     public function getName()
@@ -25,8 +28,13 @@ class PrimaryKey implements ConstraintInterface
     public function getColumns()
     {
         return empty($this->columns)
-            ?  $this->table->getName() . '_id'
-            :  implode(',', $this->columns);
+            ? $this->table->getName() . '_id'
+            : implode(',', $this->columns);        
+    }
+
+    public function isAutoCreateColumn()
+    {
+        return $this->autoCreateColumn;
     }
 
     public function isMulti()
