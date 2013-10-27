@@ -12,6 +12,11 @@ class PrimaryKey implements ConstraintInterface
     private $autoCreateColumn = false;
     private $table;
 
+    /**
+     * Constructor.
+     * 
+     * @param array $columns Column names.
+     */
     public function __construct(array $columns = array())
     {
         $this->columns = $columns;
@@ -20,11 +25,15 @@ class PrimaryKey implements ConstraintInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */    
     public function getName()
     {
         return $this->table->getName() . '_pkey';
     }
 
+    // TODO hmmmmmm....
     public function getColumns()
     {
         return empty($this->columns)
@@ -32,16 +41,31 @@ class PrimaryKey implements ConstraintInterface
             : implode(',', $this->columns);        
     }
 
+    /**
+     * Return true if the primary key is auto create column.
+     * 
+     * @return bool Auto create column
+     */
     public function isAutoCreateColumn()
     {
         return $this->autoCreateColumn;
     }
 
+    /**
+     * Return true if the primary key is multi.
+     * 
+     * @return bool Multi columns.
+     */
     public function isMulti()
     {
         return count($this->columns) > 1;
     }
 
+    /**
+     * Disable auto increment.
+     * 
+     * @return PrimaryKey Self.
+     */
     public function disableAutoIncrement()
     {
         $this->isAutoIncrement = false;
@@ -49,6 +73,11 @@ class PrimaryKey implements ConstraintInterface
         return $this;
     }
 
+    /**
+     * Return true if the primary key is auto increment.
+     * 
+     * @return bool Auto increment.
+     */
     public function isAutoIncrement()
     {
         return true === $this->isAutoIncrement;
@@ -63,13 +92,24 @@ class PrimaryKey implements ConstraintInterface
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */    
     public function getTable()
     {
         return $this->table;
     }
 
+    /**
+     * Set table instance.
+     * 
+     * @param Table $table Table instance.
+     * 
+     * @return PrimaryKey Self.
+     */
     public function setTable(Table $table)
     {
         $this->table = $table;
+        return $this;
     }
 }
