@@ -16,7 +16,9 @@ class DropIndexCommand extends Command
 
     public function getSql()
     {
-        $sql = sprintf('DROP INDEX %s;', $this->index->getName());
+        $sql = sprintf('DROP INDEX %s.%s;'
+            , $this->index->getTable()->getSchema()->getName()
+            , $this->index->getName());
         return $sql;
     }
 }

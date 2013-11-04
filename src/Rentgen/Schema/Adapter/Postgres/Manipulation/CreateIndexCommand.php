@@ -18,7 +18,7 @@ class CreateIndexCommand extends Command
     {        
         $sql = sprintf('CREATE INDEX %s ON %s (%s);'            
             , $this->index->getName()
-            , $this->index->getTable()->getName()
+            , $this->index->getTable()->getQualifiedName()
             , implode(',', $this->index->getColumns()));
         return $sql;
     }
