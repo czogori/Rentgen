@@ -9,6 +9,7 @@ use Rentgen\Database\Table;
 use Rentgen\Database\Column;
 use Rentgen\Database\Constraint\ConstraintInterface;
 use Rentgen\Database\Constraint\PrimaryKey;
+use Rentgen\Database\Index;
 
 class Manipulation
 {
@@ -117,6 +118,34 @@ class Manipulation
             ->get('drop_constraint')
             ->setConstraint($constraint)
             ->execute();
+    }
+
+     /**
+     * Create a index.
+     *
+     * @param  Index  $indx Index instance.
+     * @return integer
+     */
+    public function createIndex(Index $index)
+    {
+        $command = $this->container
+            ->get('create_index')
+            ->setIndex($index);
+        return $command->execute();
+    }
+
+     /**
+     * Drop a index.
+     *
+     * @param  Index  $index Index instance.
+     * @return integer
+     */
+    public function dropIndex(Index $index)
+    {
+        $command = $this->container
+            ->get('drop_index')
+            ->setIndex($index);
+        return $command->execute();
     }
 
     /**
