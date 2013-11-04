@@ -6,17 +6,17 @@ use Rentgen\Schema\Command;
 
 class DropIndexCommand extends Command
 {
-    private $indexName;
+    private $index;
 
-    public function setIndexName($indexName)
+    public function setIndex(Index $index)
     {
-        $this->indexName = $indexName;
+        $this->index = $index;
         return $this;
     }
 
     public function getSql()
     {
-        $sql = sprintf('DROP INDEX %s;', $this->indexName);
+        $sql = sprintf('DROP INDEX %s;', $this->index->getName());
         return $sql;
     }
 }
