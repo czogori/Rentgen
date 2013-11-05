@@ -13,7 +13,7 @@ class UniqueTest extends \PHPUnit_Framework_TestCase
 {
 	protected function setUp()
 	{
-    	$this->unique = new Unique(new Table('test'), array('foo', 'bar'));		
+    	$this->unique = new Unique(array('foo', 'bar'), new Table('test'));		
 	}
     
     public function testGetName()

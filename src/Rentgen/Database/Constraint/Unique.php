@@ -13,10 +13,10 @@ class Unique implements ConstraintInterface
     /**
      * Constructor.
      * 
-     * @param datatype $table Table instance.
-     * @param array    $columns Column names.
+     * @param array|string $columns Column names.
+     * @param datatype     $table   Table instance.
      */
-    public function __construct(Table $table, $columns)
+    public function __construct($columns, Table $table)
     {
         $this->table = $table;        
         $this->columns = is_string($columns) ? array($columns) : $columns;

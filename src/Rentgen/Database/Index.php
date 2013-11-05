@@ -13,7 +13,7 @@ class Index
      * @param array|string $columns Columns of index.
      * @param Table        $table   Table instance.
      */
-    public function __construct($columns = array(), Table $table)
+    public function __construct($columns, Table $table)
     {
         $this->columns = is_string($columns) ? array($columns) : $columns;        
         $this->table = $table;
