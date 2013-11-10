@@ -11,6 +11,7 @@ class DropIndexCommand extends Command
     public function setIndex(Index $index)
     {
         $this->index = $index;
+
         return $this;
     }
 
@@ -19,6 +20,7 @@ class DropIndexCommand extends Command
         $sql = sprintf('DROP INDEX %s.%s;'
             , $this->index->getTable()->getSchema()->getName()
             , $this->index->getName());
+
         return $sql;
     }
 }

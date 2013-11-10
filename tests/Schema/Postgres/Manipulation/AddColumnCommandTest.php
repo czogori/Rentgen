@@ -21,8 +21,8 @@ class AddColumnCommandTest extends TestHelpers
     {
         $column = new StringColumn('name');
         $column->setTable(new Table('foo'));
-        
-        $addColumnCommand = new AddColumnCommand();        
+
+        $addColumnCommand = new AddColumnCommand();
         $addColumnCommand->setColumn($column);
 
         $sql = 'ALTER TABLE public.foo ADD COLUMN name character varying;';

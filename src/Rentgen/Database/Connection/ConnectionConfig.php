@@ -10,20 +10,20 @@ class ConnectionConfig implements ConnectionConfigInterface
 
     public function __construct(array $config = array())
     {
-        if(isset($config['dsn'])) {
-            $this->dsn = $config['dsn'];            
+        if (isset($config['dsn'])) {
+            $this->dsn = $config['dsn'];
             $config = array_merge($config, $this->parseDsn($config['dsn']));
         } else {
             $this->dsn = sprintf('%s:host=%s; port=%s; dbname=%s;'
                 , $config['adapter']
                 , $config['host']
                 , $config['port']
-                , $config['database']);      
-            
-        }   
-        $this->adapter = $config['adapter'];     
+                , $config['database']);
+
+        }
+        $this->adapter = $config['adapter'];
         $this->username = $config['username'];
-        $this->password = $config['password'];        
+        $this->password = $config['password'];
     }
 
     public function getUsername()
@@ -49,9 +49,10 @@ class ConnectionConfig implements ConnectionConfigInterface
     private function parseDsn($dsn)
     {
         $config = array();
-        if(preg_match('/^(.*):/', $dsn, $matches)) {
-            $config['adapter'] = $matches[1];            
+        if (preg_match('/^(.*):/', $dsn, $matches)) {
+            $config['adapter'] = $matches[1];
         }
+
         return $config;
     }
 }

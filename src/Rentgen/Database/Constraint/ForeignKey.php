@@ -13,7 +13,7 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * Constructor.
-     * 
+     *
      * @param Table $table           Table instance.
      * @param Table $referencedTable Table reference instance.
      */
@@ -25,7 +25,7 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * {@inheritdoc}
-     */    
+     */
     public function getName()
     {
         $tableName = $this->table->getName();
@@ -36,7 +36,7 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * {@inheritdoc}
-     */    
+     */
     public function getTable()
     {
         return $this->table;
@@ -44,7 +44,7 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * Get reference table name.
-     * 
+     *
      * @return string Reference table name.
      */
     public function getReferencedTable()
@@ -54,9 +54,9 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * Set foreign key columns.
-     * 
+     *
      * @param array $columns Columns list.
-     * 
+     *
      * @return ForeignKey Self instance.
      */
     public function setColumns($columns)
@@ -71,7 +71,7 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * Get column names.
-     * 
+     *
      * @return array Column names.
      */
     public function getColumns()
@@ -81,9 +81,9 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * Set foreign key reference columns.
-     * 
+     *
      * @param array $columns Columns list.
-     * 
+     *
      * @return ForeignKey Self instance.
      */
     public function setReferencedColumns($columns)
@@ -98,7 +98,7 @@ class ForeignKey implements ConstraintInterface
 
     /**
      * Get reference column names.
-     * 
+     *
      * @return array Column names.
      */
     public function getReferencedColumns()
@@ -109,60 +109,70 @@ class ForeignKey implements ConstraintInterface
     public function onUpdateNoAction()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onUpdateRestrict()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onUpdateCascade()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onUpdateSetNull()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onUpdateSetDefault()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onDeleteNoAction()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onDeleteRestrict()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onDeleteCascade()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onDeleteSetNull()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 
     public function onDeleteSetDefault()
     {
         throw new Exception('Not implemented');
+
         return $this;
     }
 }

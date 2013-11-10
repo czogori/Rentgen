@@ -7,7 +7,7 @@ use Rentgen\Event\ColumnEvent;
 use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 
 class AddColumnCommand extends Command
-{ 
+{
     private $column;
 
     public function setColumn(Column $column)
@@ -20,12 +20,13 @@ class AddColumnCommand extends Command
     public function getSql()
     {
         $columnTypeMapper = new ColumnTypeMapper();
-        
+
         $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s;'
             , $this->column->getTable()->getQualifiedName()
             , $this->column->getName()
             , $columnTypeMapper->getNative($this->column->getType())
         );
+
         return $sql;
     }
 

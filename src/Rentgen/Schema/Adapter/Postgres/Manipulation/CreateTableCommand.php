@@ -20,8 +20,8 @@ class CreateTableCommand extends Command
     }
 
     public function getSql()
-    {        
-        $sql = sprintf('CREATE TABLE %s(%s);'     
+    {
+        $sql = sprintf('CREATE TABLE %s(%s);'
             , $this->table->getQualifiedName()
             , $this->columns());
 
@@ -33,7 +33,7 @@ class CreateTableCommand extends Command
         $columnTypeMapper = new ColumnTypeMapper();
 
         foreach ($this->table->getConstraints() as $constraint) {
-            if($constraint instanceof PrimaryKey) {
+            if ($constraint instanceof PrimaryKey) {
                 $primaryKey = $constraint;
             }
         }
@@ -45,7 +45,7 @@ class CreateTableCommand extends Command
         $sql = '';
         if (!$primaryKey->isMulti() && $primaryKey->isAutoCreateColumn()) {
             $sql = sprintf('%s %s NOT NULL,', $primaryKey->getColumns(), $primaryKey->isAutoIncrement() ? 'serial' : 'integer');
-        }        
+        }
         foreach ($this->table->getColumns() as $column) {
             $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
@@ -56,6 +56,7 @@ class CreateTableCommand extends Command
             );
         }
         $sql .= (string) $primaryKey;
+
         return $sql;
     }
 

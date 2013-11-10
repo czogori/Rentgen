@@ -14,20 +14,20 @@ class PrimaryKey implements ConstraintInterface
 
     /**
      * Constructor.
-     * 
+     *
      * @param array $columns Column names.
      */
     public function __construct(array $columns = array())
     {
         $this->columns = $columns;
-        if(empty($this->columns)) {
-            $this->autoCreateColumn = true;         
+        if (empty($this->columns)) {
+            $this->autoCreateColumn = true;
         }
     }
 
     /**
      * {@inheritdoc}
-     */    
+     */
     public function getName()
     {
         return $this->table->getName() . '_pkey';
@@ -38,12 +38,12 @@ class PrimaryKey implements ConstraintInterface
     {
         return empty($this->columns)
             ? $this->table->getName() . '_id'
-            : implode(',', $this->columns);        
+            : implode(',', $this->columns);
     }
 
     /**
      * Return true if the primary key is auto create column.
-     * 
+     *
      * @return bool Auto create column
      */
     public function isAutoCreateColumn()
@@ -53,7 +53,7 @@ class PrimaryKey implements ConstraintInterface
 
     /**
      * Return true if the primary key is multi.
-     * 
+     *
      * @return bool Multi columns.
      */
     public function isMulti()
@@ -63,7 +63,7 @@ class PrimaryKey implements ConstraintInterface
 
     /**
      * Disable auto increment.
-     * 
+     *
      * @return PrimaryKey Self.
      */
     public function disableAutoIncrement()
@@ -75,7 +75,7 @@ class PrimaryKey implements ConstraintInterface
 
     /**
      * Return true if the primary key is auto increment.
-     * 
+     *
      * @return bool Auto increment.
      */
     public function isAutoIncrement()
@@ -94,7 +94,7 @@ class PrimaryKey implements ConstraintInterface
 
     /**
      * {@inheritdoc}
-     */    
+     */
     public function getTable()
     {
         return $this->table;
@@ -102,14 +102,15 @@ class PrimaryKey implements ConstraintInterface
 
     /**
      * Set table instance.
-     * 
+     *
      * @param Table $table Table instance.
-     * 
+     *
      * @return PrimaryKey Self.
      */
     public function setTable(Table $table)
     {
         $this->table = $table;
+
         return $this;
     }
 }

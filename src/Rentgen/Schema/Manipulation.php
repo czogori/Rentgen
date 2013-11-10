@@ -8,7 +8,6 @@ use Rentgen\Rentgen;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
 use Rentgen\Database\Constraint\ConstraintInterface;
-use Rentgen\Database\Constraint\PrimaryKey;
 use Rentgen\Database\Index;
 
 class Manipulation
@@ -41,6 +40,7 @@ class Manipulation
         $command = $this->container
             ->get('create_table')
             ->setTable($table);
+
         return $command->execute();
     }
 
@@ -59,13 +59,14 @@ class Manipulation
         if ($cascade) {
             $dropTableCommand->cascade();
         }
+
         return $dropTableCommand->execute();
     }
 
     /**
      * Add a column to a table.
      *
-     * @param  Column   $table   A Column instance     
+     * @param  Column  $table A Column instance
      * @return integer
      */
     public function addColumn(Column $column)
@@ -73,13 +74,14 @@ class Manipulation
         $command = $this->container
             ->get('add_column')
             ->setColumn($column);
+
         return $command->execute();
     }
 
     /**
      * Drop a column from a table.
      *
-     * @param  Column  $table A column instance     
+     * @param  Column  $table A column instance
      * @return integer
      */
     public function dropColumn(Column $column)
@@ -87,6 +89,7 @@ class Manipulation
         $command = $this->container
             ->get('drop_column')
             ->setColumn($column);
+
         return $command->execute();
     }
 
@@ -123,7 +126,7 @@ class Manipulation
      /**
      * Create a index.
      *
-     * @param  Index  $indx Index instance.
+     * @param  Index   $indx Index instance.
      * @return integer
      */
     public function createIndex(Index $index)
@@ -131,13 +134,14 @@ class Manipulation
         $command = $this->container
             ->get('create_index')
             ->setIndex($index);
+
         return $command->execute();
     }
 
      /**
      * Drop a index.
      *
-     * @param  Index  $index Index instance.
+     * @param  Index   $index Index instance.
      * @return integer
      */
     public function dropIndex(Index $index)
@@ -145,6 +149,7 @@ class Manipulation
         $command = $this->container
             ->get('drop_index')
             ->setIndex($index);
+
         return $command->execute();
     }
 

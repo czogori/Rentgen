@@ -3,7 +3,7 @@
 namespace Rentgen\Database;
 
 class Index
-{    
+{
     private $columns = array();
     private $table;
 
@@ -15,13 +15,13 @@ class Index
      */
     public function __construct($columns, Table $table)
     {
-        $this->columns = is_string($columns) ? array($columns) : $columns;        
+        $this->columns = is_string($columns) ? array($columns) : $columns;
         $this->table = $table;
     }
 
     /**
      * Get index name.
-     * 
+     *
      * @return string Index name.
      */
     public function getName()
@@ -40,14 +40,13 @@ class Index
     }
 
     /**
-     * Get table instance. 
-     * 
+     * Get table instance.
+     *
      * @return Table Table instance.
      */
     public function getTable()
-    {        
+    {
         return $this->table;
     }
 
-    
 }

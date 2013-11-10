@@ -18,7 +18,7 @@ class RentgenExtension implements ExtensionInterface
     {
         $connectionConfig = array();
         foreach ($configs as $config) {
-            if($this->isConnectionConfig($config)) {
+            if ($this->isConnectionConfig($config)) {
                 $connectionConfig = $config;
             }
         }
@@ -145,7 +145,7 @@ class RentgenExtension implements ExtensionInterface
 
     private function isConnectionConfig($config)
     {
-        return isset($config['username']) 
+        return isset($config['username'])
             && isset($config['password'])
             && isset($config['dsn']);
     }

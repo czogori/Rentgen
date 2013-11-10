@@ -12,12 +12,14 @@ class RenameTableCommand extends Command
     public function setTable(Table $table)
     {
         $this->table = $table;
+
         return $this;
-    }    
+    }
 
     public function setNewName($newTableName)
     {
         $this->newTableName = $newTableName;
+
         return $this;
     }
 
@@ -26,10 +28,11 @@ class RenameTableCommand extends Command
         $schemaName = $this->table->getSchema();
         $schema = empty($schemaName) ? 'public' : $schemaName;
 
-        $sql = sprintf('ALTER TABLE %s RENAME TO %s;'            
+        $sql = sprintf('ALTER TABLE %s RENAME TO %s;'
             , $this->table->getQualifiedName()
             , $this->newTableName
-        );    
+        );
+
         return $sql;
     }
 
@@ -38,6 +41,6 @@ class RenameTableCommand extends Command
     }
 
     protected function postExecute()
-    {        
+    {
     }
 }

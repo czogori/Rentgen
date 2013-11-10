@@ -13,6 +13,7 @@ class GetTableCommand extends Command
     public function setTableName($tableName)
     {
         $this->tableName = $tableName;
+
         return $this;
     }
 
@@ -22,6 +23,7 @@ class GetTableCommand extends Command
             column_default, character_maximum_length, numeric_precision, numeric_scale
             FROM information_schema.columns
             WHERE table_name ='%s';", $this->tableName);
+
         return $sql;
     }
 
@@ -34,9 +36,9 @@ class GetTableCommand extends Command
         $this->postExecute();
 
         $table = new Table($this->tableName);
-        if(null === $table->getSchema()) {
+        if (null === $table->getSchema()) {
             $table->setSchema($columns[0]['table_schema']);
-        }  
+        }
         $columnCreator = new ColumnCreator();
         foreach ($columns as $column) {
             $columnType = $columnTypeMapper->getCommon($column['data_type']);
@@ -51,6 +53,7 @@ class GetTableCommand extends Command
             $column = $columnCreator->create($column['column_name'], $columnType, $options);
             $table->addColumn($column);
         }
+
         return $table;
     }
 
@@ -92,7 +95,7 @@ LEFT JOIN information_schema.constraint_column_usage ccu
 
         $constraints = $this->connection->query($sql);
 
-        foreach ($constraints as $constraint) {           
+        foreach ($constraints as $constraint) {
         }
     }
 }

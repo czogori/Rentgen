@@ -5,7 +5,7 @@ namespace Rentgen\Database;
 class Schema
 {
     private $name;
-    
+
     /**
      * Constructor.
      *
@@ -24,5 +24,5 @@ class Schema
     public function getName()
     {
         return $this->name ?: 'public'; //TODO to remove
-    }    
+    }
 }

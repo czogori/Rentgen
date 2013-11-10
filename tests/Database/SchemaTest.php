@@ -11,13 +11,13 @@ class SchemaTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateInstanceWithoutSchemaName()
     {
-        $schema = new Schema();        
+        $schema = new Schema();
         $this->assertEquals('public', $schema->getName());
     }
 
     public function testCreateInstanceWithSchemaName()
     {
-        $schema = new Schema('foo');        
+        $schema = new Schema('foo');
         $this->assertEquals('foo', $schema->getName());
     }
 }

@@ -2,7 +2,6 @@
 namespace Rentgen\Schema\Adapter\Postgres\Info;
 
 use Rentgen\Schema\Command;
-use Rentgen\Database\Table;
 
 class SchemaExistsCommand extends Command
 {
@@ -16,8 +15,9 @@ class SchemaExistsCommand extends Command
     }
 
     public function getSql()
-    {       
-        $sql = sprintf("SELECT count(schema_name) FROM information_schema.schemata WHERE schema_name = '%s';", $this->schemaName);            
+    {
+        $sql = sprintf("SELECT count(schema_name) FROM information_schema.schemata WHERE schema_name = '%s';", $this->schemaName);
+
         return $sql;
     }
 

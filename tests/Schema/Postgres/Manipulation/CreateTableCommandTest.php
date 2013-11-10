@@ -52,7 +52,7 @@ class CreateTableCommandTest extends TestHelpers
         $createTableCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->setTable($table)            
+            ->setTable($table)
             ->execute();
 
         $this->assertTrue($this->tableExists('test'));
@@ -68,7 +68,7 @@ class CreateTableCommandTest extends TestHelpers
         $createTableCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->setTable($table)            
+            ->setTable($table)
             ->execute();
 
         $getTableCommand = new GetTableCommand();

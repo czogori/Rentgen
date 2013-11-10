@@ -23,7 +23,7 @@ class Info
     /**
      * Get table information.
      *
-     * @param Table $table Table instance.     
+     * @param Table $table Table instance.
      *
      * @return Table Table instance.
      */
@@ -38,7 +38,7 @@ class Info
     /**
      * If table exists.
      *
-     * @param Table $table Table instance.     
+     * @param Table $table Table instance.
      *
      * @return Boolean
      */

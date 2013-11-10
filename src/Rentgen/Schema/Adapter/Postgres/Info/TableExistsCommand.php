@@ -16,7 +16,7 @@ class TableExistsCommand extends Command
     }
 
     public function getSql()
-    {        
+    {
         $sql = sprintf(
             "SELECT count(table_name) FROM information_schema.tables WHERE table_schema = '%s' AND table_name = '%s';"
             , $this->table->getSchema()->getName()

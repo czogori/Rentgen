@@ -22,8 +22,8 @@ class Table
      */
     public function __construct($name, Schema $schema = null)
     {
-        $this->name = $name;        
-        $this->schema = null === $schema ? new Schema() : $schema;         
+        $this->name = $name;
+        $this->schema = null === $schema ? new Schema() : $schema;
     }
 
     /**
@@ -38,8 +38,8 @@ class Table
 
     /**
      * Get qualified name (schema name + table name)
-     * 
-     * @return string  Qualified name.
+     *
+     * @return string Qualified name.
      */
     public function getQualifiedName()
     {
