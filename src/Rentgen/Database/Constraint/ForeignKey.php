@@ -43,6 +43,20 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
+     * Set table instance.
+     *
+     * @param Table $table Table instance.
+     *
+     * @return PrimaryKey Self.
+     */
+    public function setTable(Table $table)
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
+    /**
      * Get reference table name.
      *
      * @return string Reference table name.

@@ -16,7 +16,7 @@ class Unique implements ConstraintInterface
      * @param array|string $columns Column names.
      * @param datatype     $table   Table instance.
      */
-    public function __construct($columns, Table $table)
+    public function __construct($columns, Table $table = null)
     {
         $this->table = $table;
         $this->columns = is_string($columns) ? array($columns) : $columns;
@@ -40,6 +40,20 @@ class Unique implements ConstraintInterface
     public function getTable()
     {
         return $this->table;
+    }
+
+    /**
+     * Set table instance.
+     *
+     * @param Table $table Table instance.
+     *
+     * @return PrimaryKey Self.
+     */
+    public function setTable(Table $table)
+    {
+        $this->table = $table;
+
+        return $this;
     }
 
    /**
