@@ -4,7 +4,9 @@ namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 use Rentgen\Schema\Command;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
+use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Constraint\PrimaryKey;
+use Rentgen\Database\Constraint\Unique;
 use Rentgen\Event\TableEvent;
 use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 
@@ -23,12 +25,34 @@ class CreateTableCommand extends Command
     {
         $sql = sprintf('CREATE TABLE %s(%s);'
             , $this->table->getQualifiedName()
-            , $this->columns());
+            , $this->getColumnsSql() . $this->getConstraintsSql());
 
         return $sql;
     }
 
-    private function columns()
+    private function getConstraintsSql()
+    {        
+        $sql = '';
+        foreach ($this->table->getConstraints() as $constraint) {
+            $sql .= ',';
+            if ($constraint instanceof PrimaryKey) {
+                $sql .= (string) $constraint ;
+            } else if ($constraint instanceof ForeignKey) {
+                $sql .= sprintf('CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,'
+                    , $constraint->getName()
+                    , implode(',', $constraint->getColumns())
+                    , $constraint->getReferencedTable()->getQualifiedName()
+                    , implode(',', $constraint->getReferencedColumns()));
+            } else if ($constraint instanceof Unique) {
+                $sql .= sprintf('CONSTRAINT %s UNIQUE (test),'
+                    , $constraint->getName()
+                    , implode(',', $constraint->getColumns()));
+            }
+        }
+        return rtrim($sql, ',');
+    }
+
+    private function getColumnsSql()
     {
         $columnTypeMapper = new ColumnTypeMapper();
 
@@ -37,9 +61,10 @@ class CreateTableCommand extends Command
                 $primaryKey = $constraint;
             }
         }
-        if (!isset($primaryKey)) {
+        if (!isset($primaryKey)) { // TODO find better solution
             $primaryKey = new PrimaryKey();
             $primaryKey->setTable($this->table);
+            $this->table->addConstraint($primaryKey);
         }
 
         $sql = '';
@@ -54,16 +79,12 @@ class CreateTableCommand extends Command
                 , $column->isNotNull() ? 'NOT NULL' : ''
                 , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $this->addQuotesIfNeeded($column, $column->getDefault())
             );
-        }
-        $sql .= (string) $primaryKey;
+        }        
 
-        return $sql;
+        return rtrim($sql, ',');
     }
 
-    protected function preExecute()
-    {
-    }
-
+    
     protected function postExecute()
     {
         $this->dispatcher->dispatch('table.create', new TableEvent($this->table, $this->getSql()));
