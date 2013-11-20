@@ -38,13 +38,13 @@ class CreateTableCommand extends Command
             if ($constraint instanceof PrimaryKey) {
                 $sql .= (string) $constraint ;
             } else if ($constraint instanceof ForeignKey) {
-                $sql .= sprintf('CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,'
+                $sql .= sprintf('CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION'
                     , $constraint->getName()
                     , implode(',', $constraint->getColumns())
                     , $constraint->getReferencedTable()->getQualifiedName()
                     , implode(',', $constraint->getReferencedColumns()));
             } else if ($constraint instanceof Unique) {
-                $sql .= sprintf('CONSTRAINT %s UNIQUE (test),'
+                $sql .= sprintf('CONSTRAINT %s UNIQUE (test)'
                     , $constraint->getName()
                     , implode(',', $constraint->getColumns()));
             }
