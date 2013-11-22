@@ -15,12 +15,12 @@ class PrimaryKey implements ConstraintInterface
     /**
      * Constructor.
      *
-     * @param array $columns Column names.
-     * @param Table $table   Table instance.
+     * @param array|string $columns Column names.
+     * @param Table        $table   Table instance.
      */
-    public function __construct(array $columns = array(), Table $table = null)
+    public function __construct($columns, Table $table = null)
     {        
-        $this->columns = $columns;
+        $this->columns = is_string($columns) ? array($columns) : $columns;        
         if (empty($this->columns)) {
             $this->autoCreateColumn = true;
         }
