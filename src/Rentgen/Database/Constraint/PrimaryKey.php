@@ -18,7 +18,7 @@ class PrimaryKey implements ConstraintInterface
      * @param array|string $columns Column names.
      * @param Table        $table   Table instance.
      */
-    public function __construct($columns, Table $table = null)
+    public function __construct($columns = null, Table $table = null)
     {        
         $this->columns = is_string($columns) ? array($columns) : $columns;        
         if (empty($this->columns)) {
