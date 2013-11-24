@@ -5,6 +5,7 @@ use Rentgen\Schema\Command;
 use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\ColumnCreator;
+use Rentgen\Database\Constraint\PrimaryKey;
 
 class GetTableCommand extends Command
 {
@@ -53,19 +54,12 @@ class GetTableCommand extends Command
             $column = $columnCreator->create($column['column_name'], $columnType, $options);
             $table->addColumn($column);
         }
+        $this->addConstraints($table);
 
         return $table;
     }
 
-    protected function preExecute()
-    {
-    }
-
-    protected function postExecute()
-    {
-    }
-
-    private function getConstraints(Table $table)
+    private function addConstraints(Table $table)
     {
         $sql = sprintf("SELECT tc.constraint_name,
             tc.constraint_type,
@@ -96,6 +90,9 @@ LEFT JOIN information_schema.constraint_column_usage ccu
         $constraints = $this->connection->query($sql);
 
         foreach ($constraints as $constraint) {
+            if($constraint['constraint_type'] === 'PRIMARY KEY') {
+                $table->addConstraint(new PrimaryKey($constraint['column_name'], $table));
+            }            
         }
     }
 }

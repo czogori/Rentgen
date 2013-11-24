@@ -16,25 +16,13 @@ class GetTableCommandTest extends TestHelpers
     public function setUp()
     {
         $this->clearDatabase();
-    }
 
-    public function testGetSql()
-    {
-
+        $columns = array(new StringColumn('name', array('not_null' => true, 'default' => 'foo', 'limit' => 150)));
+        $this->createTable('foo', $columns);
     }
 
     public function testExecute()
     {
-        $table = new Table('foo');
-        $table->addColumn(new StringColumn('name', array('not_null' => true, 'default' => 'foo', 'limit' => 150)));
-
-        $createTableCommand = new CreateTableCommand();
-        $createTableCommand
-            ->setTable($table)
-            ->setConnection($this->connection)
-            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->execute();
-
         $getTableCommand = new GetTableCommand();
         $getTableCommand->setConnection($this->connection);
         $getTableCommand->setTableName('foo');
@@ -50,5 +38,21 @@ class GetTableCommandTest extends TestHelpers
         $this->assertTrue($tableInfo->getColumn('name')->isNotNull());
         $this->assertEquals('foo', $tableInfo->getColumn('name')->getDefault());
         $this->assertEquals(150, $tableInfo->getColumn('name')->getLimit());
+    }
+
+    public function testConstraints()
+    {
+        $getTableCommand = new GetTableCommand();
+        $getTableCommand->setConnection($this->connection);
+        $getTableCommand->setTableName('foo');
+
+        $tableInfo = $getTableCommand->execute();
+
+        $this->assertCount(1, $tableInfo->getConstraints());
+
+        $constraints = $tableInfo->getConstraints();
+        $this->assertInstanceOf('Rentgen\Database\Constraint\PrimaryKey', $constraints[0]);
+        $this->assertEquals('foo_pkey', $constraints[0]->getName());
+        $this->assertEquals('foo_id', $constraints[0]->getColumns());
     }
 }
