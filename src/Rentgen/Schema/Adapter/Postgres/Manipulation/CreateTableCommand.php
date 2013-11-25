@@ -44,7 +44,7 @@ class CreateTableCommand extends Command
                     , $constraint->getReferencedTable()->getQualifiedName()
                     , implode(',', $constraint->getReferencedColumns()));
             } else if ($constraint instanceof Unique) {
-                $sql .= sprintf('CONSTRAINT %s UNIQUE (test)'
+                $sql .= sprintf('CONSTRAINT %s UNIQUE (%s)'
                     , $constraint->getName()
                     , implode(',', $constraint->getColumns()));
             }
