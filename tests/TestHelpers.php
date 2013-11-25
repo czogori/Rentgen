@@ -41,11 +41,14 @@ class TestHelpers extends \PHPUnit_Framework_TestCase
             ->execute();
     }
 
-    protected function createTable($name, $columns = array())
+    protected function createTable($name, $columns = array(), $constraints = array())
     {
         $table = new Table($name);
         foreach ($columns as $column) {
             $table->addColumn($column);
+        }
+        foreach ($constraints as $constraint) {
+            $table->addConstraint($constraint);
         }
         $createTableCommand = new CreateTableCommand();
         $createTableCommand
