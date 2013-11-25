@@ -5,7 +5,9 @@ use Rentgen\Schema\Command;
 use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\ColumnCreator;
+use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Constraint\PrimaryKey;
+use Rentgen\Database\Constraint\Unique;
 
 class GetTableCommand extends Command
 {
@@ -85,13 +87,26 @@ LEFT JOIN information_schema.constraint_column_usage ccu
        ON rc.unique_constraint_catalog = ccu.constraint_catalog
       AND rc.unique_constraint_schema = ccu.constraint_schema
       AND rc.unique_constraint_name = ccu.constraint_name
-    WHERE tc.table_name = '%s' AND tc.constraint_type IN ('PRIMARY KEY', 'FOREIGN KEY')", $this->tableName);
+    WHERE tc.table_name = '%s' AND tc.constraint_type IN ('PRIMARY KEY', 'FOREIGN KEY', 'UNIQUE')", $this->tableName);
 
         $constraints = $this->connection->query($sql);
 
         foreach ($constraints as $constraint) {
-            if($constraint['constraint_type'] === 'PRIMARY KEY') {
-                $table->addConstraint(new PrimaryKey($constraint['column_name'], $table));
+            switch($constraint['constraint_type']) {
+                case 'FOREIGN KEY':                
+                    // TODO Find a better way to define foreign key
+                    $foreignKey = new ForeignKey(new Table($constraint['table_name']), new Table($constraint['column_name']));
+                    $foreignKey->setColumns($constraint['references_table']);
+                    $foreignKey->setReferencedColumns($constraint['references_field']);
+
+                    $table->addConstraint($foreignKey);
+                    break;
+                case 'PRIMARY KEY':
+                    $table->addConstraint(new PrimaryKey($constraint['column_name'], $table));
+                    break;
+                case 'UNIQUE':                    
+                    $table->addConstraint(new Unique($constraint['column_name'], new Table($constraint['table_name'])));
+                    break;
             }            
         }
     }

@@ -5,7 +5,10 @@ namespace Rentgen\Tests\Schema\Postgres\Info;
 use Rentgen\Schema\Adapter\Postgres\Info\GetTableCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Table;
+use Rentgen\Database\Column\IntegerColumn;
 use Rentgen\Database\Column\StringColumn;
+use Rentgen\Database\Constraint\ForeignKey;
+use Rentgen\Database\Constraint\Unique;
 
 use Rentgen\Tests\TestHelpers;
 /**
@@ -17,8 +20,22 @@ class GetTableCommandTest extends TestHelpers
     {
         $this->clearDatabase();
 
-        $columns = array(new StringColumn('name', array('not_null' => true, 'default' => 'foo', 'limit' => 150)));
-        $this->createTable('foo', $columns);
+        $columns = array(
+            new StringColumn('name', array('not_null' => true, 'default' => 'foo', 'limit' => 150)),
+            new IntegerColumn('bar_id'),
+        );  
+
+        $foreignKey = new ForeignKey(new Table('foo'), new Table('bar'));
+        $foreignKey->setColumns('bar_id');
+        $foreignKey->setReferencedColumns('bar_id');
+        
+        $constraints = array(
+            $foreignKey,
+            new Unique('bar_id', new Table('foo')),
+        );
+        
+        $this->createTable('bar');
+        $this->createTable('foo', $columns, $constraints);        
     }
 
     public function testExecute()
@@ -27,32 +44,60 @@ class GetTableCommandTest extends TestHelpers
         $getTableCommand->setConnection($this->connection);
         $getTableCommand->setTableName('foo');
 
-        $tableInfo = $getTableCommand->execute();
+        $table = $getTableCommand->execute();
 
-        $this->assertCount(2, $tableInfo->getColumns());
-        $this->assertEquals('foo_id', $tableInfo->getColumn('foo_id')->getName());
-        $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());
+        $this->assertCount(3, $table->getColumns());
+        $this->assertEquals('foo_id', $table->getColumn('foo_id')->getName());
+        $this->assertEquals('integer', $table->getColumn('foo_id')->getType());
 
-        $this->assertEquals('name', $tableInfo->getColumn('name')->getName());
-        $this->assertEquals('string', $tableInfo->getColumn('name')->getType());
-        $this->assertTrue($tableInfo->getColumn('name')->isNotNull());
-        $this->assertEquals('foo', $tableInfo->getColumn('name')->getDefault());
-        $this->assertEquals(150, $tableInfo->getColumn('name')->getLimit());
+        $this->assertEquals('name', $table->getColumn('name')->getName());
+        $this->assertEquals('string', $table->getColumn('name')->getType());
+        $this->assertTrue($table->getColumn('name')->isNotNull());
+        $this->assertEquals('foo', $table->getColumn('name')->getDefault());
+        $this->assertEquals(150, $table->getColumn('name')->getLimit());
     }
 
-    public function testConstraints()
+    public function testNumberConstraints()
     {
         $getTableCommand = new GetTableCommand();
         $getTableCommand->setConnection($this->connection);
         $getTableCommand->setTableName('foo');
 
-        $tableInfo = $getTableCommand->execute();
+        $table = $getTableCommand->execute();
 
-        $this->assertCount(1, $tableInfo->getConstraints());
+        $this->assertCount(3, $table->getConstraints());        
+    }
 
-        $constraints = $tableInfo->getConstraints();
-        $this->assertInstanceOf('Rentgen\Database\Constraint\PrimaryKey', $constraints[0]);
-        $this->assertEquals('foo_pkey', $constraints[0]->getName());
-        $this->assertEquals('foo_id', $constraints[0]->getColumns());
+    public function testPrimaryKey()
+    {
+        $getTableCommand = new GetTableCommand();
+        $getTableCommand->setConnection($this->connection);
+        $getTableCommand->setTableName('foo');
+
+        $table = $getTableCommand->execute();
+
+        foreach ($table->getConstraints() as $constraint) {
+            if($constraint instanceof PrimaryKey) {
+                $this->assertInstanceOf('Rentgen\Database\Constraint\PrimaryKey', $constraint);
+                $this->assertEquals('foo_pkey', $constraint->getName());
+                $this->assertEquals('foo_id', $constraint->getColumns());                
+            }
+        }
+    }
+
+    public function testForeignKey()
+    {
+        $getTableCommand = new GetTableCommand();
+        $getTableCommand->setConnection($this->connection);
+        $getTableCommand->setTableName('foo');
+
+        $table = $getTableCommand->execute();        
+
+        foreach ($table->getConstraints() as $constraint) {            
+            if($constraint instanceof ForeignKey) {        
+                $this->assertInstanceOf('Rentgen\Database\Constraint\ForeignKey', $constraint);
+                $this->assertEquals('foo_bar_fkey', $constraint->getName());              
+            }
+        }          
     }
 }
