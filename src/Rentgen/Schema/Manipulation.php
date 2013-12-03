@@ -27,16 +27,12 @@ class Manipulation
     /**
      * Create a table.
      *
-     * @param Table $table       Table instance.
-     * @param array $constraints Array of constraints
+     * @param Table $table Table instance.     
      *
      * @return integer
      */
-    public function createTable(Table $table, array $constraints = array())
-    {
-        foreach ($constraints as $constraint) {
-            $table->addConstraint($constraint);
-        }
+    public function createTable(Table $table)
+    {        
         $command = $this->container
             ->get('create_table')
             ->setTable($table);
