@@ -36,6 +36,20 @@ class Info
     }
 
     /**
+     * Get tables information.     
+     *
+     * @return Table[] Array of Table instances.
+     */
+    public function getTables($schemaName = null)
+    {
+        $getTablesCommand = $this->container->get('get_tables');            
+        if(null !== $schemaName) {
+            $getTablesCommand->setSchemaName($schemaName);
+        }
+        return $getTablesCommand->execute();
+    }
+
+    /**
      * If table exists.
      *
      * @param Table $table Table instance.
