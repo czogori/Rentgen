@@ -9,10 +9,20 @@ use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Constraint\PrimaryKey;
 use Rentgen\Database\Constraint\Unique;
 
+/**
+ * @author Arek Jaskólski <arek.jaskolski@gmail.com>
+ */
 class GetTableCommand extends Command
 {
     private $tableName;
 
+    /**
+     * Sets a table name.
+     * 
+     * @param string $tableName A table name.
+     * 
+     * @return GetTableCommand
+     */
     public function setTableName($tableName)
     {
         $this->tableName = $tableName;
@@ -20,6 +30,9 @@ class GetTableCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf("SELECT table_schema, column_name, data_type, is_identity, is_nullable,
@@ -30,6 +43,9 @@ class GetTableCommand extends Command
         return $sql;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute()
     {
         $columnTypeMapper = new ColumnTypeMapper();
@@ -56,12 +72,47 @@ class GetTableCommand extends Command
             $column = $columnCreator->create($column['column_name'], $columnType, $options);
             $table->addColumn($column);
         }
-        $this->addConstraints($table);
+        $this->loadConstraints($table);
 
         return $table;
     }
 
-    private function addConstraints(Table $table)
+    /**
+     * Load contsraints to table.
+     * 
+     * @param Table $table A table.
+     * 
+     * @return void
+     */
+    private function loadConstraints(Table $table)
+    {
+
+        foreach ($this->getConstraints() as $constraint) {
+            switch($constraint['constraint_type']) {
+                case 'FOREIGN KEY':                
+                    // TODO Find a better way to define foreign key
+                    $foreignKey = new ForeignKey(new Table($constraint['table_name']), new Table($constraint['column_name']));
+                    $foreignKey->setColumns($constraint['references_table']);
+                    $foreignKey->setReferencedColumns($constraint['references_field']);
+
+                    $table->addConstraint($foreignKey);
+                    break;
+                case 'PRIMARY KEY':
+                    $table->addConstraint(new PrimaryKey($constraint['column_name'], $table));
+                    break;
+                case 'UNIQUE':                    
+                    $table->addConstraint(new Unique($constraint['column_name'], new Table($constraint['table_name'])));
+                    break;
+            }            
+        }
+    }
+
+    /**
+     * Gets constraints from database.
+     * 
+     * @return array Array of contraints.
+     */
+    private function getConstraints()
     {
         $sql = sprintf("SELECT tc.constraint_name,
             tc.constraint_type,
@@ -89,25 +140,6 @@ LEFT JOIN information_schema.constraint_column_usage ccu
       AND rc.unique_constraint_name = ccu.constraint_name
     WHERE tc.table_name = '%s' AND tc.constraint_type IN ('PRIMARY KEY', 'FOREIGN KEY', 'UNIQUE')", $this->tableName);
 
-        $constraints = $this->connection->query($sql);
-
-        foreach ($constraints as $constraint) {
-            switch($constraint['constraint_type']) {
-                case 'FOREIGN KEY':                
-                    // TODO Find a better way to define foreign key
-                    $foreignKey = new ForeignKey(new Table($constraint['table_name']), new Table($constraint['column_name']));
-                    $foreignKey->setColumns($constraint['references_table']);
-                    $foreignKey->setReferencedColumns($constraint['references_field']);
-
-                    $table->addConstraint($foreignKey);
-                    break;
-                case 'PRIMARY KEY':
-                    $table->addConstraint(new PrimaryKey($constraint['column_name'], $table));
-                    break;
-                case 'UNIQUE':                    
-                    $table->addConstraint(new Unique($constraint['column_name'], new Table($constraint['table_name'])));
-                    break;
-            }            
-        }
+        return $this->connection->query($sql);        
     }
 }
