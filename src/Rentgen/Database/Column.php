@@ -56,11 +56,23 @@ abstract class Column
         return $this->isNotNull;
     }
 
+    /**
+     * Set the table instance.
+     * 
+     * @param Table $table  Table instance.
+     * 
+     * @return void
+     */
     public function setTable(Table $table)
     {
         $this->table = $table;
     }
 
+    /**
+     * Get the table instance.
+     * 
+     * @return Table
+     */
     public function getTable()
     {
         return $this->table;
