@@ -1,15 +1,23 @@
 <?php
 namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
+use Rentgen\Database\Schema;
 use Rentgen\Schema\Command;
 
 class CreateSchemaCommand extends Command
 {
-    private $schemaName;
+    private $schema;
 
-    public function setName($schemaName)
+    /**
+     * Sets a schema.
+     * 
+     * @param Schema $schema The schema instance.
+     * 
+     * @return CreateSchemaCommand
+     */
+    public function setSchema(Schema $schema)
     {
-        $this->schemaName = $schemaName;
+        $this->schema = $schema;
 
         return $this;
     }
@@ -19,6 +27,6 @@ class CreateSchemaCommand extends Command
      */
     public function getSql()
     {
-        return sprintf('CREATE SCHEMA %s;', $this->schemaName);
+        return sprintf('CREATE SCHEMA %s;', $this->schema->getName());
     }
 }

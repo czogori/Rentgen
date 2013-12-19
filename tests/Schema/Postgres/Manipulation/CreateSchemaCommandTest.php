@@ -2,6 +2,7 @@
 
 namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
+use Rentgen\Database\Schema;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateSchemaCommand;
 use Rentgen\Tests\TestHelpers;
 
@@ -17,23 +18,23 @@ class CreateSchemaCommandTest extends TestHelpers
 
     public function testGetSql()
     {
-        $schemaName = 'foo';
+        $schema = new Schema('foo');
         $createSchemaCommand = new CreateSchemaCommand();
-        $createSchemaCommand->setName($schemaName);
+        $createSchemaCommand->setSchema($schema);
         $sql = 'CREATE SCHEMA foo;';
         $this->assertEquals($sql, $createSchemaCommand->getSql());
     }
 
     public function testExecute()
     {
-        $schemaName = 'foo' . time();
+        $schema = new Schema('foo');
         $createSchemaCommand = new CreateSchemaCommand();
         $createSchemaCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->setName($schemaName)
+            ->setSchema($schema)
             ->execute();
 
-        $this->assertTrue($this->schemaExists($schemaName));
+        $this->assertTrue($this->schemaExists($schema->getName()));
     }
 }

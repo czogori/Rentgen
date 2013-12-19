@@ -152,14 +152,14 @@ class Manipulation
     /**
      * Create a schema.
      *
-     * @param  string  $schemaName Schema name.
+     * @param  Schema  $schema The Schema instance.
      * @return integer
      */
-    public function createSchema($schemaName)
+    public function createSchema(Schema $schema)
     {
         $command = $this->container
             ->get('create_schema')
-            ->setName($schemaName);
+            ->setSchema($schema);
 
         return $command->execute();
     }
@@ -167,14 +167,14 @@ class Manipulation
      /**
      * Drop a schema.
      *
-     * @param  string  $schemaName Schema name.
+     * @param  string  $schema The Schema instance.
      * @return integer
      */
-    public function dropSchema($schemaName)
+    public function dropSchema(Schema $schema)
     {
         $command = $this->container
             ->get('drop_schema')
-            ->setName($schemaName);
+            ->setSchema($schema);
 
         return $command->execute();
     }

@@ -2,6 +2,7 @@
 
 namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
+use Rentgen\Database\Schema;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateSchemaCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\DropSchemaCommand;
 use Rentgen\Tests\TestHelpers;
@@ -16,34 +17,41 @@ class DropSchemaCommandTest extends TestHelpers
         $this->clearDatabase();
     }
 
+    public function tearDown()
+    {
+        if($this->schemaExists('foo')) {
+            $this->dropSchema('foo');
+        }
+    }
+
     public function testGetSql()
     {
-        $schemaName = 'foo';
+        $schema = new Schema('foo');
         $createSchemaCommand = new DropSchemaCommand();
-        $createSchemaCommand->setName($schemaName);
+        $createSchemaCommand->setSchema($schema);
         $sql = 'DROP SCHEMA foo;';
         $this->assertEquals($sql, $createSchemaCommand->getSql());
     }
 
     public function testExecute()
     {
-        $schemaName = 'foo_drop_test' . time();
+        $schema = new Schema('foo');
         $createSchemaCommand = new CreateSchemaCommand();
         $createSchemaCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->setName($schemaName)
+            ->setSchema($schema)
             ->execute();
 
-        $this->assertTrue($this->schemaExists($schemaName));
+        $this->assertTrue($this->schemaExists($schema->getName()));
 
         $dropSchemaCommand = new DropSchemaCommand();
         $dropSchemaCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->setName($schemaName)
+            ->setSchema($schema)
             ->execute();
 
-         $this->assertFalse($this->schemaExists($schemaName));
+         $this->assertFalse($this->schemaExists($schema->getName()));
     }
 }

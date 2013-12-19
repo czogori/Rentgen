@@ -1,22 +1,23 @@
 <?php
 namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
+use Rentgen\Database\Schema;
 use Rentgen\Schema\Command;
 
 class DropSchemaCommand extends Command
 {
-    private $schemaName;
+    private $schema;
 
     /**
-     * Sets a schema name.
+     * Sets a schema.
      * 
-     * @param string $schemaName The schema name.
-     *
+     * @param Schema $schema The schema instance.
+     * 
      * @return DropSchemaCommand
      */
-    public function setName($schemaName)
+    public function setSchema(Schema $schema)
     {
-        $this->schemaName = $schemaName;
+        $this->schema = $schema;
 
         return $this;
     }
@@ -26,6 +27,6 @@ class DropSchemaCommand extends Command
      */
     public function getSql()
     {
-        return sprintf('DROP SCHEMA %s;', $this->schemaName);
+        return sprintf('DROP SCHEMA %s;', $this->schema->getName());
     }
 }
