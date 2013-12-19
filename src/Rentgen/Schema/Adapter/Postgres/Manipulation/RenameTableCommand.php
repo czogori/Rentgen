@@ -9,6 +9,13 @@ class RenameTableCommand extends Command
     private $table;
     private $newTableName;
 
+    /**
+     * Sets a table.
+     * 
+     * @param Table $table The table instance.
+     * 
+     * @return RenameTableCommand
+     */
     public function setTable(Table $table)
     {
         $this->table = $table;
@@ -16,6 +23,13 @@ class RenameTableCommand extends Command
         return $this;
     }
 
+    /**
+     * Sets a table name.
+     * 
+     * @param string $newTableName New table name.
+     * 
+     * @return RenameTableCommand
+     */
     public function setNewName($newTableName)
     {
         $this->newTableName = $newTableName;
@@ -23,6 +37,9 @@ class RenameTableCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $schemaName = $this->table->getSchema();
@@ -34,13 +51,5 @@ class RenameTableCommand extends Command
         );
 
         return $sql;
-    }
-
-    protected function preExecute()
-    {
-    }
-
-    protected function postExecute()
-    {
     }
 }

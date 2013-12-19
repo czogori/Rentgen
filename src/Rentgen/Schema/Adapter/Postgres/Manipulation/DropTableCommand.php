@@ -10,6 +10,13 @@ class DropTableCommand extends Command
     private $table;
     private $cascade = false;
 
+    /**
+     * Sets a table.
+     * 
+     * @param Table $table The table instance.
+     * 
+     * @return DropTableCommand
+     */
     public function setTable(Table $table)
     {
         $this->table = $table;
@@ -17,6 +24,11 @@ class DropTableCommand extends Command
         return $this;
     }
 
+    /**
+     * Drop table cascade.
+     * 
+     * @return DropTableCommand
+     */
     public function cascade()
     {
         $this->cascade = true;
@@ -24,6 +36,9 @@ class DropTableCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf('DROP TABLE %s%s'
@@ -35,11 +50,9 @@ class DropTableCommand extends Command
         return $sql;
     }
 
-    protected function preExecute()
-    {
-
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     protected function postExecute()
     {
         $this->dispatcher->dispatch('table.drop', new TableEvent($this->table, $this->getSql()));

@@ -14,16 +14,11 @@ class CreateSchemaCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         return sprintf('CREATE SCHEMA %s;', $this->schemaName);
-    }
-
-    protected function preExecute()
-    {
-    }
-
-    protected function postExecute()
-    {
     }
 }

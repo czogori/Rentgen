@@ -7,6 +7,13 @@ class DropSchemaCommand extends Command
 {
     private $schemaName;
 
+    /**
+     * Sets a schema name.
+     * 
+     * @param string $schemaName The schema name.
+     *
+     * @return DropSchemaCommand
+     */
     public function setName($schemaName)
     {
         $this->schemaName = $schemaName;
@@ -14,16 +21,11 @@ class DropSchemaCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         return sprintf('DROP SCHEMA %s;', $this->schemaName);
-    }
-
-    protected function preExecute()
-    {
-    }
-
-    protected function postExecute()
-    {
     }
 }

@@ -10,6 +10,13 @@ class AddColumnCommand extends Command
 {
     private $column;
 
+    /**
+     * Sets a column.
+     * 
+     * @param Column $column The column instance.
+     * 
+     * @return AddColumnCommand
+     */
     public function setColumn(Column $column)
     {
         $this->column = $column;
@@ -17,6 +24,9 @@ class AddColumnCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $columnTypeMapper = new ColumnTypeMapper();
@@ -30,6 +40,9 @@ class AddColumnCommand extends Command
         return $sql;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function postExecute()
     {
         $this->dispatcher->dispatch('column.add', new ColumnEvent($this->column, $this->getSql()));

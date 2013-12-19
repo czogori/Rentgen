@@ -14,6 +14,13 @@ class CreateTableCommand extends Command
 {
     private $table;
 
+    /**
+     * Sets a table.
+     * 
+     * @param Table $table The table instance.
+     * 
+     * @return CreateTableCommand
+     */
     public function setTable(Table $table)
     {
         $this->table = $table;
@@ -21,6 +28,9 @@ class CreateTableCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf('CREATE TABLE %s(%s);'
@@ -30,6 +40,11 @@ class CreateTableCommand extends Command
         return $sql;
     }
 
+    /**
+     * Gets constraints query.
+     * 
+     * @return string
+     */
     private function getConstraintsSql()
     {        
         $sql = '';
@@ -52,6 +67,11 @@ class CreateTableCommand extends Command
         return rtrim($sql, ',');
     }
 
+    /**
+     * Gets columns query.
+     * 
+     * @return string
+     */
     private function getColumnsSql()
     {
         $columnTypeMapper = new ColumnTypeMapper();
@@ -84,12 +104,15 @@ class CreateTableCommand extends Command
         return rtrim($sql, ',');
     }
 
-    
+    /**
+     * {@inheritdoc}
+     */
     protected function postExecute()
     {
         $this->dispatcher->dispatch('table.create', new TableEvent($this->table, $this->getSql()));
     }
 
+    
     private function addQuotesIfNeeded(Column $column, $value)
     {
         return $column->getType() === 'string' ? sprintf("'%s'", $value) : $value;

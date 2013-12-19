@@ -26,9 +26,7 @@ class AddConstraintCommand extends Command
     }
 
     /**
-     * Get sql query.
-     *
-     * @return string Sql query.
+     * {@inheritdoc}
      */
     public function getSql()
     {

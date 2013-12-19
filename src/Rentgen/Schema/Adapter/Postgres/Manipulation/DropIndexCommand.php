@@ -8,6 +8,13 @@ class DropIndexCommand extends Command
 {
     private $index;
 
+    /**
+     * Sets a index
+     * 
+     * @param Index $index The index instance.
+     * 
+     * @return DropColumnCommand
+     */
     public function setIndex(Index $index)
     {
         $this->index = $index;
@@ -15,6 +22,9 @@ class DropIndexCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf('DROP INDEX %s.%s;'

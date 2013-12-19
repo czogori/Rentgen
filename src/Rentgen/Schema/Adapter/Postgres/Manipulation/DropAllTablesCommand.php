@@ -11,6 +11,13 @@ class DropAllTablesCommand extends Command
     private $schemaName = 'public';
     private $sql = '';
 
+    /**
+     * Sets a schema name.
+     * 
+     * @param string $schemaName The schema name.
+     *
+     * @return DropAllTablesCommand
+     */
     public function setSchemaName($schemaName)
     {
         $this->schemaName = $schemaName;
@@ -18,11 +25,17 @@ class DropAllTablesCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         return $this->sql;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute()
     {
         $getTablesCommand = new GetTablesCommand();
@@ -43,15 +56,5 @@ class DropAllTablesCommand extends Command
         $this->postExecute();
 
         return true;
-    }
-
-    protected function preExecute()
-    {
-
-    }
-
-    protected function postExecute()
-    {
-        //$this->dispatcher->dispatch('table.drop_all', new TableEvent($this->table, $this->sql()));
     }
 }

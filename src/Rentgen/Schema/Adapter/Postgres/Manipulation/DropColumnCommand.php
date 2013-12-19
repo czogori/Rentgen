@@ -24,9 +24,7 @@ class DropColumnCommand extends Command
     }
 
     /**
-     * Get sql to execute.
-     *
-     * @return string Sql to execute.
+     * {@inheritdoc}
      */
     public function getSql()
     {

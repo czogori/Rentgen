@@ -8,6 +8,13 @@ class DropConstraintCommand extends Command
 {
     private $constraint;
 
+    /**
+     * Set a constraint.
+     *
+     * @param ConstraintInterface $constraint The constraint instance.
+     *
+     * @return DropConstraintCommand
+     */
     public function setConstraint(ConstraintInterface $constraint)
     {
         $this->constraint = $constraint;
@@ -15,6 +22,9 @@ class DropConstraintCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf('ALTER TABLE %s DROP CONSTRAINT %s;'
