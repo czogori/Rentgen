@@ -2,7 +2,7 @@
 
 namespace Rentgen\Database;
 
-class Schema
+class Schema implements DatabaseObjectInterface
 {
     private $name;
 

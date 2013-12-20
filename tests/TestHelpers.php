@@ -41,6 +41,12 @@ class TestHelpers extends \PHPUnit_Framework_TestCase
             ->execute();
     }
 
+    protected function dropSchema($schemaName)
+    {
+        $sql = sprintf('DROP SCHEMA %s CASCADE', $schemaName);
+        $this->connection->execute($sql);
+    }
+
     protected function createTable($name, $columns = array(), $constraints = array())
     {
         $table = new Table($name);

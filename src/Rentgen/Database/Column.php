@@ -2,7 +2,7 @@
 
 namespace Rentgen\Database;
 
-abstract class Column
+abstract class Column implements DatabaseObjectInterface
 {
     protected $name;
     protected $isNotNull = false;

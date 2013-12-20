@@ -7,7 +7,7 @@ use Rentgen\Database\Constraint\ConstraintInterface;
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class Table
+class Table implements DatabaseObjectInterface
 {
     private $name;
     private $schema;

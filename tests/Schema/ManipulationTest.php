@@ -27,23 +27,22 @@ class ManipulationTest extends TestHelpers
         $container->loadFromExtension($extension->getAlias());
         $container->compile();
 
-         $this->manipulation = new Manipulation($container);
+        $this->manipulation = new Manipulation($container);
     }
 
     public function testCreateTable()
     {
-         $this->manipulation->createTable(new Table('foo'));
+        $this->manipulation->create(new Table('foo'));
         $this->assertTrue($this->tableExists('foo'));
     }
 
     public function testDropTable()
     {
-         $this->manipulation->createTable(new Table('foo'));
-        $this->assertTrue($this->tableExists('foo'));
+        $this->connection->execute('CREATE TABLE foo()');
 
-        $this->manipulation->dropTable(new Table('foo'));
+        $this->manipulation->drop(new Table('foo'));
         $this->assertFalse($this->tableExists('foo'));
-    }
+    }    
 
     public function testExecute()
     {

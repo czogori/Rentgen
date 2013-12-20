@@ -2,7 +2,9 @@
 
 namespace Rentgen\Database\Constraint;
 
-interface ConstraintInterface
+use Rentgen\Database\DatabaseObjectInterface;
+
+interface ConstraintInterface extends DatabaseObjectInterface
 {
     /**
      * Get constraint name.

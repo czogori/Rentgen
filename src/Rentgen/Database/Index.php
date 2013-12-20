@@ -2,7 +2,7 @@
 
 namespace Rentgen\Database;
 
-class Index
+class Index implements DatabaseObjectInterface
 {
     private $columns = array();
     private $table;
