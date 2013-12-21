@@ -31,8 +31,8 @@ class InfoTest extends TestHelpers
         $this->manipulation = new Manipulation($container);
         $this->info = new Info($container);
 
-        $this->manipulation->createTable(new Table('foo'));
-        $this->manipulation->createTable(new Table('bar'));
+        $this->manipulation->create(new Table('foo'));
+        $this->manipulation->create(new Table('bar'));
     }
 
     public function testGetTable()
