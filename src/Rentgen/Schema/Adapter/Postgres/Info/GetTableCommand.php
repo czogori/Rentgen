@@ -8,6 +8,7 @@ use Rentgen\Database\Column\ColumnCreator;
 use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Constraint\PrimaryKey;
 use Rentgen\Database\Constraint\Unique;
+use Rentgen\Exception\TableNotExistsException;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
@@ -52,8 +53,9 @@ class GetTableCommand extends Command
 
         $this->preExecute();
         $columns = $this->connection->query($this->getSql());
-        $this->postExecute();
-
+        if(empty($columns)) {
+            throw new TableNotExistsException($this->tableName);            
+        }
         $table = new Table($this->tableName);
         if (null === $table->getSchema()) {
             $table->setSchema($columns[0]['table_schema']);
@@ -73,6 +75,7 @@ class GetTableCommand extends Command
             $table->addColumn($column);
         }
         $this->loadConstraints($table);
+        $this->postExecute();
 
         return $table;
     }
