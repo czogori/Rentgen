@@ -24,6 +24,11 @@ class Rentgen
         $this->container = $container;
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     public function get($service)
     {
         return $this->container->get($service);
