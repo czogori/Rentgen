@@ -8,6 +8,13 @@ class GetTablesCommand extends Command
 {
     private $schemaName = 'public';
 
+     /**
+      * Sets a schema name.
+      * 
+      * @param string $schemaName Schema name.
+      * 
+      * @return GetTablesCommand
+      */
     public function setSchemaName($schemaName)
     {
         $this->schemaName = $schemaName;
@@ -15,6 +22,9 @@ class GetTablesCommand extends Command
         return $this;
     }
 
+     /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf("SELECT table_name FROM information_schema.tables WHERE table_schema = '%s';", $this->schemaName);
@@ -22,6 +32,9 @@ class GetTablesCommand extends Command
         return $sql;
     }
 
+     /**
+     * {@inheritdoc}
+     */
     public function execute()
     {
         $this->preExecute();
@@ -34,13 +47,5 @@ class GetTablesCommand extends Command
         }
 
         return $tables;
-    }
-
-    protected function preExecute()
-    {
-    }
-
-    protected function postExecute()
-    {
     }
 }

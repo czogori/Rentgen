@@ -7,6 +7,13 @@ class SchemaExistsCommand extends Command
 {
     private $schemaName;
 
+    /**
+      * Sets a schema name.
+      * 
+      * @param string $schemaName Schema name.
+      * 
+      * @return SchemaExistsCommand
+      */
     public function setName($schemaName)
     {
         $this->schemaName = $schemaName;
@@ -14,6 +21,9 @@ class SchemaExistsCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf("SELECT count(schema_name) FROM information_schema.schemata WHERE schema_name = '%s';", $this->schemaName);
@@ -21,6 +31,9 @@ class SchemaExistsCommand extends Command
         return $sql;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute()
     {
         $this->preExecute();
@@ -31,13 +44,5 @@ class SchemaExistsCommand extends Command
         $this->postExecute();
 
         return (bool) $count;
-    }
-
-    protected function preExecute()
-    {
-    }
-
-    protected function postExecute()
-    {
     }
 }

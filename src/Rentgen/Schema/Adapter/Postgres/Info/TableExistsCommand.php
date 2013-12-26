@@ -8,6 +8,13 @@ class TableExistsCommand extends Command
 {
     private $table;
 
+    /**
+      * Sets a table.
+      * 
+      * @param string $table A table instance.
+      * 
+      * @return TableExistsCommand
+      */
     public function setTable(Table $table)
     {
         $this->table = $table;
@@ -15,6 +22,9 @@ class TableExistsCommand extends Command
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSql()
     {
         $sql = sprintf(
@@ -25,6 +35,9 @@ class TableExistsCommand extends Command
         return $sql;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute()
     {
         $this->preExecute();
