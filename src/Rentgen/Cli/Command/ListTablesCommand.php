@@ -27,9 +27,7 @@ class ListTablesCommand extends ContainerAwareCommand
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $arguments = $input->getArguments();
-
+    {        
         $getTablesCommand = $this->getContainer()->get('get_tables');
         $tables = $getTablesCommand->execute();
 

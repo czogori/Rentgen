@@ -5,6 +5,7 @@ namespace Rentgen\Cli;
 use Symfony\Component\Console\Application;
 
 use Rentgen\Cli\Command\ListTablesCommand;
+use Rentgen\Cli\Command\TableInfoCommand;
 use Rentgen\Rentgen;
 
 class RentgenApplication extends Application
@@ -20,7 +21,8 @@ class RentgenApplication extends Application
         $container = $rentgen->getContainer();                
 
         $this->addCommands(array(
-            new ListTablesCommand('tables', $container),            
+            new TableInfoCommand('table', $container),
+            new ListTablesCommand('tables', $container),
         ));
     }
 }
