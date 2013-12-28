@@ -33,9 +33,7 @@ class CreateTableCommandTest extends TestHelpers
     {
         $table = new Table('foo');
         $createTableCommand = new CreateTableCommand();
-        $createTableCommand
-            ->setConnection($this->connection)
-            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
+        $this->getCreateTableCommand()        
             ->setTable($table)
             ->execute();
 
@@ -48,10 +46,7 @@ class CreateTableCommandTest extends TestHelpers
         $table->addColumn(new StringColumn('foo'));
         $table->addColumn(new StringColumn('bar'));
         $table->addConstraint(new PrimaryKey(array('foo', 'bar')));
-        $createTableCommand = new CreateTableCommand();
-        $createTableCommand
-            ->setConnection($this->connection)
-            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
+        $this->getCreateTableCommand()
             ->setTable($table)
             ->execute();
 
@@ -64,10 +59,7 @@ class CreateTableCommandTest extends TestHelpers
         $primaryKey->disableAutoIncrement();
         $table = new Table('foo');
         $table->addConstraint($primaryKey);
-        $createTableCommand = new CreateTableCommand();
-        $createTableCommand
-            ->setConnection($this->connection)
-            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
+        $this->getCreateTableCommand()
             ->setTable($table)
             ->execute();
 
@@ -78,5 +70,13 @@ class CreateTableCommandTest extends TestHelpers
         $tableInfo = $getTableCommand->execute();
 
         $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());
+    }
+
+    private function getCreateTableCommand()
+    {
+        $createTableCommand = new CreateTableCommand();
+        return $createTableCommand
+            ->setConnection($this->connection)
+            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'));
     }
 }
