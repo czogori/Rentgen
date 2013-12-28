@@ -89,7 +89,7 @@ class Manipulation
                 ->get($isCreate ? 'create_table' : 'drop_table')
                 ->setTable($databaseObject);
         } else {        
-            throw new \Exception(sprintf("Object %s is not supported", $className));                
+            throw new \Exception(sprintf("Class %s is not supported", get_class($databaseObject)));                
         }
      
         return $command;
