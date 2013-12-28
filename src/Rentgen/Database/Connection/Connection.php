@@ -5,7 +5,6 @@ namespace Rentgen\Database\Connection;
 class Connection
 {
     private $connection;
-    private $config;
 
     public function __construct(ConnectionConfigInterface $config)
     {

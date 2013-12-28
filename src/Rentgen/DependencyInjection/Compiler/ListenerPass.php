@@ -18,7 +18,7 @@ class ListenerPass implements CompilerPassInterface
         $listener = $container->get('event_listener');
 
         $taggedServices = $container->findTaggedServiceIds('table');
-        foreach ($taggedServices as $id => $tagAttributes) {
+        foreach ($taggedServices as $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $dispatcher->addListener($attributes['event'], array($listener, $attributes['method']));
             }

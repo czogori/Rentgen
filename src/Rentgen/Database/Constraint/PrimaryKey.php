@@ -5,8 +5,7 @@ namespace Rentgen\Database\Constraint;
 use Rentgen\Database\Table;
 
 class PrimaryKey implements ConstraintInterface
-{
-    private $name;
+{    
     private $columns;
     private $isAutoIncrement = true;
     private $autoCreateColumn = false;

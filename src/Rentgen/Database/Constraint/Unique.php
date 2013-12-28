@@ -5,8 +5,7 @@ namespace Rentgen\Database\Constraint;
 use Rentgen\Database\Table;
 
 class Unique implements ConstraintInterface
-{
-    private $name;
+{    
     private $columns;
     private $table;
 

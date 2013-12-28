@@ -5,8 +5,7 @@ namespace Rentgen\Database\Constraint;
 use Rentgen\Database\Table;
 
 class ForeignKey implements ConstraintInterface
-{
-    private $name;
+{    
     private $columns;
     private $table;
     private $referencedTable;
