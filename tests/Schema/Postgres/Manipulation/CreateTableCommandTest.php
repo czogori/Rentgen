@@ -9,12 +9,12 @@ use Rentgen\Database\Column\CustomColumn;
 use Rentgen\Database\Column\StringColumn;
 use Rentgen\Database\Connection;
 use Rentgen\Database\Constraint\PrimaryKey;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class CreateTableCommandTest extends TestHelpers
+class CreateTableCommandTest extends TestCase
 {
     public function setUp()
     {

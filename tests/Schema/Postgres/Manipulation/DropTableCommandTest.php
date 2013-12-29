@@ -4,12 +4,12 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Adapter\Postgres\Manipulation\DropTableCommand;
 use Rentgen\Database\Table;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class DropTableCommandTest extends TestHelpers
+class DropTableCommandTest extends TestCase
 {
     public function setUp()
     {

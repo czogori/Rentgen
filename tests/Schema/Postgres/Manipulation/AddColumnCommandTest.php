@@ -6,12 +6,12 @@ use Rentgen\Schema\Adapter\Postgres\Manipulation\AddColumnCommand;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column\CustomColumn;
 use Rentgen\Database\Column\StringColumn;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class AddColumnCommandTest extends TestHelpers
+class AddColumnCommandTest extends TestCase
 {
     public function setUp()
     {

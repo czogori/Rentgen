@@ -10,11 +10,11 @@ use Rentgen\Database\Column\StringColumn;
 use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Constraint\Unique;
 
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class GetTableCommandTest extends TestHelpers
+class GetTableCommandTest extends TestCase
 {
     public function setUp()
     {

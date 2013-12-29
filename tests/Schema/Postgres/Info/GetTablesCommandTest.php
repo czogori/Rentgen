@@ -5,11 +5,11 @@ namespace Rentgen\Tests\Schema\Postgres\Info;
 use Rentgen\Schema\Adapter\Postgres\Info\GetTablesCommand;
 use Rentgen\Database\Connection;
 
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class GetTablesCommandTest extends TestHelpers
+class GetTablesCommandTest extends TestCase
 {
     public function setUp()
     {

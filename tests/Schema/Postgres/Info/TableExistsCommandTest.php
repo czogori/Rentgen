@@ -4,12 +4,12 @@ namespace Rentgen\Schema\Postgres\Info;
 
 use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
 use Rentgen\Database\Table;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class TableExistsCommandTest extends TestHelpers
+class TableExistsCommandTest extends TestCase
 {
     public function setUp()
     {

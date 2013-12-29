@@ -8,12 +8,12 @@ use Rentgen\Rentgen;
 use Rentgen\Database\Table;
 use Rentgen\DependencyInjection\RentgenExtension;
 use Rentgen\Schema\Manipulation;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class ManipulationTest extends TestHelpers
+class ManipulationTest extends TestCase
 {
     private $manipulation;
 

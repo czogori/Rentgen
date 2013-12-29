@@ -5,12 +5,12 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\DropConstraintCommand;
 use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Table;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class DropConstraintCommandTest extends TestHelpers
+class DropConstraintCommandTest extends TestCase
 {
     public function setUp()
     {

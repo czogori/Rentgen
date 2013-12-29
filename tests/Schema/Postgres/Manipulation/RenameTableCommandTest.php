@@ -4,12 +4,12 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Schema\Adapter\Postgres\Manipulation\RenameTableCommand;
 use Rentgen\Database\Table;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class RenameTableCommandTest extends TestHelpers
+class RenameTableCommandTest extends TestCase
 {
     public function setUp()
     {

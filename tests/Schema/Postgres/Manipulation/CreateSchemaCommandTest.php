@@ -4,12 +4,12 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 
 use Rentgen\Database\Schema;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateSchemaCommand;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class CreateSchemaCommandTest extends TestHelpers
+class CreateSchemaCommandTest extends TestCase
 {
     public function setUp()
     {

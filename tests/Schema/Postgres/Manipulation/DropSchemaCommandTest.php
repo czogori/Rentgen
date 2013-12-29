@@ -5,12 +5,12 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 use Rentgen\Database\Schema;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateSchemaCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\DropSchemaCommand;
-use Rentgen\Tests\TestHelpers;
+use Rentgen\Tests\TestCase;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
-class DropSchemaCommandTest extends TestHelpers
+class DropSchemaCommandTest extends TestCase
 {
     public function setUp()
     {
