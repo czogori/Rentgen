@@ -3,6 +3,7 @@ namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
 use Rentgen\Database\Column;
+use Rentgen\Database\Column\CustomColumn;
 use Rentgen\Event\ColumnEvent;
 use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
 
@@ -29,12 +30,18 @@ class AddColumnCommand extends Command
      */
     public function getSql()
     {
-        $columnTypeMapper = new ColumnTypeMapper();
+        if($this->column instanceof CustomColumn) {
+            $columnType = $this->column->getType();
+        } else {
+            $columnTypeMapper = new ColumnTypeMapper();
+            $columnType = $columnTypeMapper->getNative($this->column->getType());
+        }
+
 
         $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s;'
             , $this->column->getTable()->getQualifiedName()
             , $this->column->getName()
-            , $columnTypeMapper->getNative($this->column->getType())
+            , $columnType
         );
 
         return $sql;

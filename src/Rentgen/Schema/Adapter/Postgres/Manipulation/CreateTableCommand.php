@@ -4,6 +4,7 @@ namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 use Rentgen\Schema\Command;
 use Rentgen\Database\Table;
 use Rentgen\Database\Column;
+use Rentgen\Database\Column\CustomColumn;
 use Rentgen\Database\Constraint\ForeignKey;
 use Rentgen\Database\Constraint\PrimaryKey;
 use Rentgen\Database\Constraint\Unique;
@@ -92,9 +93,14 @@ class CreateTableCommand extends Command
             $sql = sprintf('%s %s NOT NULL,', $primaryKey->getColumns(), $primaryKey->isAutoIncrement() ? 'serial' : 'integer');
         }
         foreach ($this->table->getColumns() as $column) {
+            if($column instanceof CustomColumn) {
+                $columnType = $column->getType();
+            } else {
+                $columnType = $columnTypeMapper->getNative($column->getType());
+            }
             $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
-                , $columnTypeMapper->getNative($column->getType())
+                , $columnType
                 , $column->getType() === 'string' && $column->getLimit() ? sprintf('(%s)', $column->getLimit()) : ''
                 , $column->isNotNull() ? 'NOT NULL' : ''
                 , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $this->addQuotesIfNeeded($column, $column->getDefault())

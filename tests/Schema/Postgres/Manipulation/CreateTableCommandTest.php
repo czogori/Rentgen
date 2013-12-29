@@ -5,6 +5,7 @@ namespace Rentgen\Tests\Schema\Postgres\Manipulation;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Schema\Adapter\Postgres\Info\GetTableCommand;
 use Rentgen\Database\Table;
+use Rentgen\Database\Column\CustomColumn;
 use Rentgen\Database\Column\StringColumn;
 use Rentgen\Database\Connection;
 use Rentgen\Database\Constraint\PrimaryKey;
@@ -18,6 +19,8 @@ class CreateTableCommandTest extends TestHelpers
     public function setUp()
     {
         $this->clearDatabase();
+
+        $this->connection->execute('CREATE EXTENSION IF NOT EXISTS hstore;');
     }
 
     public function testGetSql()
@@ -70,6 +73,18 @@ class CreateTableCommandTest extends TestHelpers
         $tableInfo = $getTableCommand->execute();
 
         $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());
+    }
+
+    public function testCreateTableWithCustomColumn()
+    {
+        $table = new Table('test');
+        $table->addColumn(new StringColumn('foo'));
+        $table->addColumn(new CustomColumn('bar', 'hstore'));        
+        $this->getCreateTableCommand()
+            ->setTable($table)
+            ->execute();
+
+        $this->assertTrue($this->tableExists('test'));
     }
 
     private function getCreateTableCommand()
