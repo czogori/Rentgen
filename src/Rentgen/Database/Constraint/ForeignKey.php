@@ -5,10 +5,19 @@ namespace Rentgen\Database\Constraint;
 use Rentgen\Database\Table;
 
 class ForeignKey implements ConstraintInterface
-{    
+{
+
+    const ACTION_NO_ACTION = 'NO ACTION';
+    const ACTION_CASCADE   = 'CASCADE';
+    const ACTION_RESTICT   = 'RESTRICT';
+    const ACTION_DEFAULT   = 'DEFAULT';
+    const ACTION_SET_NULL  = 'SET NULL';
+
     private $columns;
     private $table;
     private $referencedTable;
+    private $updateAction;
+    private $deleteAction;
 
     /**
      * Constructor.
@@ -20,6 +29,8 @@ class ForeignKey implements ConstraintInterface
     {
         $this->table = $table;
         $this->referencedTable = $referencedTable;
+
+        $this->updateAction = $this->deleteAction = self::ACTION_NO_ACTION;
     }
 
     /**
@@ -42,7 +53,7 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
-     * Set table instance.
+     * Sets a table instance.
      *
      * @param Table $table Table instance.
      *
@@ -56,7 +67,7 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
-     * Get reference table name.
+     * Gets a reference table name.
      *
      * @return string Reference table name.
      */
@@ -66,7 +77,7 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
-     * Set foreign key columns.
+     * Sets foreign key columns.
      *
      * @param array $columns Columns list.
      *
@@ -83,7 +94,7 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
-     * Get column names.
+     * Gets column names.
      *
      * @return array Column names.
      */
@@ -93,7 +104,7 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
-     * Set foreign key reference columns.
+     * Sets foreign key reference columns.
      *
      * @param array $columns Columns list.
      *
@@ -110,7 +121,7 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
-     * Get reference column names.
+     * Gets reference column names.
      *
      * @return array Column names.
      */
@@ -119,72 +130,118 @@ class ForeignKey implements ConstraintInterface
         return $this->referencedColumns;
     }
 
-    public function onUpdateNoAction()
+    /**
+     * Gets an update action.
+     *
+     * @return string
+     */
+    public function getUpdateAction()
     {
-        throw new Exception('Not implemented');
+        return $this->updateAction;
+    }
+
+    /**
+     * Gets a delete action.
+     *
+     * @return string
+     */
+    public function getDeleteAction()
+    {
+        return $this->deleteAction;
+    }
+
+    /**
+     * Sets an update action on restrict.
+     *
+     * @return ForeignKey
+     */
+    public function updateRestrict()
+    {
+        $this->updateAction = self::ACTION_RESTICT;
 
         return $this;
     }
 
-    public function onUpdateRestrict()
+    /**
+     * Sets an update action on cascade.
+     *
+     * @return ForeignKey
+     */
+    public function updateCascade()
     {
-        throw new Exception('Not implemented');
+        $this->updateAction = self::ACTION_CASCADE;
 
         return $this;
     }
 
-    public function onUpdateCascade()
+    /**
+     * Sets an update action on set null.
+     *
+     * @return ForeignKey
+     */
+    public function updateSetNull()
     {
-        throw new Exception('Not implemented');
+        $this->updateAction = self::ACTION_SET_NULL;
 
         return $this;
     }
 
-    public function onUpdateSetNull()
+    /**
+     * Sets an update action on default.
+     *
+     * @return ForeignKey
+     */
+    public function updateSetDefault()
     {
-        throw new Exception('Not implemented');
+        $this->updateAction = self::ACTION_DEFAULT;
 
         return $this;
     }
 
-    public function onUpdateSetDefault()
+    /**
+     * Sets a delete action on restrict.
+     *
+     * @return ForeignKey
+     */
+    public function deleteRestrict()
     {
-        throw new Exception('Not implemented');
+        $this->deleteAction = self::ACTION_RESTICT;
 
         return $this;
     }
 
-    public function onDeleteNoAction()
+    /**
+     * Sets a delete action on cascade.
+     *
+     * @return ForeignKey
+     */
+    public function deleteCascade()
     {
-        throw new Exception('Not implemented');
+        $this->deleteAction = self::ACTION_CASCADE;
 
         return $this;
     }
 
-    public function onDeleteRestrict()
+    /**
+     * Sets a delete action on set null.
+     *
+     * @return ForeignKey
+     */
+    public function deleteSetNull()
     {
-        throw new Exception('Not implemented');
+        $this->deleteAction = self::ACTION_SET_NULL;
 
         return $this;
     }
 
-    public function onDeleteCascade()
+    /**
+     * Sets a delete action on default.
+     *
+     * @return ForeignKey
+     */
+    public function deleteSetDefault()
     {
-        throw new Exception('Not implemented');
-
-        return $this;
-    }
-
-    public function onDeleteSetNull()
-    {
-        throw new Exception('Not implemented');
-
-        return $this;
-    }
-
-    public function onDeleteSetDefault()
-    {
-        throw new Exception('Not implemented');
+        $this->deleteAction = self::ACTION_DEFAULT;
 
         return $this;
     }

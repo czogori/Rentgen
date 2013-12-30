@@ -17,9 +17,9 @@ class CreateTableCommand extends Command
 
     /**
      * Sets a table.
-     * 
+     *
      * @param Table $table The table instance.
-     * 
+     *
      * @return CreateTableCommand
      */
     public function setTable(Table $table)
@@ -43,22 +43,24 @@ class CreateTableCommand extends Command
 
     /**
      * Gets constraints query.
-     * 
+     *
      * @return string
      */
     private function getConstraintsSql()
-    {        
+    {
         $sql = '';
         foreach ($this->table->getConstraints() as $constraint) {
             $sql .= ',';
             if ($constraint instanceof PrimaryKey) {
                 $sql .= (string) $constraint ;
             } else if ($constraint instanceof ForeignKey) {
-                $sql .= sprintf('CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION'
+                $sql .= sprintf('CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE %s ON DELETE %s'
                     , $constraint->getName()
                     , implode(',', $constraint->getColumns())
                     , $constraint->getReferencedTable()->getQualifiedName()
-                    , implode(',', $constraint->getReferencedColumns()));
+                    , implode(',', $constraint->getReferencedColumns())
+                    , $constraint->getUpdateAction()
+                    , $constraint->getDeleteAction());
             } else if ($constraint instanceof Unique) {
                 $sql .= sprintf('CONSTRAINT %s UNIQUE (%s)'
                     , $constraint->getName()
@@ -70,7 +72,7 @@ class CreateTableCommand extends Command
 
     /**
      * Gets columns query.
-     * 
+     *
      * @return string
      */
     private function getColumnsSql()
@@ -105,7 +107,7 @@ class CreateTableCommand extends Command
                 , $column->isNotNull() ? 'NOT NULL' : ''
                 , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $this->addQuotesIfNeeded($column, $column->getDefault())
             );
-        }        
+        }
 
         return rtrim($sql, ',');
     }
@@ -118,7 +120,7 @@ class CreateTableCommand extends Command
         $this->dispatcher->dispatch('table.create', new TableEvent($this->table, $this->getSql()));
     }
 
-    
+
     private function addQuotesIfNeeded(Column $column, $value)
     {
         return $column->getType() === 'string' ? sprintf("'%s'", $value) : $value;

@@ -31,12 +31,14 @@ class AddConstraintCommand extends Command
     public function getSql()
     {
         if ($this->constraint instanceof ForeignKey) {
-            return sprintf('ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE;'
+            return sprintf('ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE %s ON DELETE %s;'
                 , $this->constraint->getTable()->getQualifiedName()
                 , $this->constraint->getName()
                 , implode(',', $this->constraint->getColumns())
                 , $this->constraint->getReferencedTable()->getQualifiedName()
                 , implode(',', $this->constraint->getReferencedColumns())
+                , $this->constraint->getUpdateAction()
+                , $this->constraint->getDeleteAction()
             );
         }
         if ($this->constraint instanceof Unique) {
