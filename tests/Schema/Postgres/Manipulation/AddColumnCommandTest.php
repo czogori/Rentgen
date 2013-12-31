@@ -30,8 +30,9 @@ class AddColumnCommandTest extends TestCase
         $this->assertEquals($sql, $addColumnCommand->getSql());
     }
 
-    public function testAddCustomColumn()
+    public function testAddCustomColumnWithHstoreType()
     {
+        $this->connection->execute('CREATE EXTENSION IF NOT EXISTS hstore;');
         $column = new CustomColumn('name', 'hstore');
         $column->setTable(new Table('foo'));
 

@@ -36,7 +36,7 @@ class CreateTableCommandTest extends TestCase
     {
         $table = new Table('foo');
         $createTableCommand = new CreateTableCommand();
-        $this->getCreateTableCommand()        
+        $this->getCreateTableCommand()
             ->setTable($table)
             ->execute();
 
@@ -75,11 +75,11 @@ class CreateTableCommandTest extends TestCase
         $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());
     }
 
-    public function testCreateTableWithCustomColumn()
+    public function testCreateTableWithCustomColumnWithHstoreType()
     {
         $table = new Table('test');
         $table->addColumn(new StringColumn('foo'));
-        $table->addColumn(new CustomColumn('bar', 'hstore'));        
+        $table->addColumn(new CustomColumn('bar', 'hstore'));
         $this->getCreateTableCommand()
             ->setTable($table)
             ->execute();

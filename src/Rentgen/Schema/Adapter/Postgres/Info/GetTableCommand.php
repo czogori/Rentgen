@@ -19,9 +19,9 @@ class GetTableCommand extends Command
 
     /**
      * Sets a table name.
-     * 
+     *
      * @param string $tableName A table name.
-     * 
+     *
      * @return GetTableCommand
      */
     public function setTableName($tableName)
@@ -54,7 +54,7 @@ class GetTableCommand extends Command
         $this->preExecute();
         $columns = $this->connection->query($this->getSql());
         if(empty($columns)) {
-            throw new TableNotExistsException($this->tableName);            
+            throw new TableNotExistsException($this->tableName);
         }
         $table = new Table($this->tableName);
         if (null === $table->getSchema()) {
@@ -82,9 +82,9 @@ class GetTableCommand extends Command
 
     /**
      * Load contsraints to table.
-     * 
+     *
      * @param Table $table A table.
-     * 
+     *
      * @return void
      */
     private function loadConstraints(Table $table)
@@ -92,7 +92,7 @@ class GetTableCommand extends Command
 
         foreach ($this->getConstraints() as $constraint) {
             switch($constraint['constraint_type']) {
-                case 'FOREIGN KEY':                
+                case 'FOREIGN KEY':
                     // TODO Find a better way to define foreign key
                     $foreignKey = new ForeignKey(new Table($constraint['table_name']), new Table($constraint['column_name']));
                     $foreignKey->setColumns($constraint['references_table']);
@@ -103,16 +103,16 @@ class GetTableCommand extends Command
                 case 'PRIMARY KEY':
                     $table->addConstraint(new PrimaryKey($constraint['column_name'], $table));
                     break;
-                case 'UNIQUE':                    
+                case 'UNIQUE':
                     $table->addConstraint(new Unique($constraint['column_name'], new Table($constraint['table_name'])));
                     break;
-            }            
+            }
         }
     }
 
     /**
      * Gets constraints from database.
-     * 
+     *
      * @return array Array of contraints.
      */
     private function getConstraints()
@@ -143,6 +143,6 @@ LEFT JOIN information_schema.constraint_column_usage ccu
       AND rc.unique_constraint_name = ccu.constraint_name
     WHERE tc.table_name = '%s' AND tc.constraint_type IN ('PRIMARY KEY', 'FOREIGN KEY', 'UNIQUE')", $this->tableName);
 
-        return $this->connection->query($sql);        
+        return $this->connection->query($sql);
     }
 }
