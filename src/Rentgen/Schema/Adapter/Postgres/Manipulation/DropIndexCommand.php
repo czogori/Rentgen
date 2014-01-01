@@ -10,9 +10,9 @@ class DropIndexCommand extends Command
 
     /**
      * Sets a index
-     * 
+     *
      * @param Index $index The index instance.
-     * 
+     *
      * @return DropColumnCommand
      */
     public function setIndex(Index $index)

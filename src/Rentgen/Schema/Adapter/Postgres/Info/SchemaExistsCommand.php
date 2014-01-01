@@ -9,9 +9,9 @@ class SchemaExistsCommand extends Command
 
     /**
       * Sets a schema name.
-      * 
+      *
       * @param string $schemaName Schema name.
-      * 
+      *
       * @return SchemaExistsCommand
       */
     public function setName($schemaName)

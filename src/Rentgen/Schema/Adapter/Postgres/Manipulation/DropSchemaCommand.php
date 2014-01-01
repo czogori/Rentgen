@@ -10,9 +10,9 @@ class DropSchemaCommand extends Command
 
     /**
      * Sets a schema.
-     * 
+     *
      * @param Schema $schema The schema instance.
-     * 
+     *
      * @return DropSchemaCommand
      */
     public function setSchema(Schema $schema)

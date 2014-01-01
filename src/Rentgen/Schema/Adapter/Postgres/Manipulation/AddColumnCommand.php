@@ -13,9 +13,9 @@ class AddColumnCommand extends Command
 
     /**
      * Sets a column.
-     * 
+     *
      * @param Column $column The column instance.
-     * 
+     *
      * @return AddColumnCommand
      */
     public function setColumn(Column $column)
@@ -30,13 +30,12 @@ class AddColumnCommand extends Command
      */
     public function getSql()
     {
-        if($this->column instanceof CustomColumn) {
+        if ($this->column instanceof CustomColumn) {
             $columnType = $this->column->getType();
         } else {
             $columnTypeMapper = new ColumnTypeMapper();
             $columnType = $columnTypeMapper->getNative($this->column->getType());
         }
-
 
         $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s;'
             , $this->column->getTable()->getQualifiedName()

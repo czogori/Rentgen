@@ -36,27 +36,26 @@ class InfoTest extends TestCase
     }
 
     public function testGetTable()
-    {        
+    {
         $table = $this->info->getTable(new Table('foo'));
-        
-        $this->assertInstanceOf('Rentgen\Database\Table', $table);                
-        $this->assertEquals('foo', $table->getName());        
+
+        $this->assertInstanceOf('Rentgen\Database\Table', $table);
+        $this->assertEquals('foo', $table->getName());
     }
 
-
     public function testGetTables()
-    {        
+    {
         $tables = $this->info->getTables();
-        
+
         $this->assertCount(2, $tables);
-        $this->assertInstanceOf('Rentgen\Database\Table', $tables[0]);    
-        $this->assertInstanceOf('Rentgen\Database\Table', $tables[1]);            
+        $this->assertInstanceOf('Rentgen\Database\Table', $tables[0]);
+        $this->assertInstanceOf('Rentgen\Database\Table', $tables[1]);
     }
 
     public function testIsTableExists()
     {
         $table = $this->info->isTableExists(new Table('foo'));
-                
+
         $this->assertTrue($this->info->isTableExists(new Table('foo')));
     }
 }

@@ -3,7 +3,6 @@ namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
 use Rentgen\Schema\Command;
 use Rentgen\Database\Table;
-use Rentgen\Event\TableEvent;
 use Rentgen\Schema\Adapter\Postgres\Info\GetTablesCommand;
 
 class DropAllTablesCommand extends Command
@@ -13,7 +12,7 @@ class DropAllTablesCommand extends Command
 
     /**
      * Sets a schema name.
-     * 
+     *
      * @param string $schemaName The schema name.
      *
      * @return DropAllTablesCommand

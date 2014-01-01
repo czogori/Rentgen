@@ -5,7 +5,7 @@ namespace Rentgen\Database\Column;
 use Rentgen\Database\Column;
 
 class CustomColumn extends Column
-{   
+{
     private $type;
 
     /**

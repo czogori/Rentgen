@@ -53,7 +53,7 @@ class CreateTableCommand extends Command
             $sql .= ',';
             if ($constraint instanceof PrimaryKey) {
                 $sql .= (string) $constraint ;
-            } else if ($constraint instanceof ForeignKey) {
+            } elseif ($constraint instanceof ForeignKey) {
                 $sql .= sprintf('CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s) MATCH SIMPLE ON UPDATE %s ON DELETE %s'
                     , $constraint->getName()
                     , implode(',', $constraint->getColumns())
@@ -61,12 +61,13 @@ class CreateTableCommand extends Command
                     , implode(',', $constraint->getReferencedColumns())
                     , $constraint->getUpdateAction()
                     , $constraint->getDeleteAction());
-            } else if ($constraint instanceof Unique) {
+            } elseif ($constraint instanceof Unique) {
                 $sql .= sprintf('CONSTRAINT %s UNIQUE (%s)'
                     , $constraint->getName()
                     , implode(',', $constraint->getColumns()));
             }
         }
+
         return rtrim($sql, ',');
     }
 
@@ -95,7 +96,7 @@ class CreateTableCommand extends Command
             $sql = sprintf('%s %s NOT NULL,', $primaryKey->getColumns(), $primaryKey->isAutoIncrement() ? 'serial' : 'integer');
         }
         foreach ($this->table->getColumns() as $column) {
-            if($column instanceof CustomColumn) {
+            if ($column instanceof CustomColumn) {
                 $columnType = $column->getType();
             } else {
                 $columnType = $columnTypeMapper->getNative($column->getType());
@@ -119,7 +120,6 @@ class CreateTableCommand extends Command
     {
         $this->dispatcher->dispatch('table.create', new TableEvent($this->table, $this->getSql()));
     }
-
 
     private function addQuotesIfNeeded(Column $column, $value)
     {

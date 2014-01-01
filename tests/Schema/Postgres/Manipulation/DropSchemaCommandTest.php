@@ -19,7 +19,7 @@ class DropSchemaCommandTest extends TestCase
 
     public function tearDown()
     {
-        if($this->schemaExists('foo')) {
+        if ($this->schemaExists('foo')) {
             $this->dropSchema('foo');
         }
     }

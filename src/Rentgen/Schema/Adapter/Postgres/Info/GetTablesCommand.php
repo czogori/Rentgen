@@ -10,9 +10,9 @@ class GetTablesCommand extends Command
 
      /**
       * Sets a schema name.
-      * 
+      *
       * @param string $schemaName Schema name.
-      * 
+      *
       * @return GetTablesCommand
       */
     public function setSchemaName($schemaName)

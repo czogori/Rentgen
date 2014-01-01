@@ -18,7 +18,7 @@ class RentgenApplication extends Application
         parent::__construct('Rentgen - Database info and schema manipulation', '0.9.1');
 
         $rentgen = new Rentgen();
-        $container = $rentgen->getContainer();                
+        $container = $rentgen->getContainer();
 
         $this->addCommands(array(
             new TableInfoCommand('table', $container),

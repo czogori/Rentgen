@@ -11,9 +11,9 @@ class RenameTableCommand extends Command
 
     /**
      * Sets a table.
-     * 
+     *
      * @param Table $table The table instance.
-     * 
+     *
      * @return RenameTableCommand
      */
     public function setTable(Table $table)
@@ -25,9 +25,9 @@ class RenameTableCommand extends Command
 
     /**
      * Sets a table name.
-     * 
+     *
      * @param string $newTableName New table name.
-     * 
+     *
      * @return RenameTableCommand
      */
     public function setNewName($newTableName)
@@ -41,7 +41,7 @@ class RenameTableCommand extends Command
      * {@inheritdoc}
      */
     public function getSql()
-    {        
+    {
         $sql = sprintf('ALTER TABLE %s RENAME TO %s;'
             , $this->table->getQualifiedName()
             , $this->newTableName

@@ -4,25 +4,25 @@ namespace Rentgen\Exception;
 
 class TableNotExistsException extends \Exception
 {
-	private $tableName;
+    private $tableName;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param string $tableName A table name.
-	 */
-	public function __construct($tableName)
-	{
-		$this->tableName = $tableName;
-	}
+    /**
+     * Constructor.
+     *
+     * @param string $tableName A table name.
+     */
+    public function __construct($tableName)
+    {
+        $this->tableName = $tableName;
+    }
 
-	/**
-	 * Gets a table name.
-	 * 
-	 * @return string
-	 */
-	public function getTableName()
-	{
-		return $this->tableName;
-	}
+    /**
+     * Gets a table name.
+     *
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
 }

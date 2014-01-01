@@ -16,7 +16,7 @@ class ForeignTest extends \PHPUnit_Framework_TestCase
         $table = new Table('foo');
         $table->addColumn(new IntegerColumn('bar_id'));
         $tableReferenced = new Table('bar');
-        
+
         $this->foreignKey = new ForeignKey(new Table('foo'), new Table('bar'));
         $this->foreignKey->setColumns('bar_id');
         $this->foreignKey->setReferencedColumns('bar_id');
@@ -26,7 +26,7 @@ class ForeignTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('foo_bar_id_fkey', $this->foreignKey->getName());
     }
-    
+
     public function testGetTable()
     {
         $this->assertEquals(new Table('foo'), $this->foreignKey->getTable());

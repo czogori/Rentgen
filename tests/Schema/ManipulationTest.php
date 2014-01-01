@@ -42,7 +42,7 @@ class ManipulationTest extends TestCase
 
         $this->manipulation->drop(new Table('foo'));
         $this->assertFalse($this->tableExists('foo'));
-    }    
+    }
 
     public function testExecute()
     {

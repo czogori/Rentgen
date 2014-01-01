@@ -58,9 +58,9 @@ abstract class Column implements DatabaseObjectInterface
 
     /**
      * Set the table instance.
-     * 
-     * @param Table $table  Table instance.
-     * 
+     *
+     * @param Table $table Table instance.
+     *
      * @return void
      */
     public function setTable(Table $table)
@@ -70,7 +70,7 @@ abstract class Column implements DatabaseObjectInterface
 
     /**
      * Get the table instance.
-     * 
+     *
      * @return Table
      */
     public function getTable()

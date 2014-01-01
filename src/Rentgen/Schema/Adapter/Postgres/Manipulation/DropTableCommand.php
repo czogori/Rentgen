@@ -12,9 +12,9 @@ class DropTableCommand extends Command
 
     /**
      * Sets a table.
-     * 
+     *
      * @param Table $table The table instance.
-     * 
+     *
      * @return DropTableCommand
      */
     public function setTable(Table $table)
@@ -26,7 +26,7 @@ class DropTableCommand extends Command
 
     /**
      * Drop table cascade.
-     * 
+     *
      * @return DropTableCommand
      */
     public function cascade()

@@ -5,7 +5,7 @@ namespace Rentgen\Database\Constraint;
 use Rentgen\Database\Table;
 
 class PrimaryKey implements ConstraintInterface
-{    
+{
     private $columns;
     private $isAutoIncrement = true;
     private $autoCreateColumn = false;
@@ -18,8 +18,8 @@ class PrimaryKey implements ConstraintInterface
      * @param Table        $table   Table instance.
      */
     public function __construct($columns = null, Table $table = null)
-    {        
-        $this->columns = is_string($columns) ? array($columns) : $columns;        
+    {
+        $this->columns = is_string($columns) ? array($columns) : $columns;
         if (empty($this->columns)) {
             $this->autoCreateColumn = true;
         }

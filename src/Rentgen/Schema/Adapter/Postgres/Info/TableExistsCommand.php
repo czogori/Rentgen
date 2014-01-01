@@ -10,9 +10,9 @@ class TableExistsCommand extends Command
 
     /**
       * Sets a table.
-      * 
+      *
       * @param string $table A table instance.
-      * 
+      *
       * @return TableExistsCommand
       */
     public function setTable(Table $table)

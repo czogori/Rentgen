@@ -10,7 +10,6 @@ use Rentgen\Database\Column;
 use Rentgen\Database\Constraint\ConstraintInterface;
 use Rentgen\Database\DatabaseObjectInterface;
 use Rentgen\Database\Index;
-use Rentgen\Helper\ObjectHelper;
 
 class Manipulation
 {
@@ -28,9 +27,9 @@ class Manipulation
 
     /**
      * Create a new database object.
-     * 
+     *
      * @param DatabaseObjectInterface $databaseObject Database object.
-     * 
+     *
      * @return integer
      */
     public function create(DatabaseObjectInterface $databaseObject)
@@ -42,10 +41,10 @@ class Manipulation
 
     /**
      * Drop a database object.
-     * 
+     *
      * @param DatabaseObjectInterface $databaseObject Database object.
      * @param bool                    $cascade        Drop databse object cascade.
-     * 
+     *
      * @return integer
      */
     public function drop(DatabaseObjectInterface $databaseObject, $cascade = false)
@@ -60,7 +59,7 @@ class Manipulation
 
     /**
      * Get a command to execute.
-     * 
+     *
      * @param DatabaseObjectInterface $databaseObject Database object.
      * @param bool                    $cascade        Drop databse object cascade.
      *
@@ -68,30 +67,30 @@ class Manipulation
      */
     private function getCommand(DatabaseObjectInterface $databaseObject, $isCreate = true)
     {
-        if($databaseObject instanceof Column) {
+        if ($databaseObject instanceof Column) {
            $command = $this->container
                 ->get($isCreate ? 'add_column' : 'drop_column')
-                ->setColumn($databaseObject);     
+                ->setColumn($databaseObject);
         } elseif ($databaseObject instanceof ConstraintInterface) {
             $command = $this->container
                 ->get($isCreate ? 'add_constraint' : 'drop_constraint')
-                ->setConstraint($databaseObject);            
+                ->setConstraint($databaseObject);
         } elseif ($databaseObject instanceof Index) {
             $command = $this->container
                 ->get($isCreate ? 'create_index' : 'drop_index')
-                ->setIndex($databaseObject);    
+                ->setIndex($databaseObject);
         } elseif ($databaseObject instanceof Schema) {
            $command = $this->container
                 ->get($isCreate ? 'create_schema' : 'drop_schema')
-                ->setSchema($databaseObject);     
+                ->setSchema($databaseObject);
         } elseif ($databaseObject instanceof Table) {
             $command = $this->container
                 ->get($isCreate ? 'create_table' : 'drop_table')
                 ->setTable($databaseObject);
-        } else {        
-            throw new \Exception(sprintf("Class %s is not supported", get_class($databaseObject)));                
+        } else {
+            throw new \Exception(sprintf("Class %s is not supported", get_class($databaseObject)));
         }
-     
+
         return $command;
     }
 

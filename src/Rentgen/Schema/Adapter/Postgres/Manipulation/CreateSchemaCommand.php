@@ -10,9 +10,9 @@ class CreateSchemaCommand extends Command
 
     /**
      * Sets a schema.
-     * 
+     *
      * @param Schema $schema The schema instance.
-     * 
+     *
      * @return CreateSchemaCommand
      */
     public function setSchema(Schema $schema)

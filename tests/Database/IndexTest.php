@@ -14,7 +14,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
     {
         $this->indexSingleColumn = new Index('foo', new Table('test'));
         $this->indexMultiColumns = new Index(array('foo', 'bar'), new Table('test'));
-    }    
+    }
 
     public function testGetName()
     {

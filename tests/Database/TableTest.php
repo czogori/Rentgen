@@ -30,18 +30,18 @@ class TableTest extends \PHPUnit_Framework_TestCase
         $schema = new Schema('public');
         $expected = $schema->getName();
 
-        $this->assertEquals($expected, $table->getSchema()->getName());        
+        $this->assertEquals($expected, $table->getSchema()->getName());
     }
 
     public function testCreateInstanceWithAllParams()
     {
         $table = new Table('foo', new Schema('bar'));
-        $this->assertEquals('foo', $table->getName());                
-        $this->assertThat(new Schema('bar'), 
+        $this->assertEquals('foo', $table->getName());
+        $this->assertThat(new Schema('bar'),
             $this->logicalAnd($this->equalTo($table->getSchema())
           )
         );
-    }    
+    }
 
     public function testGetName()
     {
@@ -52,7 +52,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
     public function testGetQualifiedName()
     {
         $table = new Table('foo');
-        $this->assertEquals('public.foo', $table->getQualifiedName());   
+        $this->assertEquals('public.foo', $table->getQualifiedName());
     }
 
     public function testColumns()
@@ -70,10 +70,10 @@ class TableTest extends \PHPUnit_Framework_TestCase
 
     public function testConstraints()
     {
-        $table = new Table('foo');        
+        $table = new Table('foo');
         $table->addConstraint(new PrimaryKey(array('pk')));
         $table->addConstraint(new ForeignKey($table, new Table('bar')));
-        $table->addConstraint(new Unique('uniq'));        
+        $table->addConstraint(new Unique('uniq'));
 
         $this->assertCount(3, $table->getConstraints());
 
@@ -87,7 +87,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
     {
         $table = new Table('foo');
         $table->setSchema(new Schema('bar'));
-        $this->assertThat(new Schema('bar'), 
+        $this->assertThat(new Schema('bar'),
             $this->logicalAnd($this->equalTo($table->getSchema())
           )
         );

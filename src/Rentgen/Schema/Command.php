@@ -25,7 +25,7 @@ abstract class Command
 
     /**
      * Set an event dispatcher.
-     * 
+     *
      * @param EventDispatcher $dispatcher EventDispatcher instance.
      *
      * @return Command
@@ -39,7 +39,7 @@ abstract class Command
 
     /**
      * Set the connection.
-     * 
+     *
      * @param Connection $connection Connection instance.
      *
      * @return Command
@@ -53,7 +53,7 @@ abstract class Command
 
     /**
      * Execute actions before execute query.
-     * 
+     *
      * @return void
      */
     protected function preExecute()
@@ -62,7 +62,7 @@ abstract class Command
 
     /**
      * Execute actions after execute query.
-     * 
+     *
      * @return void
      */
     protected function postExecute()
@@ -71,7 +71,7 @@ abstract class Command
 
     /**
      * Get sql query to execute.
-     * 
+     *
      * @return string
      */
     abstract public function getSql();

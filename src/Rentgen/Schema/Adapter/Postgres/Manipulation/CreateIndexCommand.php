@@ -10,9 +10,9 @@ class CreateIndexCommand extends Command
 
     /**
      * Sets a index
-     * 
+     *
      * @param Index $index The index instance.
-     * 
+     *
      * @return AddColumnCommand
      */
     public function setIndex(Index $index)

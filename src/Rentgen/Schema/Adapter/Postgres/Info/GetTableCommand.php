@@ -53,7 +53,7 @@ class GetTableCommand extends Command
 
         $this->preExecute();
         $columns = $this->connection->query($this->getSql());
-        if(empty($columns)) {
+        if (empty($columns)) {
             throw new TableNotExistsException($this->tableName);
         }
         $table = new Table($this->tableName);
@@ -91,7 +91,7 @@ class GetTableCommand extends Command
     {
 
         foreach ($this->getConstraints() as $constraint) {
-            switch($constraint['constraint_type']) {
+            switch ($constraint['constraint_type']) {
                 case 'FOREIGN KEY':
                     // TODO Find a better way to define foreign key
                     $foreignKey = new ForeignKey(new Table($constraint['table_name']), new Table($constraint['column_name']));

@@ -90,6 +90,7 @@ class CreateTableCommandTest extends TestCase
     private function getCreateTableCommand()
     {
         $createTableCommand = new CreateTableCommand();
+
         return $createTableCommand
             ->setConnection($this->connection)
             ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'));
