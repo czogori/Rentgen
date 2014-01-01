@@ -10,6 +10,7 @@ use Rentgen\Database\Constraint\PrimaryKey;
 use Rentgen\Database\Constraint\Unique;
 use Rentgen\Event\TableEvent;
 use Rentgen\Schema\Adapter\Postgres\ColumnTypeMapper;
+use Rentgen\Schema\Adapter\Postgres\Escapement;
 
 class CreateTableCommand extends Command
 {
@@ -34,8 +35,10 @@ class CreateTableCommand extends Command
      */
     public function getSql()
     {
+        $escapement = new Escapement();
+
         $sql = sprintf('CREATE TABLE %s(%s);'
-            , $this->table->getQualifiedName()
+            , $escapement->escape($this->table->getQualifiedName())
             , $this->getColumnsSql() . $this->getConstraintsSql());
 
         return $sql;
