@@ -1,8 +1,9 @@
 {
     "name": "czogori/rentgen",
     "type": "library",
-    "description": "Database abstraction layer",
+    "description": "Database abstraction layer for information and manipulation schema",
     "keywords": [ "database", "dbal" ],
+    "homepage": "https://github.com/czogori/Rentgen"
     "license": "MIT",
     "require": {        
         "php": ">=5.3.2",
