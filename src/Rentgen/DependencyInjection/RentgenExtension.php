@@ -142,7 +142,7 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('command.info.get_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTableCommand');
         $container->setParameter('command.info.get_tables.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTablesCommand');
         $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
-        $container->setParameter('event_listener.class', 'Rentgen\Listener');
+        $container->setParameter('event_listener.class', 'Rentgen\EventListener\LoggingListener');
     }
 
     private function isConnectionConfig($config)

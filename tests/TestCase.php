@@ -34,11 +34,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $this->setConnection();
 
-        $dropAllTablesCommand = new DropAllTablesCommand();
-        $dropAllTablesCommand
-            ->setConnection($this->connection)
-            ->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcher'))
-            ->execute();
+        $sql = 'select schema_name
+                from information_schema.schemata
+                where schema_name <> \'information_schema\' and schema_name !~ \'^pg_\'';
+        $items = $this->connection->query($sql);
+        $schemas = array();
+        foreach ($items as $item) {
+            $this->connection->execute(sprintf('DROP SCHEMA "%s" CASCADE', $item['schema_name']));
+        }
+        $this->connection->execute(sprintf('CREATE SCHEMA public'));
     }
 
     protected function dropSchema($schemaName)
