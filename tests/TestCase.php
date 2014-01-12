@@ -2,6 +2,7 @@
 
 namespace Rentgen\Tests;
 
+use Rentgen\Schema\Adapter\Postgres\Info\GetTablesCommand;
 use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Info\SchemaExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
@@ -82,6 +83,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ->setConnection($this->connection)
             ->setTableName($name)
             ->execute();
+    }
+
+    protected function getTables($schemaName)
+    {
+        $getTablesCommand = new GetTablesCommand();
+        $getTablesCommand
+            ->setConnection($this->connection)
+            ->setSchemaName($schemaName);
+        return $getTablesCommand->execute();
     }
 
     protected function tableExists($name)

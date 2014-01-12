@@ -35,13 +35,16 @@ class ClearDatabaseCommandTest extends TestCase
     public function testExecute()
     {
         $this->createSchema('foo');
+        $this->createTable('bar');
 
         $this->assertTrue($this->schemaExists('public'));
+        $this->assertEquals(1, count($this->getTables('public')));
         $this->assertTrue($this->schemaExists('foo'));
 
         $this->clearDatabaseCommand->execute();
 
         $this->assertTrue($this->schemaExists('public'));
+        $this->assertEquals(0, count($this->getTables('public')));
         $this->assertFalse($this->schemaExists('foo'));
     }
 }
