@@ -60,6 +60,7 @@ class RentgenExtension implements ExtensionInterface
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
         $this->adapter = $this->parseAdapter($connectionConfig['adapter']);
 
+
         $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);
         $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);
         $this->setDefinition('add_column', 'command.manipulation.add_column.class', $container);
@@ -74,6 +75,12 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);
         $this->setDefinition('get_table', 'command.info.get_table.class', $container);
         $this->setDefinition('get_tables', 'command.info.get_tables.class', $container);
+        $this->setDefinition('get_schemas', 'command.info.get_tables.class', $container);
+
+        $definition = new Definition('%command.manipulation.clear_database.class%', array(new Reference('get_schemas')));
+        $definition->addMethodCall('setConnection', array(new Reference('connection')));
+        $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
+        $container->setDefinition('clear_database', $definition);
 
         $definition = new Definition('Rentgen\Event\TableEvent');
         $definition->addTag('table', array('event' => 'table.create',   'method' => 'onCreateTable'));
@@ -138,9 +145,11 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('command.manipulation.drop_index.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropIndexCommand');
         $container->setParameter('command.manipulation.create_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateSchemaCommand');
         $container->setParameter('command.manipulation.drop_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropSchemaCommand');
+        $container->setParameter('command.manipulation.clear_database.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\ClearDatabaseCommand');
         $container->setParameter('command.info.table_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand');
         $container->setParameter('command.info.get_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTableCommand');
         $container->setParameter('command.info.get_tables.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTablesCommand');
+        $container->setParameter('command.info.get_schemas.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetSchemasCommand');
         $container->setParameter('event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
         $container->setParameter('event_listener.class', 'Rentgen\EventListener\LoggingListener');
     }

@@ -1,17 +1,34 @@
 <?php
 namespace Rentgen\Schema\Adapter\Postgres\Manipulation;
 
-class ClearDatabseCommand extends Command
+use Rentgen\Schema\Command;
+use Rentgen\Schema\Adapter\Postgres\Info\GetSchemasCommand;
+
+class ClearDatabaseCommand extends Command
 {
+    private $getSchemasCommand;
+
+    /**
+     * Constructor.
+     *
+     * @param GetSchemasCommand $getSchemasCommand
+     */
+    public function __construct(GetSchemasCommand $getSchemasCommand)
+    {
+        $this->getSchemasCommand = $getSchemasCommand;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getSql()
     {
-        $sql = sprintf('CREATE INDEX %s ON %s (%s);'
-            , $this->index->getName()
-            , $this->index->getTable()->getQualifiedName()
-            , implode(',', $this->index->getColumns()));
+        $sql = '';
+        $schemas = $this->getSchemasCommand->execute();
+        foreach ($schemas as $schema) {
+            $sql .= sprintf('DROP SCHEMA "%s" CASCADE;', $schema->getName());
+        }
+        $sql .= 'CREATE SCHEMA public;';
 
         return $sql;
     }

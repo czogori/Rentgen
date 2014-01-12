@@ -45,6 +45,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $this->connection->execute(sprintf('CREATE SCHEMA public'));
     }
 
+    protected function createSchema($schemaName)
+    {
+        $sql = sprintf('CREATE SCHEMA "%s"', $schemaName);
+        $this->connection->execute($sql);
+    }
+
     protected function dropSchema($schemaName)
     {
         $sql = sprintf('DROP SCHEMA %s CASCADE', $schemaName);
