@@ -38,7 +38,7 @@ class ManipulationTest extends TestCase
 
     public function testDropTable()
     {
-        $this->connection->execute('CREATE TABLE foo()');
+        $this->createTable('foo');
 
         $this->manipulation->drop(new Table('foo'));
         $this->assertFalse($this->tableExists('foo'));
@@ -51,5 +51,22 @@ class ManipulationTest extends TestCase
 
         $this->manipulation->execute('DROP TABLE foo');
         $this->assertFalse($this->tableExists('foo'));
+    }
+
+    public function testClearDatabase()
+    {
+        $this->createTable('foo');
+        $this->createTable('bar');
+        $this->createSchema('moo');
+
+        $this->assertEquals(2, count($this->getTables('public')));
+        $this->assertTrue($this->schemaExists('public'));
+        $this->assertTrue($this->schemaExists('moo'));
+
+        $this->manipulation->clearDatabase();
+
+        $this->assertEquals(0, count($this->getTables('public')));
+        $this->assertTrue($this->schemaExists('public'));
+        $this->assertFalse($this->schemaExists('moo'));
     }
 }

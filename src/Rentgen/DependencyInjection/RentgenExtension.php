@@ -75,9 +75,10 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('table_exists', 'command.info.table_exists.class', $container);
         $this->setDefinition('get_table', 'command.info.get_table.class', $container);
         $this->setDefinition('get_tables', 'command.info.get_tables.class', $container);
-        $this->setDefinition('get_schemas', 'command.info.get_tables.class', $container);
+        $this->setDefinition('get_schemas', 'command.info.get_schemas.class', $container);
 
-        $definition = new Definition('%command.manipulation.clear_database.class%', array(new Reference('get_schemas')));
+        $definition = new Definition($this->getClassName($container->getParameter('command.manipulation.clear_database.class'), $this->adapter),
+            array(new Reference('get_schemas')));
         $definition->addMethodCall('setConnection', array(new Reference('connection')));
         $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
         $container->setDefinition('clear_database', $definition);

@@ -58,6 +58,31 @@ class Manipulation
     }
 
     /**
+     * Clear current database. Turn database to default state - empty public schema.
+     *
+     * @return integer
+     */
+    public function clearDatabase()
+    {
+        $clearDatabaseCommand = $this->container->get('clear_database');
+        return $clearDatabaseCommand->execute();
+    }
+
+    /**
+     * Execute SQL query.
+     *
+     * @param string $sql Sql query.
+     *
+     * @return integer
+     */
+    public function execute($sql)
+    {
+        return $this->container
+            ->get('connection')
+            ->execute($sql);
+    }
+
+    /**
      * Get a command to execute.
      *
      * @param DatabaseObjectInterface $databaseObject Database object.
@@ -92,19 +117,5 @@ class Manipulation
         }
 
         return $command;
-    }
-
-    /**
-     * Execute SQL query.
-     *
-     * @param string $sql Sql query.
-     *
-     * @return integer
-     */
-    public function execute($sql)
-    {
-        return $this->container
-            ->get('connection')
-            ->execute($sql);
     }
 }

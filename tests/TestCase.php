@@ -75,6 +75,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ->execute();
     }
 
+    protected function dropTable($name)
+    {
+        $sql = sprintf('DROP TABLE %s CASCADE', $name);
+        $this->connection->execute($sql);
+    }
+
     protected function getTable($name)
     {
         $getTableCommand = new GetTableCommand();
