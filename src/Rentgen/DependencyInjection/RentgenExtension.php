@@ -14,12 +14,18 @@ use Rentgen\DependencyInjection\Compiler\ListenerPass;
 
 class RentgenExtension implements ExtensionInterface
 {
+    public function __construct(array $config = array())
+    {
+        if ($this->isConnectionConfig($config)) {
+            $this->connectionConfig = $config;
+        }
+    }
+
     public function load(array $configs, ContainerBuilder $container)
     {
-        $connectionConfig = array();
         foreach ($configs as $config) {
             if ($this->isConnectionConfig($config)) {
-                $connectionConfig = $config;
+                $this->connectionConfig = $config;
             }
         }
 
@@ -40,16 +46,16 @@ class RentgenExtension implements ExtensionInterface
         $definition->setArguments(array(new Reference('service_container')));
         $container->setDefinition('schema.info', $definition);
 
-        if (empty($connectionConfig)) {
+        if (empty($this->connectionConfig)) {
             $fileLocator = new FileLocator(getcwd());
             $configFile = $fileLocator->locate('rentgen.yml');
             $config = Yaml::parse($configFile);
 
-            $connectionConfig = $config['connection'];
+            $this->connectionConfig = $config['connection'];
         }
 
         $definition = new Definition('Rentgen\Database\Connection\ConnectionConfig');
-        $definition->setArguments(array($connectionConfig));
+        $definition->setArguments(array($this->connectionConfig));
         $container->setDefinition('connection_config', $definition);
 
         $definition = new Definition('Rentgen\Database\Connection\Connection');
@@ -58,7 +64,7 @@ class RentgenExtension implements ExtensionInterface
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
-        $this->adapter = $this->parseAdapter($connectionConfig['adapter']);
+        $this->adapter = $this->parseAdapter($this->connectionConfig['adapter']);
 
 
         $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);
