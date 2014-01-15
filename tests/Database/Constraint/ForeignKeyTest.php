@@ -51,6 +51,24 @@ class ForeignTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSetActionUpdateWithLowercase()
+    {
+        foreach ($this->getActions() as $action) {
+            $this->foreignKey->setUpdateAction(strtolower($action));
+
+            $this->assertEquals($action, $this->foreignKey->getUpdateAction());
+        }
+    }
+
+    /**
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage Action FOO does not exist.
+     */
+    public function testSetActionUpdateWithWrongAction()
+    {
+        $this->foreignKey->setUpdateAction('foo');
+    }
+
     public function testSetActionDelete()
     {
         foreach ($this->getActions() as $action) {
@@ -58,6 +76,24 @@ class ForeignTest extends \PHPUnit_Framework_TestCase
 
             $this->assertEquals($action, $this->foreignKey->getDeleteAction());
         }
+    }
+
+    public function testSetActionDeleteWithLowercase()
+    {
+        foreach ($this->getActions() as $action) {
+            $this->foreignKey->setDeleteAction(strtolower($action));
+
+            $this->assertEquals($action, $this->foreignKey->getDeleteAction());
+        }
+    }
+
+    /**
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage Action FOO does not exist.
+     */
+    public function testSetActionDeleteWithWrongAction()
+    {
+        $this->foreignKey->setDeleteAction('foo');
     }
 
     private function getActions()

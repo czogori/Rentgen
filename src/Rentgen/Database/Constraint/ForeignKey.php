@@ -155,10 +155,16 @@ class ForeignKey implements ConstraintInterface
      *
      * @param string $updateAction Update action.
      *
+     * @throws InvalidArgumentException If the provided argument is not of action type.
+     *
      * @return void
      */
     public function setUpdateAction($updateAction)
     {
+        $updateAction = strtoupper($updateAction);
+        if(!in_array($updateAction, $this->getAvailableActions())) {
+            throw new \InvalidArgumentException(sprintf('Action %s does not exist.', $updateAction));
+        }
         $this->updateAction = $updateAction;
     }
 
@@ -167,10 +173,16 @@ class ForeignKey implements ConstraintInterface
      *
      * @param string $deleteAction Delete action.
      *
+     * @throws InvalidArgumentException If the provided argument is not of action type.
+     *
      * @return void
      */
     public function setDeleteAction($deleteAction)
     {
+        $deleteAction = strtoupper($deleteAction);
+        if(!in_array($deleteAction, $this->getAvailableActions())) {
+           throw new \InvalidArgumentException(sprintf('Action %s does not exist.', $deleteAction));
+        }
         $this->deleteAction = $deleteAction;
     }
 
@@ -268,5 +280,16 @@ class ForeignKey implements ConstraintInterface
         $this->deleteAction = self::ACTION_DEFAULT;
 
         return $this;
+    }
+
+    private function getAvailableActions()
+    {
+        return array(
+            ForeignKey::ACTION_NO_ACTION,
+            ForeignKey::ACTION_CASCADE,
+            ForeignKey::ACTION_RESTICT,
+            ForeignKey::ACTION_DEFAULT,
+            ForeignKey::ACTION_SET_NULL
+        );
     }
 }
