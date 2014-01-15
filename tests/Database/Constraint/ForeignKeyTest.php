@@ -42,4 +42,32 @@ class ForeignTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('bar_id'), $this->foreignKey->getReferencedColumns());
     }
 
+    public function testSetActionUpdate()
+    {
+        foreach ($this->getActions() as $action) {
+            $this->foreignKey->setUpdateAction($action);
+
+            $this->assertEquals($action, $this->foreignKey->getUpdateAction());
+        }
+    }
+
+    public function testSetActionDelete()
+    {
+        foreach ($this->getActions() as $action) {
+            $this->foreignKey->setDeleteAction($action);
+
+            $this->assertEquals($action, $this->foreignKey->getDeleteAction());
+        }
+    }
+
+    private function getActions()
+    {
+        return array(
+            ForeignKey::ACTION_NO_ACTION,
+            ForeignKey::ACTION_CASCADE,
+            ForeignKey::ACTION_RESTICT,
+            ForeignKey::ACTION_DEFAULT,
+            ForeignKey::ACTION_SET_NULL
+        );
+    }
 }

@@ -151,6 +151,30 @@ class ForeignKey implements ConstraintInterface
     }
 
     /**
+     * Sets an update action.
+     *
+     * @param string $updateAction Update action.
+     *
+     * @return void
+     */
+    public function setUpdateAction($updateAction)
+    {
+        $this->updateAction = $updateAction;
+    }
+
+    /**
+     * Sets a delete action.
+     *
+     * @param string $deleteAction Delete action.
+     *
+     * @return void
+     */
+    public function setDeleteAction($deleteAction)
+    {
+        $this->deleteAction = $deleteAction;
+    }
+
+    /**
      * Sets an update action on restrict.
      *
      * @return ForeignKey
