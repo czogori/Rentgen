@@ -10,7 +10,7 @@ class ForeignKey implements ConstraintInterface
     const ACTION_NO_ACTION = 'NO ACTION';
     const ACTION_CASCADE   = 'CASCADE';
     const ACTION_RESTICT   = 'RESTRICT';
-    const ACTION_DEFAULT   = 'DEFAULT';
+    const ACTION_DEFAULT   = 'SET DEFAULT';
     const ACTION_SET_NULL  = 'SET NULL';
 
     private $columns;
