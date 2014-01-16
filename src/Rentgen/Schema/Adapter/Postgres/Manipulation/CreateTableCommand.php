@@ -104,10 +104,11 @@ class CreateTableCommand extends Command
             } else {
                 $columnType = $columnTypeMapper->getNative($column->getType());
             }
+
             $sql .= sprintf('%s %s%s %s %s,'
                 , $column->getName()
                 , $columnType
-                , $column->getType() === 'string' && $column->getLimit() ? sprintf('(%s)', $column->getLimit()) : ''
+                , $this->getTypeConstraints($column)
                 , $column->isNotNull() ? 'NOT NULL' : ''
                 , null === $column->getDefault() ? '' : 'DEFAULT'. ' ' . $this->addQuotesIfNeeded($column, $column->getDefault())
             );
@@ -127,5 +128,23 @@ class CreateTableCommand extends Command
     private function addQuotesIfNeeded(Column $column, $value)
     {
         return $column->getType() === 'string' ? sprintf("'%s'", $value) : $value;
+    }
+
+    private function getTypeConstraints(Column $column)
+    {
+        $typeConstraints = '';
+        switch($column->getType()) {
+            case 'string':
+                if($column->getLimit()) {
+                    $typeConstraints = sprintf('(%s)', $column->getLimit());
+                }
+                break;
+            case 'decimal':
+                if($column->getPrecision()) {
+                    $typeConstraints = sprintf('(%s, %s)', $column->getPrecision(), $column->getScale());
+                }
+                break;
+        }
+        return $typeConstraints;
     }
 }
