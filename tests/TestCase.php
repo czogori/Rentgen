@@ -6,7 +6,6 @@ use Rentgen\Schema\Adapter\Postgres\Info\GetTablesCommand;
 use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Info\SchemaExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
-use Rentgen\Schema\Adapter\Postgres\Manipulation\DropAllTablesCommand;
 use Rentgen\Database\Connection\Connection;
 use Rentgen\Database\Connection\ConnectionConfig;
 use Rentgen\Database\Table;
@@ -97,6 +96,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $getTablesCommand
             ->setConnection($this->connection)
             ->setSchemaName($schemaName);
+
         return $getTablesCommand->execute();
     }
 

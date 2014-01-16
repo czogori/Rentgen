@@ -66,7 +66,6 @@ class RentgenExtension implements ExtensionInterface
         $this->eventDispatcher = $container->getDefinition('event_dispatcher');
         $this->adapter = $this->parseAdapter($this->connectionConfig['adapter']);
 
-
         $this->setDefinition('create_table', 'command.manipulation.create_table.class', $container);
         $this->setDefinition('drop_table', 'command.manipulation.drop_table.class', $container);
         $this->setDefinition('add_column', 'command.manipulation.add_column.class', $container);

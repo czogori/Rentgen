@@ -162,7 +162,7 @@ class ForeignKey implements ConstraintInterface
     public function setUpdateAction($updateAction)
     {
         $updateAction = strtoupper($updateAction);
-        if(!in_array($updateAction, $this->getAvailableActions())) {
+        if (!in_array($updateAction, $this->getAvailableActions())) {
             throw new \InvalidArgumentException(sprintf('Action %s does not exist.', $updateAction));
         }
         $this->updateAction = $updateAction;
@@ -180,7 +180,7 @@ class ForeignKey implements ConstraintInterface
     public function setDeleteAction($deleteAction)
     {
         $deleteAction = strtoupper($deleteAction);
-        if(!in_array($deleteAction, $this->getAvailableActions())) {
+        if (!in_array($deleteAction, $this->getAvailableActions())) {
            throw new \InvalidArgumentException(sprintf('Action %s does not exist.', $deleteAction));
         }
         $this->deleteAction = $deleteAction;

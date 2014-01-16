@@ -65,6 +65,7 @@ class Manipulation
     public function clearDatabase()
     {
         $clearDatabaseCommand = $this->container->get('clear_database');
+
         return $clearDatabaseCommand->execute();
     }
 
