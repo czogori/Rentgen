@@ -2,17 +2,19 @@
 
 namespace Rentgen\Tests;
 
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Yaml\Yaml;
+
 use Rentgen\Schema\Adapter\Postgres\Info\GetTablesCommand;
 use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Info\SchemaExistsCommand;
 use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
 use Rentgen\Database\Connection\Connection;
 use Rentgen\Database\Connection\ConnectionConfig;
-use Rentgen\Database\Table;
 use Rentgen\Database\Column;
+use Rentgen\Database\Table;
+use Rentgen\Database\Schema;
 
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
@@ -57,9 +59,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $this->connection->execute($sql);
     }
 
-    protected function createTable($name, $columns = array(), $constraints = array())
+    protected function createTable($name, $columns = array(), $constraints = array(), $schemaName = null)
     {
-        $table = new Table($name);
+        $table = null === $schemaName ?
+            new Table($name):
+            new Table($name, new Schema($schemaName));
         foreach ($columns as $column) {
             $table->addColumn($column);
         }
