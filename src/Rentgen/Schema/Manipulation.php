@@ -5,11 +5,12 @@ namespace Rentgen\Schema;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Rentgen\Rentgen;
-use Rentgen\Database\Table;
 use Rentgen\Database\Column;
 use Rentgen\Database\Constraint\ConstraintInterface;
 use Rentgen\Database\DatabaseObjectInterface;
 use Rentgen\Database\Index;
+use Rentgen\Database\Schema;
+use Rentgen\Database\Table;
 
 class Manipulation
 {
