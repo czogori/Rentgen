@@ -21,7 +21,7 @@ class RentgenExtension implements ExtensionInterface
                 $connectionConfig = $config;
             }
         }
-        if($container->hasParameter('connection_config')) {
+        if ($container->hasParameter('connection_config')) {
             $connectionConfig = $container->getParameter('connection_config');
         }
 

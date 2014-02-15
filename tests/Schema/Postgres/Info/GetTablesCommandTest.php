@@ -57,7 +57,7 @@ class GetTablesCommandTest extends TestCase
         $this->assertCount(2, $tables);
         foreach ($tables as $table) {
             $this->assertTrue(in_array($table->getName(), array('foo', 'bar')));
-            if($table->getName() == 'bar') {
+            if ($table->getName() == 'bar') {
                 $this->assertEquals('another_schema', $table->getSchema()->getName());
             }
         }
@@ -67,6 +67,7 @@ class GetTablesCommandTest extends TestCase
     {
         $getTablesCommand = new GetTablesCommand();
         $getTablesCommand->setConnection($this->connection);
+
         return $getTablesCommand->execute();
     }
 }

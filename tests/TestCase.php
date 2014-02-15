@@ -15,7 +15,6 @@ use Rentgen\Database\Column;
 use Rentgen\Database\Table;
 use Rentgen\Database\Schema;
 
-
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */

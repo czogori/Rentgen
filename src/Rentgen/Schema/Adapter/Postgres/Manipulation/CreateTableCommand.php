@@ -133,18 +133,19 @@ class CreateTableCommand extends Command
     private function getTypeConstraints(Column $column)
     {
         $typeConstraints = '';
-        switch($column->getType()) {
+        switch ($column->getType()) {
             case 'string':
-                if($column->getLimit()) {
+                if ($column->getLimit()) {
                     $typeConstraints = sprintf('(%s)', $column->getLimit());
                 }
                 break;
             case 'decimal':
-                if($column->getPrecision()) {
+                if ($column->getPrecision()) {
                     $typeConstraints = sprintf('(%s, %s)', $column->getPrecision(), $column->getScale());
                 }
                 break;
         }
+
         return $typeConstraints;
     }
 }
