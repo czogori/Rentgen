@@ -65,7 +65,7 @@ class Manipulation
      */
     public function clearDatabase()
     {
-        $clearDatabaseCommand = $this->container->get('clear_database');
+        $clearDatabaseCommand = $this->container->get('rentgen.clear_database');
 
         return $clearDatabaseCommand->execute();
     }
@@ -96,23 +96,23 @@ class Manipulation
     {
         if ($databaseObject instanceof Column) {
            $command = $this->container
-                ->get($isCreate ? 'add_column' : 'drop_column')
+                ->get($isCreate ? 'rentgen.add_column' : 'rentgen.drop_column')
                 ->setColumn($databaseObject);
         } elseif ($databaseObject instanceof ConstraintInterface) {
             $command = $this->container
-                ->get($isCreate ? 'add_constraint' : 'drop_constraint')
+                ->get($isCreate ? 'rentgen.add_constraint' : 'rentgen.drop_constraint')
                 ->setConstraint($databaseObject);
         } elseif ($databaseObject instanceof Index) {
             $command = $this->container
-                ->get($isCreate ? 'create_index' : 'drop_index')
+                ->get($isCreate ? 'rentgen.create_index' : 'rentgen.drop_index')
                 ->setIndex($databaseObject);
         } elseif ($databaseObject instanceof Schema) {
            $command = $this->container
-                ->get($isCreate ? 'create_schema' : 'drop_schema')
+                ->get($isCreate ? 'rentgen.create_schema' : 'rentgen.drop_schema')
                 ->setSchema($databaseObject);
         } elseif ($databaseObject instanceof Table) {
             $command = $this->container
-                ->get($isCreate ? 'create_table' : 'drop_table')
+                ->get($isCreate ? 'rentgen.create_table' : 'rentgen.drop_table')
                 ->setTable($databaseObject);
         } else {
             throw new \Exception(sprintf("Class %s is not supported", get_class($databaseObject)));

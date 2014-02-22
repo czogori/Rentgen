@@ -36,12 +36,12 @@ class Rentgen
 
     public function createManipulationInstance()
     {
-        return $this->container->get('schema.manipulation');
+        return $this->container->get('rentgen.schema.manipulation');
     }
 
     public function createInfoInstance()
     {
-        return $this->container->get('schema.info');
+        return $this->container->get('rentgen.schema.info');
     }
 
     public function execute($sql)

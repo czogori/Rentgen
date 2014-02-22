@@ -30,7 +30,7 @@ class Info
     public function getTable(Table $table)
     {
         return $this->container
-            ->get('get_table')
+            ->get('rentgen.get_table')
             ->setTableName($table->getName())
             ->execute();
     }
@@ -42,7 +42,7 @@ class Info
      */
     public function getTables($schemaName = null)
     {
-        $getTablesCommand = $this->container->get('get_tables');
+        $getTablesCommand = $this->container->get('rentgen.get_tables');
         if (null !== $schemaName) {
             $getTablesCommand->setSchemaName($schemaName);
         }
@@ -60,7 +60,7 @@ class Info
     public function isTableExists(Table $table)
     {
         return $this->container
-            ->get('table_exists')
+            ->get('rentgen.table_exists')
             ->setTable($table)
             ->execute();
     }
