@@ -14,8 +14,8 @@ class ListenerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $dispatcher = $container->get('event_dispatcher');
-        $listener = $container->get('event_listener');
+        $dispatcher = $container->get('rentgen.event_dispatcher');
+        $listener = $container->get('rentgen.event_listener');
 
         $taggedServices = $container->findTaggedServiceIds('table');
         foreach ($taggedServices as $tagAttributes) {
