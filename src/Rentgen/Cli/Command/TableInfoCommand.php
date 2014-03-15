@@ -32,7 +32,7 @@ class TableInfoCommand extends ContainerAwareCommand
 
         try {
             $table = $this->getContainer()
-                ->get('get_table')
+                ->get('rentgen.get_table')
                 ->setTableName($tableName)
                 ->execute();
             foreach ($table->getColumns() as $column) {

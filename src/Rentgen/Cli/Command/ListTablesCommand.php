@@ -27,7 +27,7 @@ class ListTablesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $getTablesCommand = $this->getContainer()->get('get_tables');
+        $getTablesCommand = $this->getContainer()->get('rentgen.get_tables');
         $tables = $getTablesCommand->execute();
 
         $rows = array();
