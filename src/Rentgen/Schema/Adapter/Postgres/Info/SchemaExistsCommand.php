@@ -42,7 +42,6 @@ class SchemaExistsCommand extends Command
             $count = $row['count'];
         }
         $this->postExecute();
-
-        return (bool) $count;
+        return $count > 0;
     }
 }
