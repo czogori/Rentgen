@@ -77,6 +77,7 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('rentgen.get_table', 'rentgen.command.info.get_table.class', $container);
         $this->setDefinition('rentgen.get_tables', 'rentgen.command.info.get_tables.class', $container);
         $this->setDefinition('rentgen.get_schemas', 'rentgen.command.info.get_schemas.class', $container);
+        $this->setDefinition('rentgen.schema_exists', 'rentgen.command.info.schema_exists.class', $container);
 
         $definition = new Definition($this->getClassName($container->getParameter('rentgen.command.manipulation.clear_database.class'), $this->adapter),
             array(new Reference('rentgen.get_schemas')));
@@ -152,6 +153,7 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('rentgen.command.info.get_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTableCommand');
         $container->setParameter('rentgen.command.info.get_tables.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTablesCommand');
         $container->setParameter('rentgen.command.info.get_schemas.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetSchemasCommand');
+        $container->setParameter('rentgen.command.info.schema_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\SchemaExistsCommand');
         $container->setParameter('rentgen.event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
         $container->setParameter('rentgen.event_listener.class', 'Rentgen\EventListener\LoggingListener');
     }
