@@ -28,6 +28,13 @@ class ListTablesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $getTablesCommand = $this->getContainer()->get('rentgen.get_tables');
+        if ($schemaName = $input->getArgument('schema_name')) {
+            if (!$this->getContainer()->get('rentgen.schema_exists')->setName($schemaName)->execute()) {
+                $output->writeln(sprintf("\n<error>Schema %s does not exist.</error>\n" , $schemaName));
+                return;
+            }
+            $getTablesCommand->setSchemaName($schemaName);
+        }
         $tables = $getTablesCommand->execute();
 
         $rows = array();
