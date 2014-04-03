@@ -31,6 +31,7 @@ class ListTablesCommand extends ContainerAwareCommand
         if ($schemaName = $input->getArgument('schema_name')) {
             if (!$this->getContainer()->get('rentgen.schema_exists')->setName($schemaName)->execute()) {
                 $output->writeln(sprintf("\n<error>Schema %s does not exist.</error>\n" , $schemaName));
+
                 return;
             }
             $getTablesCommand->setSchemaName($schemaName);
