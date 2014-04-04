@@ -11,6 +11,7 @@ class Table implements DatabaseObjectInterface
 {
     private $name;
     private $schema;
+    private $description;
     protected $columns = array();
     protected $constraints = array();
 
@@ -74,6 +75,7 @@ class Table implements DatabaseObjectInterface
      * Get column of table.
      *
      * @param  string $name Column name.
+     *
      * @return Column Column instance.
      */
     public function getColumn($name)
@@ -125,5 +127,25 @@ class Table implements DatabaseObjectInterface
     public function getSchema()
     {
         return $this->schema;
+    }
+
+    /**
+     * Set table description.
+     *
+     * @param string $description Table description.
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get table description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
