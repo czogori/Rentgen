@@ -5,6 +5,7 @@ namespace Rentgen\Database;
 abstract class Column implements DatabaseObjectInterface
 {
     protected $name;
+    protected $description;
     protected $isNotNull = false;
     protected $default;
 
@@ -84,4 +85,24 @@ abstract class Column implements DatabaseObjectInterface
      * @return string Column type name.
      */
     abstract public function getType();
+
+    /**
+     * Set column description.
+     *
+     * @param string $description Table description.
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get column description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 }
