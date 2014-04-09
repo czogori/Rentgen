@@ -6,6 +6,11 @@ class Connection
 {
     private $connection;
 
+    /**
+     * Constructor.
+     *
+     * @param ConnectionConfigInterface $config Connection config.
+     */
     public function __construct(ConnectionConfigInterface $config)
     {
         try {
@@ -16,11 +21,25 @@ class Connection
         }
     }
 
+    /**
+     * Execute sql query.
+     *
+     * @param string  $sql Sql query.
+     *
+     * @return integer
+     */
     public function execute($sql)
     {
         return $this->connection->exec($sql);
     }
 
+    /**
+     * Execute sql and expect return a data.
+     *
+     * @param string $sql Sql query.
+     *
+     * @return array
+     */
     public function query($sql)
     {
         $rows = array();

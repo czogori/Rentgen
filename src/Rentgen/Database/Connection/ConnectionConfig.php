@@ -8,6 +8,11 @@ class ConnectionConfig implements ConnectionConfigInterface
     private $username;
     private $password;
 
+    /**
+     * Constructor.
+     *
+     * @param array $config Array config.
+     */
     public function __construct(array $config = array())
     {
         if (isset($config['dsn'])) {
@@ -26,26 +31,47 @@ class ConnectionConfig implements ConnectionConfigInterface
         $this->password = $config['password'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getUsername()
     {
         return $this->username;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDsn()
     {
         return $this->dsn;
     }
 
+    /**
+     * Get database adapter.
+     *
+     * @return string
+     */
     public function getAdapter()
     {
         return $this->adapter;
     }
 
+    /**
+     * Parse DSN string to arrray.
+     *
+     * @param string $dsn Dsn string.
+     *
+     * @return array
+     */
     private function parseDsn($dsn)
     {
         $config = array();
