@@ -41,9 +41,10 @@ class CreateTableCommand extends Command
             , $escapement->escape($this->table->getQualifiedName())
             , $this->getColumnsSql() . $this->getConstraintsSql());
 
-        if (!empty($this->table->getDescription())) {
+        $tableDescription = $this->table->getDescription();
+        if (!empty($$tableDescription)) {
         $sql .= sprintf("COMMENT ON TABLE %s IS '%s';",
-            $escapement->escape($this->table->getQualifiedName()), $this->table->getDescription());
+            $escapement->escape($this->table->getQualifiedName()), $tableDescription);
         }
 
         return $sql;
