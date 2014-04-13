@@ -14,9 +14,18 @@ Using composer:
 }
 ```
 ## Basic usage
-Create empty table
+Create sample table
 ```php
 $rentgen = new Rentgen();
 $manipulation = $rentgen->createManipulationInstance();
-$manipulation->create(new Table('foo')); 
+
+$table = new Table('foo');
+$table->addColumn(new StringColumn('bar'));
+$table->addColumn(new IntegerColumn('baz', array('not_null' => true)));
+$manipulation->create($table);
+```
+Get information about foo table
+```php
+$info = $rentgen->createInfoInstance();
+$fooTable = $info->getTable(new Table('foo'));
 ```
