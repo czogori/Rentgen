@@ -44,6 +44,14 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($column->isNotNull());
     }
+
+    public function testDescription()
+    {
+        $column = new FooColumn('foo');
+        $column->setDescription('desc');
+
+        $this->assertEquals('desc', $column->getDescription());
+    }
 }
 
 class FooColumn extends Column
