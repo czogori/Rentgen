@@ -24,7 +24,7 @@ class Connection
     /**
      * Execute sql query.
      *
-     * @param string  $sql Sql query.
+     * @param string $sql Sql query.
      *
      * @return integer
      */

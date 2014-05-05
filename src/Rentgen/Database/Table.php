@@ -74,7 +74,7 @@ class Table implements DatabaseObjectInterface
     /**
      * Get column of table.
      *
-     * @param  string $name Column name.
+     * @param string $name Column name.
      *
      * @return Column Column instance.
      */

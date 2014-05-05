@@ -50,6 +50,7 @@ class AddColumnCommand extends Command
                 $this->column->getName(),
                 $columnDescription);
         }
+
         return $sql;
     }
 
