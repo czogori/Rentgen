@@ -37,7 +37,11 @@ class ListTablesCommand extends ContainerAwareCommand
             $getTablesCommand->setSchemaName($schemaName);
         }
         $tables = $getTablesCommand->execute();
+        if (count($tables) === 0) {
+            $output->writeln("\n<info>There are no tables.<info>");
 
+            return;
+        }
         $rows = array();
         foreach ($tables as $table) {
             $rows[] = array($table->getSchema()->getName(), $table->getName());
@@ -45,7 +49,7 @@ class ListTablesCommand extends ContainerAwareCommand
 
         $table = $this->getHelperSet()->get('table');
         $table
-            ->setHeaders(array('Schema', 'Name'))
+            ->setHeaders(array('Schema', 'Table'))
             ->setRows($rows)
             ->render($output);
     }
