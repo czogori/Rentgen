@@ -24,4 +24,13 @@ interface ConnectionConfigInterface
      * @return string
      */
     public function getDsn();
+
+    /**
+     * Change current environment.
+     *
+     * @param string Environment.
+     *
+     * @return void
+     */
+    public function changeEnvironment($environment);
 }

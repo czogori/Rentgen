@@ -47,11 +47,11 @@ class RentgenExtension implements ExtensionInterface
             $configFile = $fileLocator->locate('rentgen.yml');
             $config = Yaml::parse($configFile);
 
-            $connectionConfig = $config['connection'];
+            $connectionConfig = $config;
         }
 
         $definition = new Definition('Rentgen\Database\Connection\ConnectionConfig');
-        $definition->setArguments(array($connectionConfig));
+        $definition->setArguments(array($connectionConfig['environments']));
         $container->setDefinition('connection_config', $definition);
 
         $definition = new Definition('Rentgen\Database\Connection\Connection');
@@ -60,7 +60,7 @@ class RentgenExtension implements ExtensionInterface
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('rentgen.event_dispatcher');
-        $this->adapter = $this->parseAdapter($connectionConfig['adapter']);
+        $this->adapter = $this->parseAdapter($connectionConfig['environments'][$connectionConfig['current_environment']]['adapter']);
 
         $this->setDefinition('rentgen.create_table', 'rentgen.command.manipulation.create_table.class', $container);
         $this->setDefinition('rentgen.drop_table', 'rentgen.command.manipulation.drop_table.class', $container);

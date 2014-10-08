@@ -19,7 +19,8 @@ class ListTablesCommand extends ContainerAwareCommand
             ->setDescription('List tables.')
             ->setDefinition(array(
                 new InputArgument('schema_name', InputArgument::OPTIONAL, 'Schema name'),
-        ));
+            ))
+            ->addOption('env', null, InputOption::VALUE_REQUIRED, 'Set environment');
     }
 
     /**
@@ -27,6 +28,11 @@ class ListTablesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $environment = $input->getOption('env');
+        if (null !== $environment) {
+            $config = $this->getContainer()->get('connection_config');
+            $config->changeEnvironment($environment);
+        }
         $getTablesCommand = $this->getContainer()->get('rentgen.get_tables');
         if ($schemaName = $input->getArgument('schema_name')) {
             if (!$this->getContainer()->get('rentgen.schema_exists')->setName($schemaName)->execute()) {

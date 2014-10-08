@@ -15,20 +15,15 @@ class ConnectionConfig implements ConnectionConfigInterface
      */
     public function __construct(array $config = array())
     {
-        if (isset($config['dsn'])) {
-            $this->dsn = $config['dsn'];
-            $config = array_merge($config, $this->parseDsn($config['dsn']));
-        } else {
-            $this->dsn = sprintf('%s:host=%s; port=%s; dbname=%s;'
-                , $config['adapter']
-                , $config['host']
-                , $config['port']
-                , $config['database']);
+        $this->configure($config);
+    }
 
-        }
-        $this->adapter = $config['adapter'];
-        $this->username = $config['username'];
-        $this->password = $config['password'];
+    /**
+     * {@inheritdoc}
+     */
+    public function changeEnvironment($environment)
+    {
+        $this->currentEnvironment = $environment;
     }
 
     /**
@@ -36,7 +31,7 @@ class ConnectionConfig implements ConnectionConfigInterface
      */
     public function getUsername()
     {
-        return $this->username;
+        return $this->username[$this->currentEnvironment];
     }
 
     /**
@@ -44,7 +39,7 @@ class ConnectionConfig implements ConnectionConfigInterface
      */
     public function getPassword()
     {
-        return $this->password;
+        return $this->password[$this->currentEnvironment];
     }
 
     /**
@@ -52,7 +47,7 @@ class ConnectionConfig implements ConnectionConfigInterface
      */
     public function getDsn()
     {
-        return $this->dsn;
+        return $this->dsn[$this->currentEnvironment];
     }
 
     /**
@@ -62,7 +57,28 @@ class ConnectionConfig implements ConnectionConfigInterface
      */
     public function getAdapter()
     {
-        return $this->adapter;
+        return $this->adapter[$this->currentEnvironment];
+    }
+
+    private function configure(array $config)
+    {
+        $this->currentEnvironment = 'dev';
+        foreach($config as $environment => $connection) {
+            if (isset($connection['dsn'])) {
+                $this->dsn[$environment]  = $connection['dsn'];
+                $connection = array_merge($connection, $this->parseDsn($connection['dsn']));
+            } else {
+                $this->dsn[$environment]= sprintf('%s:host=%s; port=%s; dbname=%s;'
+                    , $connection['adapter']
+                    , $connection['host']
+                    , $connection['port']
+                    , $connection['database']);
+
+            }
+            $this->adapter[$environment] = $connection['adapter'];
+            $this->username[$environment] = $connection['username'];
+            $this->password[$environment] = $connection['password'];
+        }
     }
 
     /**
