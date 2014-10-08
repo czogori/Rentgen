@@ -1,7 +1,23 @@
-connection:
-    adapter:    pgsql
-    host:       localhost
-    database:   rentgen
-    username:   postgres
-    password:
-    port:       5432
+environments:
+    dev:
+        adapter: pgsql
+        host: localhost
+        database: rentgen
+        username: postgres
+        password:
+        port: 5432
+    prod:
+        adapter: pgsql
+        host: localhost
+        database: rentgen_prod
+        username: postgres
+        password:
+        port: 5432
+    test:
+        adapter: pgsql
+        host: localhost
+        database: rentgen_test
+        username: postgres
+        password:
+        port: 5432
+current_environment: dev
