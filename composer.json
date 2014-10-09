@@ -13,8 +13,7 @@
         "symfony/event-dispatcher": "2.5.*",
         "symfony/finder": "2.5.*",
         "symfony/filesystem": "2.5.*",
-        "symfony/yaml": "2.5.*",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "symfony/yaml": "2.5.*"
     },
     "authors": [
         {
@@ -22,20 +21,6 @@
             "email": "arek.jaskolski@gmail.com"
         }
     ],
-    "scripts": {
-        "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
-        ],
-        "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
-        ]
-    },
-    "extra": {
-        "incenteev-parameters": {
-            "file": "rentgen.yml",
-            "parameter-key": "connection"
-        }
-    },
     "autoload": {
         "psr-0": {
             "Rentgen": "src/"
