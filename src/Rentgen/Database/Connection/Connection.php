@@ -5,6 +5,7 @@ namespace Rentgen\Database\Connection;
 class Connection
 {
     private $connection;
+    private $config;
 
     /**
      * Constructor.
@@ -13,12 +14,7 @@ class Connection
      */
     public function __construct(ConnectionConfigInterface $config)
     {
-        try {
-            $this->connection = new \PDO($config->getDsn(), $config->getUsername(), $config->getPassword(),
-                array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
-        } catch (\PDOException $exception) {
-            throw new \InvalidArgumentException($exception->getMessage());
-        }
+       $this->config = $config;
     }
 
     /**
@@ -30,7 +26,7 @@ class Connection
      */
     public function execute($sql)
     {
-        return $this->connection->exec($sql);
+        return $this->getConnection()->exec($sql);
     }
 
     /**
@@ -43,10 +39,24 @@ class Connection
     public function query($sql)
     {
         $rows = array();
-        foreach ($this->connection->query($sql) as $row) {
+        foreach ($this->getConnection()->query($sql) as $row) {
             $rows[] = $row;
         }
 
         return $rows;
+    }
+
+    private function getConnection()
+    {
+        if (null === $this->connection) {
+            try {
+                $this->connection = new \PDO($this->config->getDsn(), $this->config->getUsername(), $this->config->getPassword(),
+                    array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+            } catch (\PDOException $exception) {
+                throw new \InvalidArgumentException($exception->getMessage());
+            }
+        }
+
+        return $this->connection;
     }
 }

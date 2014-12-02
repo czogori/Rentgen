@@ -44,10 +44,20 @@ class RentgenExtension implements ExtensionInterface
 
         if (!isset($connectionConfig)) {
             $fileLocator = new FileLocator(getcwd());
-            $configFile = $fileLocator->locate('rentgen.yml');
-            $config = Yaml::parse($configFile);
-
-            $connectionConfig = $config;
+            try {
+                $configFile = $fileLocator->locate('rentgen.yml');
+                $config = Yaml::parse($configFile);
+                $connectionConfig = $config;
+            } catch (\InvalidArgumentException $e) {
+                $connectionConfig['environments']['dev'] = array(
+                    'adapter' => 'pgsql',
+                    'host' => 'localhost',
+                    'database' => null,
+                    'username' => 'postgres',
+                    'password' => '',
+                    'port' => 5432,
+                );
+            }
         }
 
         $definition = new Definition('Rentgen\Database\Connection\ConnectionConfig');
@@ -60,7 +70,7 @@ class RentgenExtension implements ExtensionInterface
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('rentgen.event_dispatcher');
-        $this->adapter = $this->parseAdapter($connectionConfig['environments'][$connectionConfig['current_environment']]['adapter']);
+        $this->adapter = 'Postgres';
 
         $this->setDefinition('rentgen.create_table', 'rentgen.command.manipulation.create_table.class', $container);
         $this->setDefinition('rentgen.drop_table', 'rentgen.command.manipulation.drop_table.class', $container);
