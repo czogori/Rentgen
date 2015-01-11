@@ -46,6 +46,7 @@ class CreateTableCommand extends Command
         $sql .= sprintf("COMMENT ON TABLE %s IS '%s';",
             $escapement->escape($this->table->getQualifiedName()), $tableDescription);
         }
+        $sql .= $this->getColumnComments();
 
         return $sql;
     }
@@ -122,6 +123,29 @@ class CreateTableCommand extends Command
 
         return rtrim($sql, ',');
     }
+
+    /**
+     * Gets comments for columns.
+     *
+     * @return string
+     */
+    private function getColumnComments()
+    {
+        $escapement = new Escapement();
+        $comments = '';
+        foreach ($this->table->getColumns() as $column) {
+             $columnDescription = $column->getDescription();
+             if (!empty($columnDescription)) {
+                $comments .= sprintf("COMMENT ON COLUMN %s.%s IS '%s';",
+                    $escapement->escape($this->table->getName()),
+                    $escapement->escape($column->getName()),
+                    $columnDescription);
+             }
+        }
+
+        return $comments;
+    }
+
 
     /**
      * {@inheritdoc}
