@@ -4,11 +4,11 @@ namespace Rentgen\Tests;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
-
-use Rentgen\Schema\Adapter\Postgres\Info\GetTablesCommand;
-use Rentgen\Schema\Adapter\Postgres\Info\TableExistsCommand;
-use Rentgen\Schema\Adapter\Postgres\Info\SchemaExistsCommand;
-use Rentgen\Schema\Adapter\Postgres\Manipulation\CreateTableCommand;
+use Symfony\Component\Finder\SplFileInfo;
+use Rentgen\Schema\Info\GetTablesCommand;
+use Rentgen\Schema\Info\TableExistsCommand;
+use Rentgen\Schema\Info\SchemaExistsCommand;
+use Rentgen\Schema\Manipulation\CreateTableCommand;
 use Rentgen\Database\Connection\Connection;
 use Rentgen\Database\Connection\ConnectionConfig;
 use Rentgen\Database\Column;
@@ -24,11 +24,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function setConnection()
     {
-        $fileLocator = new FileLocator(getcwd());
-        $configFile = $fileLocator->locate('rentgen.yml');
-        $config = Yaml::parse($configFile);
-
-        $this->connection = new Connection(new ConnectionConfig($config['connection']));
+//        $fileLocator = new FileLocator(getcwd());
+//        $configFile = $fileLocator->locate('rentgen.yml');print_r($configFile);
+        $config = Yaml::parse(file_get_contents(getcwd() . '/rentgen.yml'));
+        $this->connection = new Connection(new ConnectionConfig($config['environments']));
     }
 
     protected function clearDatabase()
