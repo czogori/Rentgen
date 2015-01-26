@@ -157,7 +157,7 @@ class CreateTableCommand extends Command
 
     private function addQuotesIfNeeded(Column $column, $value)
     {
-        return $column->getType() === 'string' ? sprintf("'%s'", $value) : $value;
+        return in_array($column->getType(), ['string', 'text']) ? sprintf("'%s'", $value) : $value;
     }
 
     private function getTypeConstraints(Column $column)
