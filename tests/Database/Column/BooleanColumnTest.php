@@ -4,22 +4,13 @@ namespace Rentgen\Tests\Database;
 
 use Rentgen\Database\Column\BooleanColumn;
 use \Exception;
+use \BadFunctionCallException;
 
 /**
  * @author Arek Jaskólski <arek.jaskolski@gmail.com>
  */
 class BooleanColumnTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @expectedException Exception
-     */
-    public function testCreateInstanceWithoutParams()
-    {
-         $column = new BooleanColumn();
-         $this->assertInstanceOf('Rentgen\Database\Column\BooleanColumn', $column);
-    }
-
     public function testCreateInstance()
     {
         $column = new BooleanColumn('foo');

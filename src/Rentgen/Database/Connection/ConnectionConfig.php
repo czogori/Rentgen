@@ -66,16 +66,15 @@ class ConnectionConfig implements ConnectionConfigInterface
         foreach($config as $environment => $connection) {
             if (isset($connection['dsn'])) {
                 $this->dsn[$environment]  = $connection['dsn'];
-                $connection = array_merge($connection, $this->parseDsn($connection['dsn']));
+                //$connection = array_merge($connection, $this->parseDsn($connection['dsn']));
             } else {
-                $this->dsn[$environment]= sprintf('%s:host=%s; port=%s; dbname=%s;'
-                    , $connection['adapter']
+                $this->dsn[$environment]= sprintf('pgsql:host=%s; port=%s; dbname=%s;'
                     , $connection['host']
                     , $connection['port']
                     , $connection['database']);
 
             }
-            $this->adapter[$environment] = $connection['adapter'];
+            //$this->adapter[$environment] = $connection['adapter'];
             $this->username[$environment] = $connection['username'];
             $this->password[$environment] = $connection['password'];
         }

@@ -46,7 +46,8 @@ class RentgenExtension implements ExtensionInterface
             $fileLocator = new FileLocator(getcwd());
             try {
                 $configFile = $fileLocator->locate('rentgen.yml');
-                $config = Yaml::parse($configFile);
+                $content = file_get_contents('rentgen.yml');
+                $config = Yaml::parse($content);
                 $connectionConfig = $config;
             } catch (\InvalidArgumentException $e) {
                 $connectionConfig['environments']['dev'] = array(
@@ -148,22 +149,22 @@ class RentgenExtension implements ExtensionInterface
     private function defineParameters(ContainerBuilder $container)
     {
         $container->setParameter('rentgen.command.factory.class', 'Rentgen\Schema\Factory');
-        $container->setParameter('rentgen.command.manipulation.create_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateTableCommand');
-        $container->setParameter('rentgen.command.manipulation.drop_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropTableCommand');
-        $container->setParameter('rentgen.command.manipulation.add_column.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddColumnCommand');
-        $container->setParameter('rentgen.command.manipulation.drop_column.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropColumnCommand');
-        $container->setParameter('rentgen.command.manipulation.add_constraint.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\AddConstraintCommand');
-        $container->setParameter('rentgen.command.manipulation.drop_constraint.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropConstraintCommand');
-        $container->setParameter('rentgen.command.manipulation.create_index.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateIndexCommand');
-        $container->setParameter('rentgen.command.manipulation.drop_index.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropIndexCommand');
-        $container->setParameter('rentgen.command.manipulation.create_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\CreateSchemaCommand');
-        $container->setParameter('rentgen.command.manipulation.drop_schema.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\DropSchemaCommand');
-        $container->setParameter('rentgen.command.manipulation.clear_database.class', 'Rentgen\Schema\Adapter\@@adapter@@\Manipulation\ClearDatabaseCommand');
-        $container->setParameter('rentgen.command.info.table_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\TableExistsCommand');
-        $container->setParameter('rentgen.command.info.get_table.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTableCommand');
-        $container->setParameter('rentgen.command.info.get_tables.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetTablesCommand');
-        $container->setParameter('rentgen.command.info.get_schemas.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetSchemasCommand');
-        $container->setParameter('rentgen.command.info.schema_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\SchemaExistsCommand');
+        $container->setParameter('rentgen.command.manipulation.create_table.class', 'Rentgen\Schema\Manipulation\CreateTableCommand');
+        $container->setParameter('rentgen.command.manipulation.drop_table.class', 'Rentgen\Schema\Manipulation\DropTableCommand');
+        $container->setParameter('rentgen.command.manipulation.add_column.class', 'Rentgen\Schema\Manipulation\AddColumnCommand');
+        $container->setParameter('rentgen.command.manipulation.drop_column.class', 'Rentgen\Schema\Manipulation\DropColumnCommand');
+        $container->setParameter('rentgen.command.manipulation.add_constraint.class', 'Rentgen\Schema\Manipulation\AddConstraintCommand');
+        $container->setParameter('rentgen.command.manipulation.drop_constraint.class', 'Rentgen\Schema\Manipulation\DropConstraintCommand');
+        $container->setParameter('rentgen.command.manipulation.create_index.class', 'Rentgen\Schema\Manipulation\CreateIndexCommand');
+        $container->setParameter('rentgen.command.manipulation.drop_index.class', 'Rentgen\Schema\Manipulation\DropIndexCommand');
+        $container->setParameter('rentgen.command.manipulation.create_schema.class', 'Rentgen\Schema\Manipulation\CreateSchemaCommand');
+        $container->setParameter('rentgen.command.manipulation.drop_schema.class', 'Rentgen\Schema\Manipulation\DropSchemaCommand');
+        $container->setParameter('rentgen.command.manipulation.clear_database.class', 'Rentgen\Schema\Manipulation\ClearDatabaseCommand');
+        $container->setParameter('rentgen.command.info.table_exists.class', 'Rentgen\Schema\Info\TableExistsCommand');
+        $container->setParameter('rentgen.command.info.get_table.class', 'Rentgen\Schema\Info\GetTableCommand');
+        $container->setParameter('rentgen.command.info.get_tables.class', 'Rentgen\Schema\Info\GetTablesCommand');
+        $container->setParameter('rentgen.command.info.get_schemas.class', 'Rentgen\Schema\Info\GetSchemasCommand');
+        $container->setParameter('rentgen.command.info.schema_exists.class', 'Rentgen\Schema\Info\SchemaExistsCommand');
         $container->setParameter('rentgen.event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
         $container->setParameter('rentgen.event_listener.class', 'Rentgen\EventListener\LoggingListener');
     }

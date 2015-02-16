@@ -29,17 +29,4 @@ class AddColumnCommandTest extends TestCase
         $sql = 'ALTER TABLE public.foo ADD COLUMN name character varying;';
         $this->assertEquals($sql, $addColumnCommand->getSql());
     }
-
-    public function testAddCustomColumnWithHstoreType()
-    {
-        $this->connection->execute('CREATE EXTENSION IF NOT EXISTS hstore;');
-        $column = new CustomColumn('name', 'hstore');
-        $column->setTable(new Table('foo'));
-
-        $addColumnCommand = new AddColumnCommand();
-        $addColumnCommand->setColumn($column);
-
-        $sql = 'ALTER TABLE public.foo ADD COLUMN name hstore;';
-        $this->assertEquals($sql, $addColumnCommand->getSql());
-    }
 }

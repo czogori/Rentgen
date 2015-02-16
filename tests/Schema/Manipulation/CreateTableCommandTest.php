@@ -19,8 +19,6 @@ class CreateTableCommandTest extends TestCase
     public function setUp()
     {
         $this->clearDatabase();
-
-        $this->connection->execute('CREATE EXTENSION IF NOT EXISTS hstore;');
     }
 
     public function testGetSql()
@@ -73,18 +71,6 @@ class CreateTableCommandTest extends TestCase
         $tableInfo = $getTableCommand->execute();
 
         $this->assertEquals('integer', $tableInfo->getColumn('foo_id')->getType());
-    }
-
-    public function testCreateTableWithCustomColumnWithHstoreType()
-    {
-        $table = new Table('test');
-        $table->addColumn(new StringColumn('foo'));
-        $table->addColumn(new CustomColumn('bar', 'hstore'));
-        $this->getCreateTableCommand()
-            ->setTable($table)
-            ->execute();
-
-        $this->assertTrue($this->tableExists('test'));
     }
 
     private function getCreateTableCommand()

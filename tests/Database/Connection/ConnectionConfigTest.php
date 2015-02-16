@@ -15,12 +15,13 @@ class ConnectionConfigTest extends \PHPUnit_Framework_TestCase
         $password = 'qwerty';
 
         $this->config = array(
-            'adapter' => 'pgsql',
-            'host' => 'localhost',
-            'database' => 'rentgen',
-            'port' => '5432',
-            'username' => $username,
-            'password' => $password,
+              'dev' => array(
+                  'host' => 'localhost',
+                  'database' => 'rentgen',
+                  'port' => '5432',
+                  'username' => $username,
+                  'password' => $password
+              ),
         );
         $this->configWithDsn = array(
             'dsn' => 'pgsql:host=localhost; port=5432; dbname=rentgen;',
@@ -28,38 +29,30 @@ class ConnectionConfigTest extends \PHPUnit_Framework_TestCase
             'password' => $password,
         );
 
-        $this->configs = array($this->config, $this->configWithDsn);
+        //$this->configs = array($this->config, $this->configWithDsn);
     }
 
     public function testGetUsername()
     {
-        foreach ($this->configs as $config) {
-            $connectionConfig = new ConnectionConfig($config);
+        //foreach ($this->configs as $config) {
+            $connectionConfig = new ConnectionConfig($this->config);
             $this->assertEquals('test', $connectionConfig->getUsername());
-        }
+       // }
     }
 
     public function testGetPassword()
     {
-        foreach ($this->configs as $config) {
-            $connectionConfig = new ConnectionConfig($config);
+//        foreach ($this->configs as $config) {
+            $connectionConfig = new ConnectionConfig($this->config);
             $this->assertEquals('qwerty', $connectionConfig->getPassword());
-        }
+ //       }
     }
 
     public function testGetDsn()
     {
-        foreach ($this->configs as $config) {
-            $connectionConfig = new ConnectionConfig($config);
+//        foreach ($this->configs as $config) {
+            $connectionConfig = new ConnectionConfig($this->config);
             $this->assertEquals('pgsql:host=localhost; port=5432; dbname=rentgen;', $connectionConfig->getDsn());
-        }
-    }
-
-    public function testGetAdapter()
-    {
-        foreach ($this->configs as $config) {
-            $connectionConfig = new ConnectionConfig($config);
-            $this->assertEquals('pgsql', $connectionConfig->getAdapter());
-        }
+ //       }
     }
 }

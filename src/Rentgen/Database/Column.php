@@ -44,7 +44,7 @@ abstract class Column implements DatabaseObjectInterface
      */
     public function getDefault()
     {
-        return null;
+        return $this->default;
     }
 
     /**
