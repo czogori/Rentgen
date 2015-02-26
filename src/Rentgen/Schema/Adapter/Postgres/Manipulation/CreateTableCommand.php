@@ -137,7 +137,7 @@ class CreateTableCommand extends Command
              $columnDescription = $column->getDescription();
              if (!empty($columnDescription)) {
                 $comments .= sprintf("COMMENT ON COLUMN %s.%s IS '%s';",
-                    $escapement->escape($this->table->getName()),
+                    $escapement->escape($this->table->getQualifiedName()),
                     $escapement->escape($column->getName()),
                     $columnDescription);
              }
