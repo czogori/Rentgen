@@ -46,6 +46,7 @@ class CreateTableCommand extends Command
         $sql .= sprintf("COMMENT ON TABLE %s IS '%s';",
             $escapement->escape($this->table->getQualifiedName()), $tableDescription);
         }
+        $sql .= $this->getColumnComments();
 
         return $sql;
     }
@@ -124,6 +125,29 @@ class CreateTableCommand extends Command
     }
 
     /**
+     * Gets comments for columns.
+     *
+     * @return string
+     */
+    private function getColumnComments()
+    {
+        $escapement = new Escapement();
+        $comments = '';
+        foreach ($this->table->getColumns() as $column) {
+             $columnDescription = $column->getDescription();
+             if (!empty($columnDescription)) {
+                $comments .= sprintf("COMMENT ON COLUMN %s.%s IS '%s';",
+                    $escapement->escape($this->table->getQualifiedName()),
+                    $escapement->escape($column->getName()),
+                    $columnDescription);
+             }
+        }
+
+        return $comments;
+    }
+
+
+    /**
      * {@inheritdoc}
      */
     protected function postExecute()
@@ -133,7 +157,7 @@ class CreateTableCommand extends Command
 
     private function addQuotesIfNeeded(Column $column, $value)
     {
-        return $column->getType() === 'string' ? sprintf("'%s'", $value) : $value;
+        return in_array($column->getType(), ['string', 'text']) ? sprintf("'%s'", $value) : $value;
     }
 
     private function getTypeConstraints(Column $column)

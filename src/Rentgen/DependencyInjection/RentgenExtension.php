@@ -8,9 +8,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
-
 use Rentgen\Schema\Factory;
-use Rentgen\DependencyInjection\Compiler\ListenerPass;
 
 class RentgenExtension implements ExtensionInterface
 {
@@ -30,9 +28,6 @@ class RentgenExtension implements ExtensionInterface
         $definition = new Definition($container->getParameter('rentgen.event_dispatcher.class'));
         $definition->setArguments(array(new Reference('service_container')));
         $container->setDefinition('rentgen.event_dispatcher', $definition);
-
-        $definition = new Definition($container->getParameter('rentgen.event_listener.class'));
-        $container->setDefinition('rentgen.event_listener', $definition);
 
         $definition = new Definition('Rentgen\Schema\Manipulation');
         $definition->setArguments(array(new Reference('service_container')));
@@ -100,7 +95,6 @@ class RentgenExtension implements ExtensionInterface
         $definition->addTag('table', array('event' => 'table.drop',     'method' => 'onDropTable'));
         $container->setDefinition('rentgen.event_table', $definition);
 
-        $container->addCompilerPass(new ListenerPass);
     }
 
     public function getAlias()
@@ -165,7 +159,6 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('rentgen.command.info.get_schemas.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\GetSchemasCommand');
         $container->setParameter('rentgen.command.info.schema_exists.class', 'Rentgen\Schema\Adapter\@@adapter@@\Info\SchemaExistsCommand');
         $container->setParameter('rentgen.event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
-        $container->setParameter('rentgen.event_listener.class', 'Rentgen\EventListener\LoggingListener');
     }
 
     private function isConnectionConfig($config)
