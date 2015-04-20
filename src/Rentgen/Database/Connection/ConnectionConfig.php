@@ -70,12 +70,16 @@ class ConnectionConfig implements ConnectionConfigInterface
     {
         $this->currentEnvironment = 'dev';
         foreach($config as $environment => $connection) {
-            $this->dsn[$environment]= sprintf('%s:host=%s; port=%s; dbname=%s;',
-                $connection['adapter'],
-                $connection['host'],
-                $connection['port'],
-                $connection['database']);
+            if (isset($connection['dsn'])) {
+                $this->dsn[$environment]  = $connection['dsn'];
+            } else {
+                $this->dsn[$environment]= sprintf('%s:host=%s; port=%s; dbname=%s;'
+                    , $connection['adapter']
+                    , $connection['host']
+                    , $connection['port']
+                    , $connection['database']);
 
+            }
             $this->adapter[$environment] = $connection['adapter'];
             $this->username[$environment] = $connection['username'];
             $this->password[$environment] = $connection['password'];
