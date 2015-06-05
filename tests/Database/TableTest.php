@@ -14,15 +14,6 @@ use Rentgen\Database\Table;
  */
 class TableTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @expectedException Exception
-     */
-    public function testCreateInstanceWithoutParams()
-    {
-        $table = new Table();
-    }
-
     public function testCreateInstanceWithoutSchemaParam()
     {
         $table = new Table('foo');

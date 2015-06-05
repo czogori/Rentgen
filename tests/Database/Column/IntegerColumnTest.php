@@ -9,15 +9,6 @@ use Rentgen\Database\Column\IntegerColumn;
  */
 class IntegerColumnTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @expectedException Exception
-     */
-    public function testCreateInstanceWithoutParams()
-    {
-         $column = new IntegerColumn();
-    }
-
     public function testCreateInstance()
     {
         $column = new IntegerColumn('foo');

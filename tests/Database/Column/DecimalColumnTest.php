@@ -14,14 +14,6 @@ class DecimalColumnTest extends \PHPUnit_Framework_TestCase
         $this->column = new DecimalColumn('foo');
     }
 
-    /**
-     * @expectedException Exception
-     */
-    public function testCreateInstanceWithoutParams()
-    {
-        $column = new DecimalColumn();
-    }
-
     public function testCreateInstance()
     {
         $this->assertInstanceOf('Rentgen\Database\Column', $this->column);

@@ -9,14 +9,6 @@ use Rentgen\Database\Column;
  */
 class ColumnTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @expectedException Exception
-     */
-    public function testCreateInstanceWithoutParams()
-    {
-         $column = new FooColumn();
-    }
-
     public function testGetName()
     {
         $column = new FooColumn('foo');

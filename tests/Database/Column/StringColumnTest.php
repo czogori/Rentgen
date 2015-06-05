@@ -9,15 +9,6 @@ use Rentgen\Database\Column\StringColumn;
  */
 class StringColumnTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @expectedException Exception
-     */
-    public function testCreateInstanceWithoutParams()
-    {
-         $column = new StringColumn();
-    }
-
     public function testCreateInstance()
     {
         $column = new StringColumn('foo');
