@@ -15,7 +15,7 @@ class ConnectionConfig implements ConnectionConfigInterface
      */
     public function __construct(array $config = array())
     {
-        $this->configure($config);
+        $this->parseConfiguration($config);
     }
 
     /**
@@ -60,13 +60,18 @@ class ConnectionConfig implements ConnectionConfigInterface
         return $this->adapter[$this->currentEnvironment];
     }
 
-    private function configure(array $config)
+    /**
+     * Parse configuration.
+     *
+     * @param array $config
+     * @return void
+     */
+    private function parseConfiguration(array $config)
     {
         $this->currentEnvironment = 'dev';
         foreach($config as $environment => $connection) {
             if (isset($connection['dsn'])) {
                 $this->dsn[$environment]  = $connection['dsn'];
-                //$connection = array_merge($connection, $this->parseDsn($connection['dsn']));
             } else {
                 $this->dsn[$environment]= sprintf('pgsql:host=%s; port=%s; dbname=%s;'
                     , $connection['host']
@@ -78,22 +83,5 @@ class ConnectionConfig implements ConnectionConfigInterface
             $this->username[$environment] = $connection['username'];
             $this->password[$environment] = $connection['password'];
         }
-    }
-
-    /**
-     * Parse DSN string to arrray.
-     *
-     * @param string $dsn Dsn string.
-     *
-     * @return array
-     */
-    private function parseDsn($dsn)
-    {
-        $config = array();
-        if (preg_match('/^(.*):/', $dsn, $matches)) {
-            $config['adapter'] = $matches[1];
-        }
-
-        return $config;
     }
 }
