@@ -71,7 +71,6 @@ class RentgenExtension implements ExtensionInterface
 
         $this->connection = $container->getDefinition('connection');
         $this->eventDispatcher = $container->getDefinition('rentgen.event_dispatcher');
-        $this->adapter = 'Postgres';
 
         $this->setDefinition('rentgen.create_table', 'rentgen.command.manipulation.create_table.class', $container);
         $this->setDefinition('rentgen.drop_table', 'rentgen.command.manipulation.drop_table.class', $container);
@@ -90,7 +89,7 @@ class RentgenExtension implements ExtensionInterface
         $this->setDefinition('rentgen.get_schemas', 'rentgen.command.info.get_schemas.class', $container);
         $this->setDefinition('rentgen.schema_exists', 'rentgen.command.info.schema_exists.class', $container);
 
-        $definition = new Definition($this->getClassName($container->getParameter('rentgen.command.manipulation.clear_database.class'), $this->adapter),
+        $definition = new Definition($container->getParameter('rentgen.command.manipulation.clear_database.class'),
             array(new Reference('rentgen.get_schemas')));
         $definition->addMethodCall('setConnection', array(new Reference('connection')));
         $definition->addMethodCall('setEventDispatcher', array(new Reference('rentgen.event_dispatcher')));
@@ -119,28 +118,11 @@ class RentgenExtension implements ExtensionInterface
         return 'http://www.example.com/symfony/schema/';
     }
 
-    private function getClassName($className, $adapter)
-    {
-        return  str_replace('@@adapter@@', $adapter, $className);
-    }
-
-    private function parseAdapter($adapter)
-    {
-        switch (strtolower($adapter)) {
-            case 'pgsql':
-            case 'postgres':
-            case 'postgresql':
-                return 'Postgres';
-            default:
-                return '';
-        }
-    }
-
     private function setDefinition($name, $classParam, $container)
     {
         $className = $container->getParameter($classParam);
 
-        $definition = new Definition($this->getClassName($className, $this->adapter));
+        $definition = new Definition($className);
         $definition->addMethodCall('setConnection', array(new Reference('connection')));
         $definition->addMethodCall('setEventDispatcher', array(new Reference('rentgen.event_dispatcher')));
         $container->setDefinition($name, $definition);
