@@ -9,6 +9,7 @@ before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --prefer-source
   - psql -c 'create database rentgen;' -U postgres
+  - cp rentgen.yml.dist rentgen.yml
 
 script:
   - phpunit --coverage-text
