@@ -28,16 +28,6 @@ class Rentgen
     }
 
     /**
-     * Get the container.
-     *
-     * @return Symfony\Component\DependencyInjection\ContainerBuilder
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * Get a service.
      *
      * @param string $service A service name.
