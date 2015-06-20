@@ -25,9 +25,9 @@ class RentgenExtension implements ExtensionInterface
 
         $this->defineParameters($container);
 
-        $definition = new Definition($container->getParameter('rentgen.event_dispatcher.class'));
+        $definition = new Definition('Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
         $definition->setArguments(array(new Reference('service_container')));
-        $container->setDefinition('rentgen.event_dispatcher', $definition);
+        $container->setDefinition('event_dispatcher', $definition);
 
         $definition = new Definition('Rentgen\Schema\Manipulation');
         $definition->setArguments(array(new Reference('service_container')));
@@ -65,7 +65,7 @@ class RentgenExtension implements ExtensionInterface
         $container->setDefinition('connection', $definition);
 
         $this->connection = $container->getDefinition('connection');
-        $this->eventDispatcher = $container->getDefinition('rentgen.event_dispatcher');
+        $this->eventDispatcher = $container->getDefinition('event_dispatcher');
 
         $this->setDefinition('rentgen.create_table', 'rentgen.command.manipulation.create_table.class', $container);
         $this->setDefinition('rentgen.drop_table', 'rentgen.command.manipulation.drop_table.class', $container);
@@ -87,14 +87,8 @@ class RentgenExtension implements ExtensionInterface
         $definition = new Definition($container->getParameter('rentgen.command.manipulation.clear_database.class'),
             array(new Reference('rentgen.get_schemas')));
         $definition->addMethodCall('setConnection', array(new Reference('connection')));
-        $definition->addMethodCall('setEventDispatcher', array(new Reference('rentgen.event_dispatcher')));
+        $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
         $container->setDefinition('rentgen.clear_database', $definition);
-
-        $definition = new Definition('Rentgen\Event\TableEvent');
-        $definition->addTag('table', array('event' => 'table.create',   'method' => 'onCreateTable'));
-        $definition->addTag('table', array('event' => 'table.drop',     'method' => 'onDropTable'));
-        $container->setDefinition('rentgen.event_table', $definition);
-
     }
 
     public function getAlias()
@@ -118,7 +112,7 @@ class RentgenExtension implements ExtensionInterface
 
         $definition = new Definition($className);
         $definition->addMethodCall('setConnection', array(new Reference('connection')));
-        $definition->addMethodCall('setEventDispatcher', array(new Reference('rentgen.event_dispatcher')));
+        $definition->addMethodCall('setEventDispatcher', array(new Reference('event_dispatcher')));
         $container->setDefinition($name, $definition);
     }
 
@@ -141,7 +135,6 @@ class RentgenExtension implements ExtensionInterface
         $container->setParameter('rentgen.command.info.get_tables.class', 'Rentgen\Schema\Info\GetTablesCommand');
         $container->setParameter('rentgen.command.info.get_schemas.class', 'Rentgen\Schema\Info\GetSchemasCommand');
         $container->setParameter('rentgen.command.info.schema_exists.class', 'Rentgen\Schema\Info\SchemaExistsCommand');
-        $container->setParameter('rentgen.event_dispatcher.class', 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher');
     }
 
     private function isConnectionConfig($config)
