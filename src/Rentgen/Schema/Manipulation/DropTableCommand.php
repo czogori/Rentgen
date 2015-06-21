@@ -53,7 +53,7 @@ class DropTableCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function postExecute()
+    protected function preExecute()
     {
         $this->dispatcher->dispatch('table.drop', new TableEvent($this->table, $this->getSql()));
     }

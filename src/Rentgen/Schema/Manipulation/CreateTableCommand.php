@@ -150,7 +150,7 @@ class CreateTableCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function postExecute()
+    protected function preExecute()
     {
         $this->dispatcher->dispatch('table.create', new TableEvent($this->table, $this->getSql()));
     }
