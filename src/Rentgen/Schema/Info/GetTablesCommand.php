@@ -32,7 +32,7 @@ class GetTablesCommand extends Command
             ? ''
             : sprintf(" AND table_schema = '%s'", $this->schemaName);
         $sql = sprintf("SELECT table_name, table_schema FROM information_schema.tables WHERE table_schema <> 'information_schema'
-            AND table_schema <> 'pg_catalog'%s;", $schemaCondition);
+            AND table_schema <> 'pg_catalog' AND table_type = 'BASE TABLE'%s;", $schemaCondition);
 
         return $sql;
     }
