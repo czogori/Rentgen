@@ -20,7 +20,7 @@ class GetTablesCommandTest extends TestCase
     {
         $getTablesCommand = new GetTablesCommand();
         $expect = "SELECT table_name, table_schema FROM information_schema.tables WHERE table_schema <> 'information_schema'
-            AND table_schema <> 'pg_catalog';";
+            AND table_schema <> 'pg_catalog' AND table_type = 'BASE TABLE';";
         $this->assertEquals($expect, $getTablesCommand->getSql());
     }
 
