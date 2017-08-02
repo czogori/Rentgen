@@ -37,10 +37,12 @@ class AddColumnCommand extends Command
             $columnType = $columnTypeMapper->getNative($this->column->getType());
         }
 
-        $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s;'
+         $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s %s %s;'
             , $this->column->getTable()->getQualifiedName()
             , $this->column->getName()
             , $columnType
+            , $this->column->isNotNull() ? 'NOT NULL' : ''
+            , null === $this->column->getDefault() ? '' : 'DEFAULT'. ' ' . $this->column->getDefault()
         );
 
         $columnDescription = $this->column->getDescription();
