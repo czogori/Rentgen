@@ -46,7 +46,7 @@ class AddColumnCommand extends Command
         );
 
         $columnDescription = $this->column->getDescription();
-        if (!empty($tableDescription)) {
+        if (!empty($columnDescription)) {
             $sql .= sprintf("COMMENT ON COLUMN %s.%s IS '%s';",
                 $this->column->getTable()->getQualifiedName(),
                 $this->column->getName(),
