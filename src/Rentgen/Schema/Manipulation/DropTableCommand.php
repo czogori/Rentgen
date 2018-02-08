@@ -41,7 +41,7 @@ class DropTableCommand extends Command
      */
     public function getSql()
     {
-        $sql = sprintf('DROP TABLE %s%s'
+        $sql = sprintf('DROP TABLE IF EXISTS %s%s'
             , $this->table->getQualifiedName()
             , $this->cascade ? ' CASCADE' : ''
         );
