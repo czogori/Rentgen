@@ -1,8 +1,8 @@
 <?php
 namespace Rentgen\Schema;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Rentgen\Database\Connection\Connection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class Command
 {
@@ -30,7 +30,7 @@ abstract class Command
      *
      * @return Command
      */
-    public function setEventDispatcher(EventDispatcher $dispatcher)
+    public function setEventDispatcher(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
 
