@@ -61,7 +61,10 @@ class RentgenExtension implements ExtensionInterface
         $container->setDefinition('connection_config', $definition);
 
         $definition = new Definition('Rentgen\Database\Connection\Connection');
-        $definition->setArguments(array(new Reference('connection_config')));
+        $definition->setArguments(array(
+            new Reference('connection_config'),
+            new Reference('event_dispatcher')
+        ));
         $container->setDefinition('connection', $definition);
 
         $this->connection = $container->getDefinition('connection');
