@@ -2,19 +2,25 @@
 
 namespace Rentgen\Database\Connection;
 
+use Rentgen\Event\SqlEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 class Connection
 {
     private $connection;
     private $config;
+    private $dispatcher;
 
     /**
      * Constructor.
      *
-     * @param ConnectionConfigInterface $config Connection config.
+     * @param ConnectionConfigInterface $config     Connection config.
+     * @param EventDispatcherInterface  $dispatcher Event dispatcher.
      */
-    public function __construct(ConnectionConfigInterface $config)
+    public function __construct(ConnectionConfigInterface $config, EventDispatcherInterface $dispatcher)
     {
        $this->config = $config;
+       $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -26,6 +32,8 @@ class Connection
      */
     public function execute($sql)
     {
+        $this->dispatcher->dispatch('rentgen.sql_executed', new SqlEvent($sql));
+
         return $this->getConnection()->exec($sql);
     }
 
